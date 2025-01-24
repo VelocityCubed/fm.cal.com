@@ -25,6 +25,8 @@ jobs:
         run: corepack enable
 
       - name: Yarn install, build, and test
+        env:
+          NODE_OPTIONS: "--max_old_space_size=8192"
         run: |
           yarn install
           yarn build --if-present

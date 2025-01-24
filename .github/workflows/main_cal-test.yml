@@ -28,6 +28,7 @@ jobs:
         env:
           NODE_OPTIONS: "--max_old_space_size=8192"
           NEXTAUTH_SECRET: ${{ secrets.NEXTAUTH_SECRET }}
+          CALENDSO_ENCRYPTION_KEY: ${{ secrets.CALENDSO_ENCRYPTION_KEY }}
         run: |
           yarn install
           yarn build

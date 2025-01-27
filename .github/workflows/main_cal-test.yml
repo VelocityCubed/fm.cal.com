@@ -34,6 +34,7 @@ jobs:
           NEXT_PUBLIC_WEBSITE_URL: 'http://localhost:3000'
           NEXT_PUBLIC_CONSOLE_URL: 'http://localhost:3004'
           NEXT_PUBLIC_EMBED_LIB_URL: 'http://localhost:3000/embed/embed.js'
+          NEXT_PUBLIC_API_V2_URL: "http://localhost:5555/api/v2"
           NEXTAUTH_URL: 'http://localhost:3000'
           CRON_API_KEY: '0cc0e6c35519bba620c9360cfe3e68d0'
           DATABASE_URL: ${{ secrets.DATABASE_URL }}

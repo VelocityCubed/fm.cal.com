@@ -50,7 +50,7 @@ jobs:
           yarn build
 
       - name: Zip artifact for deployment
-        run: zip release.zip ./apps/web/.next* -r
+        run: zip release.zip ./apps/web/.next/* -r
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3

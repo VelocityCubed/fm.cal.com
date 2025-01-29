@@ -52,7 +52,7 @@ jobs:
       - name: Zip artifact for deployment
         run: |
           cd ./apps/web
-          zip -r ../../release.zip * .[^.]*
+          zip -r ../../release.zip .
           cd ../..
 
       - name: Upload artifact for deployment job

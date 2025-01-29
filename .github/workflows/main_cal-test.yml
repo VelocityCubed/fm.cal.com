@@ -49,11 +49,15 @@ jobs:
           yarn install
           yarn build
 
+      # - name: Zip artifact for deployment
+      #   run: |
+      #     cd ./apps/web
+      #     zip -r ../../release.zip .
+      #     cd ../..
+
       - name: Zip artifact for deployment
         run: |
-          cd ./apps/web
-          zip -r ../../release.zip .
-          cd ../..
+          zip -r release.zip .
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v3

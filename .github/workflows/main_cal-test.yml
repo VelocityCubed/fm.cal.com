@@ -57,7 +57,7 @@ jobs:
 
       - name: Zip artifact for deployment
         run: |
-          zip -r release.zip package.json yarn.lock .yarnrc.yml playwright.config.ts turbo.json git-init.sh git-setup.sh i18n.json .yarn apps/web apps/api/v2 packages tests  startup.sh .git -x ".git/objects/pack/*"  -x "node_modules/*" -x "apps/web/.next/cache"
+          zip -r release.zip package.json yarn.lock .yarnrc.yml playwright.config.ts turbo.json git-init.sh git-setup.sh i18n.json .yarn apps/web apps/api/v2 packages tests  startup.sh .git -x ".git/objects/pack/*"  -x "node_modules/*" -x "apps/web/.next/cache" -x "apps/api/node_modules" -x "apps/web/node_modules"
 
       - name: Upload artifact for deployment job
         uses: actions/upload-artifact@v4

@@ -16,6 +16,11 @@ jobs:
     steps:
       - uses: actions/checkout@v4
 
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
@@ -91,6 +96,12 @@ jobs:
       - name: Unzip artifact for deployment
         run: unzip release.zip
 
+
+      - name: Login to Azure
+        uses: azure/login@v1
+        with:
+          creds: ${{ secrets.AZURE_CREDENTIALS }}
+
       - name: 'Deploy to Azure Web App'
         id: deploy-to-webapp
         uses: azure/webapps-deploy@v2
@@ -99,3 +110,27 @@ jobs:
           slot-name: 'Production'
           publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B388C95AC0F747D7BBECAAA0B767FD55 }}
           package: .
+      
+      - name: 'Set Environment Variables on Azure Web App'
+        run: |
+          az webapp config appsettings set --resource-group my-resource-group \
+            --name cal-test \
+            --settings \
+              NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }} \
+              CALENDSO_ENCRYPTION_KEY=${{ secrets.CALENDSO_ENCRYPTION_KEY }} \
+              NEXT_PUBLIC_DEBUG=1 \
+              NEXT_PUBLIC_WEBAPP_URL=http://localhost:3000 \
+              NEXT_PUBLIC_WEBSITE_URL=http://localhost:3000 \
+              NEXT_PUBLIC_CONSOLE_URL=http://localhost:3004 \
+              NEXT_PUBLIC_EMBED_LIB_URL=http://localhost:3000/embed/embed.js \
+              NEXT_PUBLIC_API_V2_URL=http://localhost:5555/api/v2 \
+              NEXTAUTH_URL=http://localhost:3000 \
+              CRON_API_KEY=0cc0e6c35519bba620c9360cfe3e68d0 \
+              DATABASE_URL=${{ secrets.DATABASE_URL }} \
+              DATABASE_DIRECT_URL=${{ secrets.DATABASE_URL }} \
+              EMAIL_FROM=notifications@yourselfhostedcal.com \
+              EMAIL_FROM_NAME=Cal.com \
+              NEXT_PUBLIC_APP_NAME=Cal.com \
+              NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS=help@cal.com \
+              NEXT_PUBLIC_COMPANY_NAME="Cal.com, Inc." \
+              NEXTAUTH_COOKIE_DOMAIN=""

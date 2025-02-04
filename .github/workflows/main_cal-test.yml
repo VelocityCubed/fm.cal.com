@@ -130,14 +130,17 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      - name: 'Deploy to Azure Web App'
-        id: deploy-to-webapp
-        uses: azure/webapps-deploy@v2
-        with:
-          app-name: 'cal-test'
-          slot-name: 'Production'
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B388C95AC0F747D7BBECAAA0B767FD55 }}
-          package: .
+
+
+
+      # - name: 'Deploy to Azure Web App'
+      #   id: deploy-to-webapp
+      #   uses: azure/webapps-deploy@v2
+      #   with:
+      #     app-name: 'cal-test'
+      #     slot-name: 'Production'
+      #     publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B388C95AC0F747D7BBECAAA0B767FD55 }}
+      #     package: .
       
       - name: 'Set Environment Variables on Azure Web App'
         run: |
@@ -162,3 +165,19 @@ jobs:
               NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS=help@cal.com \
               NEXT_PUBLIC_COMPANY_NAME="Cal.com, Inc." \
               NEXTAUTH_COOKIE_DOMAIN=""
+
+      - name: Enable Corepack
+        run: |
+          az webapp remote-console --name cal-test --resource-group fertility-mapper-we --command "corepack enable"
+
+      - name: Set yarn version
+        run: |
+          az webapp remote-console --name cal-test --resource-group fertility-mapper-we --command "yarn set version stable"
+
+      - name: Yarn Install
+        run: |
+          az webapp remote-console --name cal-test --resource-group fertility-mapper-we --command "yarn install"
+
+      - name: Yarn Start
+        run: |
+          az webapp remote-console --name cal-test --resource-group fertility-mapper-we --command "yarn start --verbosity silly"

@@ -85,6 +85,9 @@ export const POWERED_BY_URL = "https://go.cal.com/booking";
 export const DOCS_URL = "https://cal.com/docs";
 export const DEVELOPER_DOCS = "https://developer.cal.com";
 export const SEO_IMG_DEFAULT = `${CAL_URL}/og-image.png`;
+export const BRANDED_URL = "https://fertilitymapper.com";
+export const BRANDED_LOGO = "https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/logo_small.svg"
+export const BRANDED_ICON = "https://fertilitymapper.com/wp-content/uploads/2023/05/Mobile-Logo.svg"
 // The Dynamic OG Image is passed through Next's Image API to further optimize it.
 // This results in a 80% smaller image 🤯. It is however important that for the query
 // parameters you pass to the /api/social/og/image endpoint, you wrap them in encodeURIComponent

@@ -13,6 +13,8 @@ import {
   LOGO_ICON,
   MSTILE_ICON,
   WEBAPP_URL,
+  BRANDED_LOGO,
+  BRANDED_ICON
 } from "@calcom/lib/constants";
 import logger from "@calcom/lib/logger";
 
@@ -56,11 +58,11 @@ type LogoTypeDefinition = {
 
 const logoDefinitions: Record<LogoType, LogoTypeDefinition> = {
   logo: {
-    fallback: `${WEBAPP_URL}${LOGO}`,
+    fallback: `${BRANDED_LOGO}`,
     source: "appLogo",
   },
   icon: {
-    fallback: `${WEBAPP_URL}${LOGO_ICON}`,
+    fallback: `${BRANDED_ICON}`,
     source: "appIconLogo",
   },
   "favicon-16": {

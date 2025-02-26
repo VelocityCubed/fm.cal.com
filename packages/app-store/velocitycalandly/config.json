@@ -1,0 +1,17 @@
+{
+  "name": "VelocityCalandly",
+  "slug": "velocitycalandly",
+  "type": "velocitycalandly_calendar",
+  "logo": "icon.svg",
+  "url": "https://example.com/link",
+  "variant": "calendar",
+  "categories": [
+    "calendar"
+  ],
+  "publisher": "Velocity",
+  "email": "info@velocitycubed.com",
+  "description": "Velocity calandly integration",
+  "isTemplate": false,
+  "__createdUsingCli": true,
+  "__template": "general-app-settings"
+}

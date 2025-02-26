@@ -14,6 +14,7 @@ export const AppSettingsComponentsMap = {
   "general-app-settings": dynamic(() =>
     import("./templates/general-app-settings/components/AppSettingsInterface")
   ),
+  velocitycalandly: dynamic(() => import("./velocitycalandly/components/AppSettingsInterface")),
   weather_in_your_calendar: dynamic(() =>
     import("./weather_in_your_calendar/components/AppSettingsInterface")
   ),

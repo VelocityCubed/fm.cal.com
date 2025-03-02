@@ -189,14 +189,22 @@ export const Components: Record<FieldType, Component> = {
           {variant.fields.map((variantField) => (
             <InputField
               // Because the container is flex(and thus margin is being computed towards container height), I need to explicitly ensure that margin-bottom for the input becomes 0, which is mb-2 otherwise
-              className="!mb-0"
+              className={
+                props.isBranded
+                  ? "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark rounded-40 branded-form-border body-head-4 font-normal-medium font-circular h-min-48 px-4 py-2"
+                  : "!mb-0"
+              }
               showAsteriskIndicator={true}
               key={variantField.name}
               name={variantField.name}
               readOnly={props.readOnly}
               placeholder={variantField.placeholder}
               label={variantField.label}
-              containerClassName={`w-full testid-${variantField.name}`}
+              containerClassName={
+                props.isBranded
+                  ? `branded-full-name w-full testid-${variantField.name}`
+                  : `w-full testid-${variantField.name}`
+              }
               value={value[variantField.name as keyof typeof value]}
               required={variantField.required}
               type="text"
@@ -400,7 +408,15 @@ export const Components: Record<FieldType, Component> = {
         <div>
           {options.map((option, i) => {
             return (
-              <label key={i} className={isBranded ? "flex flex-row items-start justify-start pb-4" : "block"}>
+              <label
+                key={i}
+                className={
+                  isBranded
+                    ? option.label === "removeOption"
+                      ? "hide-val"
+                      : "flex flex-row items-start justify-start pb-4"
+                    : "block"
+                }>
                 <input
                   type="checkbox"
                   disabled={readOnly}

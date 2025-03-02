@@ -4,65 +4,6 @@
 /**
 * Add css variables here as well for light mode in addition to tailwind.config to avoid FOUC
 */
-@font-face {
-  font-family: "p22-mackinac";
-  font-weight: 400;
-  src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/P22/P22Mackinac-Book_13.woff");
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "p22-mackinac";
-  font-weight: 400;
-  font-style: italic;
-  src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/P22/P22Mackinac-BookItalic_5.woff");
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "p22-mackinac";
-  font-weight: 500;
-  src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/P22/P22Mackinac-Medium_6.woff");
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "p22-mackinac";
-  font-weight: 500;
-  font-style: italic;
-  src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/P22/P22Mackinac-MedItalic_22.woff");
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "p22-mackinac";
-  font-weight: 700;
-  src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/P22/P22Mackinac-Bold_23.woff");
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "p22-mackinac";
-  font-weight: 700;
-  font-style: italic;
-  src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/P22/P22Mackinac-BoldItalic_7.woff");
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "p22-mackinac";
-  font-weight: 800;
-  src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/P22/P22Mackinac-ExtraBold_9.woff");
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "p22-mackinac";
-  font-weight: 800;
-  font-style: italic;
-  src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/P22/P22Mackinac-ExtraBoldItalic_4.woff");
-  font-display: swap;
-}
 
 @font-face {
   font-family: "circular-std";
@@ -141,7 +82,6 @@
 
 :root {
   --font-body: "circular-std";
-  --font-head: "p22-mackinac";
   /* background */
 
   --cal-bg-emphasis: hsla(220, 13%, 91%, 1);
@@ -626,12 +566,6 @@ select:focus {
   font-family: var(--font-body) !important;
 }
 
-.title-1,
-.title-2,
-.title-3 {
-  font-family: var(--font-head);
-}
-
 .body-head-1 {
 }
 
@@ -954,5 +888,8 @@ select:focus {
 
 .mt-2px {
   margin-top: 2px;
+}
+.hide-val {
+  display: none !important;
 }
 @import "./raqb.css";

@@ -25,7 +25,6 @@ import { DEFAULT_LIGHT_BRAND_COLOR, DEFAULT_DARK_BRAND_COLOR, WEBAPP_URL } from 
 import { useRouterQuery } from "@calcom/lib/hooks/useRouterQuery";
 import { BookerLayouts } from "@calcom/prisma/zod-utils";
 
-import { BookerCustomQuestions } from "./BookerCustomQuestions";
 import { BookerOverrides } from "./BookerOverrides";
 
 type BookerWebWrapperAtomProps = BookerProps;
@@ -34,7 +33,7 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  let event = useEvent({
+  const event = useEvent({
     fromRedirectOfNonOrgLink: props.entity.fromRedirectOfNonOrgLink,
   });
   const bookerLayout = useBookerLayout(event.data);
@@ -42,9 +41,6 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
   const mem = searchParams?.get("mem") ?? null;
   let overrides = null;
   if (bookerLayout.layout === BookerLayouts.BRANDED_VIEW) {
-    if (event.data) {
-      event = BookerCustomQuestions({ clinic, event });
-    }
     overrides = BookerOverrides({ clinic, member: mem });
   }
 

@@ -47,8 +47,10 @@ export const EventMeta = ({
   event,
   isPending,
   isPlatform = true,
+  isBranded = false,
   classNames,
   locale,
+  overrides = null,
 }: {
   event?: Pick<
     BookerEvent,
@@ -74,12 +76,21 @@ export const EventMeta = ({
   > | null;
   isPending: boolean;
   isPlatform?: boolean;
+  isBranded?: boolean;
   classNames?: {
     eventMetaContainer?: string;
     eventMetaTitle?: string;
     eventMetaTimezoneSelect?: string;
   };
   locale?: string | null;
+  overrides?: {
+    memberName: string | null;
+    memberDescription: string | null;
+    memberImage: string | null;
+    clinicTitle: string | null;
+    clinicDescription: string | null;
+    clinicImage: string | null;
+  } | null;
 }) => {
   const { timeFormat, timezone } = useBookerTime();
   const [setTimezone] = useTimePreferences((state) => [state.setTimezone]);
@@ -140,13 +151,71 @@ export const EventMeta = ({
   );
 
   return (
-    <div className={`${classNames?.eventMetaContainer || ""} relative z-10 p-6`} data-testid="event-meta">
+    <div
+      className={`${classNames?.eventMetaContainer || ""} ${
+        isBranded ? "px-r-6 px-l-10 py-b-6 py-t-10" : "p-6"
+      } relative z-10 `}
+      data-testid="event-meta">
       {isPending && (
         <m.div {...fadeInUp} initial="visible" layout>
           <EventMetaSkeleton />
         </m.div>
       )}
-      {!isPending && !!event && (
+      {!isPending && !!event && isBranded && (
+        <m.div {...fadeInUp} layout transition={{ ...fadeInUp.transition, delay: 0.3 }}>
+          <div className="flex flex-col gap-6">
+            <div className="flex flex-row items-center justify-start gap-4">
+              <img
+                src={overrides?.clinicImage ?? "https://fertilitymapper.com/assets/logo_small.svg"}
+                className="h-8-5 h-8-5-max w-auto"
+                alt="Clinic Logo"
+              />
+              <EventTitle className={`${classNames?.eventMetaTitle} body-head-2 font-circular font-medium`}>
+                {overrides?.clinicTitle ?? "Expert Call"}
+              </EventTitle>
+            </div>
+
+            <EventMetaBlock contentClassName="body-normal font-normal-medium font-circular color-body-text">
+              <div
+                // eslint-disable-next-line react/no-danger
+                dangerouslySetInnerHTML={{
+                  __html: markdownToSafeHTMLClient(
+                    overrides?.clinicDescription ??
+                      "Share your questions, treatment priorities and availability with the Fertility Mapper team and we’ll arrange a free call with the most relevant clinic contact to help you progress."
+                  ),
+                }}
+              />
+            </EventMetaBlock>
+
+            <div className="flex flex-row items-center justify-start gap-4">
+              <img
+                src={overrides?.memberImage ?? "https://fertilitymapper.com/assets/images/kayleigh.webp"}
+                className="max-h-5-5 h-5-5 w-5-5 max-w-5-5 rounded-full"
+                alt="Clinician Image"
+              />
+              <div className="flex flex-col gap-1">
+                <EventMetaBlock contentClassName="color-text-dark font-circular font-normal-medium body-head-4">
+                  <div
+                    // eslint-disable-next-line react/no-danger
+                    dangerouslySetInnerHTML={{
+                      __html: markdownToSafeHTMLClient(overrides?.memberName ?? "Kayleigh Hartigan"),
+                    }}
+                  />
+                </EventMetaBlock>
+                <EventMetaBlock contentClassName="color-body-text font-circular body-sml font-normal-medium">
+                  <div
+                    // eslint-disable-next-line react/no-danger
+                    dangerouslySetInnerHTML={{
+                      __html: markdownToSafeHTMLClient(overrides?.memberDescription ?? "Founder and CEO"),
+                    }}
+                  />
+                </EventMetaBlock>
+              </div>
+            </div>
+          </div>
+        </m.div>
+      )}
+      {!isPending && !!event && !isBranded && (
         <m.div {...fadeInUp} layout transition={{ ...fadeInUp.transition, delay: 0.3 }}>
           <EventMembers
             schedulingType={event.schedulingType}

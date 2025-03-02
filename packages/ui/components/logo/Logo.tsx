@@ -17,14 +17,9 @@ export default function Logo({
     <h3 className={classNames("logo", inline && "inline", className)}>
       <strong>
         {icon ? (
-          <img className="mx-auto w-9 dark:invert" alt="FM" title="FM" src={`${src}?type=icon`} />
+          <img className="mx-auto w-9" alt="FM" title="FM" src={`${src}?type=icon`} />
         ) : (
-          <img
-            className={classNames(small ? "h-10 w-auto" : "h-5 w-auto")}
-            alt="FM"
-            title="FM"
-            src={src}
-          />
+          <img className={classNames(small ? "h-10 w-auto" : "h-5 w-auto")} alt="FM" title="FM" src={src} />
         )}
       </strong>
     </h3>

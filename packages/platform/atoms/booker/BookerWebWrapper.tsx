@@ -25,16 +25,28 @@ import { DEFAULT_LIGHT_BRAND_COLOR, DEFAULT_DARK_BRAND_COLOR, WEBAPP_URL } from 
 import { useRouterQuery } from "@calcom/lib/hooks/useRouterQuery";
 import { BookerLayouts } from "@calcom/prisma/zod-utils";
 
+import { BookerCustomQuestions } from "./BookerCustomQuestions";
+import { BookerOverrides } from "./BookerOverrides";
+
 type BookerWebWrapperAtomProps = BookerProps;
 
 export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
   const router = useRouter();
   const pathname = usePathname();
   const searchParams = useSearchParams();
-  const event = useEvent({
+  let event = useEvent({
     fromRedirectOfNonOrgLink: props.entity.fromRedirectOfNonOrgLink,
   });
   const bookerLayout = useBookerLayout(event.data);
+  const clinic = searchParams?.get("clinic") ?? null;
+  const mem = searchParams?.get("mem") ?? null;
+  let overrides = null;
+  if (bookerLayout.layout === BookerLayouts.BRANDED_VIEW) {
+    if (event.data) {
+      event = BookerCustomQuestions({ clinic, event });
+    }
+    overrides = BookerOverrides({ clinic, member: mem });
+  }
 
   const selectedDate = searchParams?.get("date");
   const isRedirect = searchParams?.get("redirected") === "true" || false;
@@ -115,12 +127,14 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
     (bookerLayout.layout === BookerLayouts.WEEK_VIEW &&
       !!bookerLayout.extraDays &&
       dayjs(date).month() !== dayjs(date).add(bookerLayout.extraDays, "day").month()) ||
-    (bookerLayout.layout === BookerLayouts.COLUMN_VIEW &&
+    ((bookerLayout.layout === BookerLayouts.COLUMN_VIEW ||
+      bookerLayout.layout === BookerLayouts.BRANDED_VIEW) &&
       dayjs(date).month() !== dayjs(date).add(bookerLayout.columnViewExtraDays.current, "day").month());
 
   const monthCount =
     ((bookerLayout.layout !== BookerLayouts.WEEK_VIEW && bookerState === "selecting_time") ||
-      bookerLayout.layout === BookerLayouts.COLUMN_VIEW) &&
+      bookerLayout.layout === BookerLayouts.COLUMN_VIEW ||
+      bookerLayout.layout === BookerLayouts.BRANDED_VIEW) &&
     dayjs(date).add(1, "month").month() !==
       dayjs(date).add(bookerLayout.columnViewExtraDays.current, "day").month()
       ? 2
@@ -179,10 +193,11 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
     },
     [searchParams, pathname, router]
   );
+
   useBrandColors({
     brandColor: event.data?.profile.brandColor ?? DEFAULT_LIGHT_BRAND_COLOR,
     darkBrandColor: event.data?.profile.darkBrandColor ?? DEFAULT_DARK_BRAND_COLOR,
-    theme: event.data?.profile.theme,
+    theme: bookerLayout.layout === BookerLayouts.BRANDED_VIEW ? "light" : event.data?.profile.theme,
   });
 
   const areInstantMeetingParametersSet = Boolean(
@@ -235,6 +250,7 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
       areInstantMeetingParametersSet={areInstantMeetingParametersSet}
       userLocale={session?.user.locale}
       renderCaptcha
+      overrides={overrides}
     />
   );
 };

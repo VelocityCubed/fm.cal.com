@@ -762,6 +762,7 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
     { value: BookerLayouts.MONTH_VIEW, label: t("bookerlayout_month_view") },
     { value: BookerLayouts.WEEK_VIEW, label: t("bookerlayout_week_view") },
     { value: BookerLayouts.COLUMN_VIEW, label: t("bookerlayout_column_view") },
+    { value: BookerLayouts.BRANDED_VIEW, label: t("bookerlayout_branded_view") },
   ];
 
   const FloatingPopupPositionOptions = [

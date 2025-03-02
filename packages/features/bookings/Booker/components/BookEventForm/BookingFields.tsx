@@ -17,11 +17,13 @@ export const BookingFields = ({
   rescheduleUid,
   isDynamicGroupBooking,
   bookingData,
+  isBranded = false,
 }: {
   fields: NonNullable<RouterOutputs["viewer"]["public"]["event"]>["bookingFields"];
   locations: LocationObject[];
   rescheduleUid?: string;
   bookingData?: GetBookingType | null;
+  isBranded?: boolean;
   isDynamicGroupBooking: boolean;
 }) => {
   const { t } = useLocale();
@@ -33,7 +35,7 @@ export const BookingFields = ({
   return (
     // TODO: It might make sense to extract this logic into BookingFields config, that would allow to quickly configure system fields and their editability in fresh booking and reschedule booking view
     // The logic here intends to make modifications to booking fields based on the way we want to specifically show Booking Form
-    <div>
+    <div className={isBranded ? "scroll-bar px-r-10-half flex h-[391px] flex-col overflow-auto" : ""}>
       {fields.map((field, index) => {
         // Don't Display Location field in case of instant meeting as only Cal Video is supported
         if (isInstantMeeting && field.name === "location") return null;
@@ -135,7 +137,13 @@ export const BookingFields = ({
         }
 
         return (
-          <FormBuilderField className="mb-4" field={{ ...field, hidden }} readOnly={readOnly} key={index} />
+          <FormBuilderField
+            className="mb-4"
+            field={{ ...field, hidden }}
+            readOnly={readOnly}
+            key={index}
+            isBranded={isBranded}
+          />
         );
       })}
     </div>

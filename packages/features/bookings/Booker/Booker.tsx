@@ -78,6 +78,7 @@ const BookerComponent = ({
   hasValidLicense,
   isBookingDryRun: isBookingDryRunProp,
   renderCaptcha,
+  overrides = null,
 }: BookerProps & WrappedBookerProps) => {
   const searchParams = useCompatSearchParams();
   const isPlatformBookerEmbed = useIsPlatformBookerEmbed();
@@ -209,7 +210,8 @@ const BookerComponent = ({
         extraOptions={extraOptions}
         rescheduleUid={rescheduleUid}
         isVerificationCodeSending={isVerificationCodeSending}
-        isPlatform={isPlatform}>
+        isPlatform={isPlatform}
+        isBranded={layout === BookerLayouts.BRANDED_VIEW}>
         <>
           {verifyCode && formEmail ? (
             <VerifyCodeDialog
@@ -307,7 +309,9 @@ const BookerComponent = ({
           // In a popup embed, if someone clicks outside the main(having main class or main tag), it closes the embed
           "main",
           "text-default flex min-h-full w-full flex-col items-center",
-          layout === BookerLayouts.MONTH_VIEW ? "overflow-visible" : "overflow-clip",
+          layout === BookerLayouts.MONTH_VIEW || layout === BookerLayouts.BRANDED_VIEW
+            ? "overflow-visible"
+            : "overflow-clip",
           `${customClassNames?.bookerWrapper}`
         )}>
         <div
@@ -315,12 +319,20 @@ const BookerComponent = ({
           data-testid="booker-container"
           className={classNames(
             ...getBookerSizeClassNames(layout, bookerState, hideEventTypeDetails),
-            `bg-default dark:bg-muted grid max-w-full items-start dark:[color-scheme:dark] sm:transition-[width] sm:duration-300 sm:motion-reduce:transition-none md:flex-row`,
+            `dark:bg-muted grid max-w-full items-start dark:[color-scheme:dark] sm:transition-[width] sm:duration-300 sm:motion-reduce:transition-none md:flex-row`,
             // We remove border only when the content covers entire viewport. Because in embed, it can almost never be the case that it covers entire viewport, we show the border there
-            (layout === BookerLayouts.MONTH_VIEW || isEmbed) && "border-subtle rounded-md",
+            layout !== BookerLayouts.BRANDED_VIEW && "bg-default",
+            layout === BookerLayouts.BRANDED_VIEW && "bg-branded rounded-branded border-subtle",
+            isEmbed && layout === BookerLayouts.BRANDED_VIEW && "rounded-branded-embed border-subtle",
+            (layout === BookerLayouts.MONTH_VIEW || (isEmbed && layout !== BookerLayouts.BRANDED_VIEW)) &&
+              "border-subtle rounded-md",
             !isEmbed && "sm:transition-[width] sm:duration-300",
-            isEmbed && layout === BookerLayouts.MONTH_VIEW && "border-booker sm:border-booker-width",
-            !isEmbed && layout === BookerLayouts.MONTH_VIEW && `border-subtle border`,
+            isEmbed &&
+              (layout === BookerLayouts.MONTH_VIEW || layout === BookerLayouts.BRANDED_VIEW) &&
+              "border-booker sm:border-booker-width",
+            !isEmbed &&
+              (layout === BookerLayouts.MONTH_VIEW || layout === BookerLayouts.BRANDED_VIEW) &&
+              `border-subtle border`,
             `${customClassNames?.bookerContainer}`
           )}>
           <AnimatePresence>
@@ -330,7 +342,8 @@ const BookerComponent = ({
                 className={classNames(
                   layout === BookerLayouts.MONTH_VIEW && "fixed top-4 z-10 ltr:right-4 rtl:left-4",
                   (layout === BookerLayouts.COLUMN_VIEW || layout === BookerLayouts.WEEK_VIEW) &&
-                    "bg-default dark:bg-muted sticky top-0 z-10"
+                    "bg-default dark:bg-muted sticky top-0 z-10",
+                  layout === BookerLayouts.BRANDED_VIEW && "dark:bg-muted sticky top-0 z-10"
                 )}>
                 {isPlatform && layout === BookerLayouts.MONTH_VIEW ? (
                   <></>
@@ -342,6 +355,8 @@ const BookerComponent = ({
                     extraDays={layout === BookerLayouts.COLUMN_VIEW ? columnViewExtraDays.current : extraDays}
                     isMobile={isMobile}
                     nextSlots={nextSlots}
+                    isBranded={layout === BookerLayouts.BRANDED_VIEW}
+                    bookerState={bookerState}
                     renderOverlay={() =>
                       isEmbed ? (
                         <></>
@@ -367,43 +382,69 @@ const BookerComponent = ({
                 )}
               </BookerSection>
             )}
-            <StickyOnDesktop key="meta" className={classNames("relative z-10 flex [grid-area:meta]")}>
-              <BookerSection
-                area="meta"
-                className="max-w-screen flex w-full flex-col md:w-[var(--booker-meta-width)]">
-                {!hideEventTypeDetails && orgBannerUrl && (
-                  <img
-                    loading="eager"
-                    className="-mb-9 h-16 object-cover object-top ltr:rounded-tl-md rtl:rounded-tr-md sm:h-auto"
-                    alt="org banner"
-                    src={orgBannerUrl}
-                  />
-                )}
-                <EventMeta
-                  classNames={{
-                    eventMetaContainer: customClassNames?.eventMetaCustomClassNames?.eventMetaContainer,
-                    eventMetaTitle: customClassNames?.eventMetaCustomClassNames?.eventMetaTitle,
-                    eventMetaTimezoneSelect:
-                      customClassNames?.eventMetaCustomClassNames?.eventMetaTimezoneSelect,
-                  }}
-                  event={event.data}
-                  isPending={event.isPending}
-                  isPlatform={isPlatform}
-                  locale={userLocale}
-                />
-                {layout !== BookerLayouts.MONTH_VIEW &&
-                  !(layout === "mobile" && bookerState === "booking") && (
-                    <div className="mt-auto px-5 py-3">
-                      <DatePicker event={event} schedule={schedule} scrollToTimeSlots={scrollToTimeSlots} />
-                    </div>
+            {layout !== BookerLayouts.BRANDED_VIEW && (
+              <StickyOnDesktop key="meta" className={classNames("relative z-10 flex [grid-area:meta]")}>
+                <BookerSection
+                  area="meta"
+                  className="max-w-screen flex w-full flex-col md:w-[var(--booker-meta-width)]">
+                  {!hideEventTypeDetails && orgBannerUrl && (
+                    <img
+                      loading="eager"
+                      className="-mb-9 h-16 object-cover object-top ltr:rounded-tl-md rtl:rounded-tr-md sm:h-auto"
+                      alt="org banner"
+                      src={orgBannerUrl}
+                    />
                   )}
-              </BookerSection>
-            </StickyOnDesktop>
+                  <EventMeta
+                    classNames={{
+                      eventMetaContainer: customClassNames?.eventMetaCustomClassNames?.eventMetaContainer,
+                      eventMetaTitle: customClassNames?.eventMetaCustomClassNames?.eventMetaTitle,
+                      eventMetaTimezoneSelect:
+                        customClassNames?.eventMetaCustomClassNames?.eventMetaTimezoneSelect,
+                    }}
+                    event={event.data}
+                    isPending={event.isPending}
+                    isPlatform={isPlatform}
+                    locale={userLocale}
+                  />
+                  {layout !== BookerLayouts.MONTH_VIEW &&
+                    !(layout === "mobile" && bookerState === "booking") && (
+                      <div className="mt-auto px-5 py-3">
+                        <DatePicker event={event} schedule={schedule} scrollToTimeSlots={scrollToTimeSlots} />
+                      </div>
+                    )}
+                </BookerSection>
+              </StickyOnDesktop>
+            )}
+            {layout === BookerLayouts.BRANDED_VIEW && (
+              <StickyOnDesktop key="meta" className={classNames("relative z-10 flex [grid-area:meta]")}>
+                <BookerSection area="meta" className="max-w-screen flex w-full flex-col">
+                  <EventMeta
+                    classNames={{
+                      eventMetaContainer: customClassNames?.eventMetaCustomClassNames?.eventMetaContainer,
+                      eventMetaTitle: customClassNames?.eventMetaCustomClassNames?.eventMetaTitle,
+                      eventMetaTimezoneSelect:
+                        customClassNames?.eventMetaCustomClassNames?.eventMetaTimezoneSelect,
+                    }}
+                    event={event.data}
+                    isPending={event.isPending}
+                    isPlatform={isPlatform}
+                    isBranded={true}
+                    overrides={overrides}
+                    locale={userLocale}
+                  />
+                  <div className="branded-divider" />
+                </BookerSection>
+              </StickyOnDesktop>
+            )}
 
             <BookerSection
               key="book-event-form"
               area="main"
-              className="sticky top-0 ml-[-1px] h-full p-6 md:w-[var(--booker-main-width)] md:border-l"
+              className={classNames(
+                "sticky top-0 h-full md:w-[var(--booker-main-width)]",
+                layout !== BookerLayouts.BRANDED_VIEW ? "ml-[-1px] p-6 md:border-l " : "px-l-6 px-r-10-half"
+              )}
               {...fadeInLeft}
               visible={bookerState === "booking" && !shouldShowFormInDialog}>
               {EventBooker}
@@ -449,20 +490,25 @@ const BookerComponent = ({
               area={{ default: "main", month_view: "timeslots" }}
               visible={
                 (layout !== BookerLayouts.WEEK_VIEW && bookerState === "selecting_time") ||
-                layout === BookerLayouts.COLUMN_VIEW
+                layout === BookerLayouts.COLUMN_VIEW ||
+                (layout === BookerLayouts.BRANDED_VIEW && bookerState !== "booking")
               }
               className={classNames(
-                "border-subtle rtl:border-default flex h-full w-full flex-col overflow-x-auto px-5 py-3 pb-0 rtl:border-r ltr:md:border-l",
+                "flex h-full w-full flex-col overflow-x-auto",
+                layout !== BookerLayouts.BRANDED_VIEW
+                  ? "border-subtle rtl:border-default px-5 py-3 pb-0 rtl:border-r ltr:md:border-l"
+                  : "px-l-6 px-r-10 py-b-10",
+                layout === BookerLayouts.BRANDED_VIEW && "h-full overflow-hidden",
                 layout === BookerLayouts.MONTH_VIEW &&
                   "h-full overflow-hidden md:w-[var(--booker-timeslots-width)]",
-                layout !== BookerLayouts.MONTH_VIEW && "sticky top-0"
+                layout !== BookerLayouts.MONTH_VIEW && layout !== BookerLayouts.BRANDED_VIEW && "sticky top-0"
               )}
               ref={timeslotsRef}
               {...fadeInLeft}>
               <AvailableTimeSlots
                 customClassNames={customClassNames?.availableTimeSlotsCustomClassNames}
                 extraDays={extraDays}
-                limitHeight={layout === BookerLayouts.MONTH_VIEW}
+                limitHeight={layout === BookerLayouts.MONTH_VIEW || layout === BookerLayouts.BRANDED_VIEW}
                 schedule={schedule?.data}
                 isLoading={schedule.isPending}
                 seatsPerTimeSlot={event.data?.seatsPerTimeSlot}
@@ -477,6 +523,17 @@ const BookerComponent = ({
                 watchedCfToken={watchedCfToken}
               />
             </BookerSection>
+            {/* {!isInstantMeeting && layout === BookerLayouts.BRANDED_VIEW && (
+              <BookerSection
+                area="footer"
+                className="dark:bg-muted  sticky bottom-0 z-10 flex items-center justify-center px-6 py-4">
+                <Button
+                  className="hover:bg-branded-secondary w-max-220 body-btn flex h-12 w-auto flex-grow flex-col justify-center py-2"
+                  color="branded_sumbit">
+                  <div className="font-normal-medium flex items-center gap-2">Submit</div>
+                </Button>
+              </BookerSection>
+            )} */}
           </AnimatePresence>
         </div>
         <HavingTroubleFindingTime
@@ -523,7 +580,9 @@ const BookerComponent = ({
             className={classNames(
               "mb-6 mt-auto pt-6",
               hasDarkBackground ? "dark" : "",
-              layout === BookerLayouts.MONTH_VIEW ? "block" : "hidden"
+              layout === BookerLayouts.MONTH_VIEW || layout === BookerLayouts.BRANDED_VIEW
+                ? "block"
+                : "hidden"
             )}>
             <PoweredBy logoOnly hasValidLicense={hasValidLicense} />
           </m.span>

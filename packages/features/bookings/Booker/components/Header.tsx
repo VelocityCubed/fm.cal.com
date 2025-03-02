@@ -20,6 +20,8 @@ export function Header({
   nextSlots,
   eventSlug,
   isMyLink,
+  isBranded,
+  bookerState,
   renderOverlay,
 }: {
   extraDays: number;
@@ -28,6 +30,8 @@ export function Header({
   nextSlots: number;
   eventSlug: string;
   isMyLink: boolean;
+  isBranded?: boolean;
+  bookerState?: string;
   renderOverlay?: () => JSX.Element | null;
 }) {
   const { t, i18n } = useLocale();
@@ -52,7 +56,7 @@ export function Header({
     [setLayout, layout]
   );
 
-  if (isMobile || !enabledLayouts) return null;
+  if (!isBranded && (isMobile || !enabledLayouts)) return null;
 
   // In month view we only show the layout toggle.
   if (isMonthView) {
@@ -88,6 +92,54 @@ export function Header({
     return selectedDate.format("YYYY") === endDate.format("YYYY");
   };
   const formattedMonth = new Intl.DateTimeFormat(i18n.language ?? "en", { month: "short" });
+
+  if (isBranded) {
+    if (bookerState === "booking") {
+      return (
+        <div className="px-l-6 px-r-10 py-b-6 py-t-10 relative z-10 flex flex-col gap-6">
+          <h2 className="font-circular body-head-2 color-primary font-medium">Enter Details</h2>
+        </div>
+      );
+    }
+    const FormattedSelectedDateRange = () => {
+      return (
+        <h3 className="body-head-3 font-circular color-primary font-medium">
+          {formattedMonth.format(selectedDate.toDate())} {selectedDate.format("D")} -{" "}
+          {formattedMonth.format(endDate.toDate())} {endDate.format("D")}
+        </h3>
+      );
+    };
+
+    return (
+      <div className="px-l-6 px-r-10 py-b-6 py-t-10 relative z-10 flex flex-col gap-6">
+        <h2 className="font-circular body-head-2 color-primary font-medium">Select a Date & Time</h2>
+        <div className="flex w-full items-center justify-between rtl:flex-grow">
+          <ButtonGroup>
+            <Button
+              disabled={!selectedDate.isAfter(dayjs())}
+              className="chev-btn color-primary group rtl:ml-1 rtl:rotate-180"
+              variant="icon_branded"
+              color="branded_minimal"
+              StartIcon="chevron-left"
+              aria-label="Previous Day"
+              onClick={() => addToSelectedDate(-extraDays)}
+            />
+          </ButtonGroup>
+          <FormattedSelectedDateRange />
+          <ButtonGroup>
+            <Button
+              className="chev-btn color-primary group rtl:mr-1 rtl:rotate-180"
+              variant="icon_branded"
+              color="branded_minimal"
+              StartIcon="chevron-right"
+              aria-label="Next Day"
+              onClick={() => addToSelectedDate(extraDays)}
+            />
+          </ButtonGroup>
+        </div>
+      </div>
+    );
+  }
   const FormattedSelectedDateRange = () => {
     return (
       <h3 className="min-w-[150px] text-base font-semibold leading-4">

@@ -63,7 +63,7 @@ export const AvailableTimeSlots = ({
   const setSeatedEventData = useBookerStore((state) => state.setSeatedEventData);
   const date = selectedDate || dayjs().format("YYYY-MM-DD");
   const [layout] = useBookerStore((state) => [state.layout]);
-  const isColumnView = layout === BookerLayouts.COLUMN_VIEW;
+  const isColumnView = layout === BookerLayouts.COLUMN_VIEW || layout === BookerLayouts.BRANDED_VIEW;
   const containerRef = useRef<HTMLDivElement | null>(null);
 
   const onTimeSelect = (
@@ -104,35 +104,41 @@ export const AvailableTimeSlots = ({
 
   return (
     <>
-      <div className={classNames(`flex`, `${customClassNames?.availableTimeSlotsContainer}`)}>
-        {isLoading ? (
-          <div className="mb-3 h-8" />
-        ) : (
-          slotsPerDay.length > 0 &&
-          slotsPerDay.map((slots) => (
-            <AvailableTimesHeader
-              customClassNames={{
-                availableTimeSlotsHeaderContainer: customClassNames?.availableTimeSlotsHeaderContainer,
-                availableTimeSlotsTitle: customClassNames?.availableTimeSlotsTitle,
-                availableTimeSlotsTimeFormatToggle: customClassNames?.availableTimeSlotsTimeFormatToggle,
-              }}
-              key={slots.date}
-              date={dayjs(slots.date)}
-              showTimeFormatToggle={!isColumnView}
-              availableMonth={
-                dayjs(selectedDate).format("MM") !== dayjs(slots.date).format("MM")
-                  ? dayjs(slots.date).format("MMM")
-                  : undefined
-              }
-            />
-          ))
-        )}
-      </div>
-
+      {layout !== BookerLayouts.BRANDED_VIEW && (
+        <div className={classNames(`flex`, `${customClassNames?.availableTimeSlotsContainer}`)}>
+          {isLoading ? (
+            <div className="mb-3 h-8" />
+          ) : (
+            slotsPerDay.length > 0 &&
+            slotsPerDay.map((slots) => (
+              <AvailableTimesHeader
+                customClassNames={{
+                  availableTimeSlotsHeaderContainer: customClassNames?.availableTimeSlotsHeaderContainer,
+                  availableTimeSlotsTitle: customClassNames?.availableTimeSlotsTitle,
+                  availableTimeSlotsTimeFormatToggle: customClassNames?.availableTimeSlotsTimeFormatToggle,
+                }}
+                key={slots.date}
+                date={dayjs(slots.date)}
+                showTimeFormatToggle={!isColumnView}
+                availableMonth={
+                  dayjs(selectedDate).format("MM") !== dayjs(slots.date).format("MM")
+                    ? dayjs(slots.date).format("MMM")
+                    : undefined
+                }
+              />
+            ))
+          )}
+        </div>
+      )}
       <div
         ref={containerRef}
         className={classNames(
-          limitHeight && "scroll-bar flex-grow overflow-auto md:h-[400px]",
+          limitHeight &&
+            layout !== BookerLayouts.BRANDED_VIEW &&
+            "scroll-bar flex-grow overflow-auto md:h-[400px]",
+          limitHeight &&
+            layout === BookerLayouts.BRANDED_VIEW &&
+            "scroll-bar h-[310px] flex-grow overflow-auto",
           !limitHeight && "flex h-full w-full flex-row gap-4",
           `${customClassNames?.availableTimeSlotsContainer}`
         )}>
@@ -141,7 +147,14 @@ export const AvailableTimeSlots = ({
         {!isLoading &&
           slotsPerDay.length > 0 &&
           slotsPerDay.map((slots) => (
-            <div key={slots.date} className="scroll-bar h-full w-full overflow-y-auto overflow-x-hidden">
+            <div
+              key={slots.date}
+              className={classNames(
+                "w-full",
+                layout !== BookerLayouts.BRANDED_VIEW
+                  ? "scroll-bar h-full overflow-y-auto overflow-x-hidden"
+                  : "mb-6"
+              )}>
               <AvailableTimes
                 className={customClassNames?.availableTimeSlotsContainer}
                 customClassNames={customClassNames?.availableTimes}
@@ -150,6 +163,8 @@ export const AvailableTimeSlots = ({
                 slots={slots.slots}
                 showAvailableSeatsCount={showAvailableSeatsCount}
                 skipConfirmStep={skipConfirmStep}
+                date={dayjs(slots.date)}
+                isBranded={layout === BookerLayouts.BRANDED_VIEW}
                 {...props}
               />
             </div>

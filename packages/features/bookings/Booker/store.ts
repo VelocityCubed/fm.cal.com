@@ -1,5 +1,6 @@
 "use client";
 
+import isoWeek from "dayjs/plugin/isoWeek";
 import { useEffect } from "react";
 import { create } from "zustand";
 
@@ -10,6 +11,8 @@ import { BookerLayouts } from "@calcom/prisma/zod-utils";
 import type { GetBookingType } from "../lib/get-booking";
 import type { BookerState, BookerLayout } from "./types";
 import { updateQueryParam, getQueryParam, removeQueryParam } from "./utils/query-param";
+
+dayjs.extend(isoWeek);
 
 /**
  * Arguments passed into store initializer, containing
@@ -171,12 +174,15 @@ export type BookerStore = {
 export const useBookerStore = create<BookerStore>((set, get) => ({
   state: "loading",
   setState: (state: BookerState) => set({ state }),
-  layout: BookerLayouts.MONTH_VIEW,
+  layout: BookerLayouts.BRANDED_VIEW,
   setLayout: (layout: BookerLayout) => {
     // If we switch to a large layout and don't have a date selected yet,
     // we selected it here, so week title is rendered properly.
     if (["week_view", "column_view"].includes(layout) && !get().selectedDate) {
       set({ selectedDate: dayjs().format("YYYY-MM-DD") });
+    }
+    if (layout === "branded_view" && !get().selectedDate) {
+      set({ selectedDate: dayjs().startOf("isoWeek").format("YYYY-MM-DD") });
     }
     updateQueryParam("layout", layout);
     return set({ layout });
@@ -302,14 +308,18 @@ export const useBookerStore = create<BookerStore>((set, get) => ({
       rescheduledBy,
       bookingUid,
       bookingData,
-      layout: layout || BookerLayouts.MONTH_VIEW,
+      layout: layout || BookerLayouts.BRANDED_VIEW,
       isTeamEvent: isTeamEvent || false,
       durationConfig,
       timezone,
       // Preselect today's date in week / column view, since they use this to show the week title.
       selectedDate:
         selectedDateInStore ||
-        (["week_view", "column_view"].includes(layout) ? dayjs().format("YYYY-MM-DD") : null),
+        (["week_view", "column_view"].includes(layout)
+          ? dayjs().format("YYYY-MM-DD")
+          : ["branded_view"].includes(layout)
+          ? dayjs().startOf("isoWeek").format("YYYY-MM-DD")
+          : null),
       teamMemberEmail,
       crmOwnerRecordType,
       crmAppSlug,

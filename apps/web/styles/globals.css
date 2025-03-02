@@ -4,20 +4,157 @@
 /**
 * Add css variables here as well for light mode in addition to tailwind.config to avoid FOUC
 */
+@font-face {
+  font-family: "p22-mackinac";
+  font-weight: 400;
+  src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/P22/P22Mackinac-Book_13.woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "p22-mackinac";
+  font-weight: 400;
+  font-style: italic;
+  src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/P22/P22Mackinac-BookItalic_5.woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "p22-mackinac";
+  font-weight: 500;
+  src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/P22/P22Mackinac-Medium_6.woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "p22-mackinac";
+  font-weight: 500;
+  font-style: italic;
+  src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/P22/P22Mackinac-MedItalic_22.woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "p22-mackinac";
+  font-weight: 700;
+  src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/P22/P22Mackinac-Bold_23.woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "p22-mackinac";
+  font-weight: 700;
+  font-style: italic;
+  src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/P22/P22Mackinac-BoldItalic_7.woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "p22-mackinac";
+  font-weight: 800;
+  src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/P22/P22Mackinac-ExtraBold_9.woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "p22-mackinac";
+  font-weight: 800;
+  font-style: italic;
+  src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/P22/P22Mackinac-ExtraBoldItalic_4.woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "circular-std";
+  font-weight: 300;
+  src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/CircularStd/CircularStd-Light.woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "circular-std";
+  font-weight: 300;
+  font-style: italic;
+  src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/CircularStd/CircularStd-LightItalic.woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "circular-std";
+  font-weight: 450;
+  src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/CircularStd/CircularStd-Book.woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "circular-std";
+  font-weight: 450;
+  font-style: italic;
+  src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/CircularStd/CircularStd-BookItalic.woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "circular-std";
+  font-weight: 500;
+  src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/CircularStd/CircularStd-Medium.woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "circular-std";
+  font-weight: 500;
+  font-style: italic;
+  src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/CircularStd/CircularStd-MediumItalic.woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "circular-std";
+  font-weight: 700;
+  src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/CircularStd/CircularStd-Bold.woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "circular-std";
+  font-weight: 700;
+  font-style: italic;
+  src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/CircularStd/CircularStd-BoldItalic.woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "circular-std";
+  font-weight: 900;
+  src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/CircularStd/CircularStd-Black.woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "circular-std";
+  font-weight: 900;
+  font-style: italic;
+  src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/CircularStd/CircularStd-BlackItalic.woff");
+  font-display: swap;
+}
+
 :root {
+  --font-body: "circular-std";
+  --font-head: "p22-mackinac";
   /* background */
 
-  --cal-bg-emphasis: hsla(220,13%,91%,1);
-  --cal-bg: hsla(0,0%,100%,1);
-  --cal-bg-subtle: hsla(220, 14%, 96%,1);
-  --cal-bg-muted: hsla(210,20%,98%,1);
-  --cal-bg-inverted: hsla(0,0%,6%,1);
+  --cal-bg-emphasis: hsla(220, 13%, 91%, 1);
+  --cal-bg: hsla(0, 0%, 100%, 1);
+  --cal-bg-subtle: hsla(220, 14%, 96%, 1);
+  --cal-bg-muted: hsla(210, 20%, 98%, 1);
+  --cal-bg-inverted: hsla(0, 0%, 6%, 1);
 
   /* background -> components*/
-  --cal-bg-info: hsla(218,83%,98%,1);
-  --cal-bg-success: hsla(134,76%,94%,1);
+  --cal-bg-info: hsla(218, 83%, 98%, 1);
+  --cal-bg-success: hsla(134, 76%, 94%, 1);
   --cal-bg-attention: hsla(37, 86%, 92%, 1);
-  --cal-bg-error: hsla(3,66%,93%,1);
+  --cal-bg-error: hsla(3, 66%, 93%, 1);
   --cal-bg-dark-error: hsla(2, 55%, 30%, 1);
 
   /* Borders */
@@ -92,12 +229,12 @@
     */
   --cal-brand: hsla(0, 0%, 100%, 1);
   --cal-brand-emphasis: hsla(218, 11%, 65%, 1);
-  --cal-brand-text: hsla(0, 0%, 0%,1);
+  --cal-brand-text: hsla(0, 0%, 0%, 1);
 }
 
 @layer base {
   * {
-    @apply border-default
+    @apply border-default;
   }
 }
 
@@ -121,7 +258,7 @@ body  {
     https://docs.todesktop.com/
 */
 
-html.todesktop-platform-win32 .todesktop\:\!bg-transparent{
+html.todesktop-platform-win32 .todesktop\:\!bg-transparent {
   background: inherit !important;
 }
 
@@ -154,7 +291,8 @@ html.todesktop header a {
   -webkit-app-region: no-drag;
 }
 
-html.todesktop-platform-darwin body, html.todesktop-platform-darwin aside {
+html.todesktop-platform-darwin body,
+html.todesktop-platform-darwin aside {
   background: transparent !important;
 }
 
@@ -480,9 +618,341 @@ select:focus {
   @apply !border-r-default left-0.5 !border-y-0 !border-l-0;
 }
 
-.intercom-lightweight-app  {
+.intercom-lightweight-app {
   @apply z-40 !important;
 }
 
+.font-circular {
+  font-family: var(--font-body) !important;
+}
 
+.title-1,
+.title-2,
+.title-3 {
+  font-family: var(--font-head);
+}
+
+.body-head-1 {
+}
+
+.body-head-2 {
+  font-size: 24px;
+  line-height: 28.8px;
+}
+
+.body-head-3 {
+  font-size: 18px;
+  line-height: 25.2px;
+}
+
+.body-head-4 {
+  font-size: 16px !important;
+  line-height: 20.8px !important;
+}
+
+.body-normal {
+  font-size: 16px;
+  line-height: 24px;
+}
+
+.body-sml {
+  font-size: 13px;
+  line-height: 18.2px;
+}
+
+.body-btn {
+  line-height: 24px;
+  font-size: 20px;
+}
+
+.font-normal-medium {
+  font-weight: 450 !important;
+}
+
+.color-primary {
+  color: #0b4736;
+}
+
+.color-text-dark {
+  color: #282d27 !important;
+}
+
+.color-body-text {
+  color: #737571;
+}
+
+.rounded-20 {
+  border-radius: 20px;
+}
+
+.subtle-bg {
+  background-color: #fafafa;
+}
+
+.px-l-6 {
+  padding-left: 1.5rem;
+}
+
+.px-r-6 {
+  padding-right: 1.5rem;
+}
+
+.px-l-10 {
+  padding-left: 2.5rem;
+}
+
+.px-r-10 {
+  padding-right: 2.5rem;
+}
+
+.px-r-10-half {
+  padding-right: 1.25rem;
+}
+
+.py-t-6 {
+  padding-top: 1.5rem;
+}
+
+.py-b-6 {
+  padding-bottom: 1.5rem;
+}
+
+.py-t-10 {
+  padding-top: 2.5rem;
+}
+
+.py-b-10 {
+  padding-bottom: 2.5rem;
+}
+
+.py-b-81 {
+  padding-bottom: 81px;
+}
+
+.my-b-10 {
+  margin-bottom: 2.5rem;
+}
+
+.disabled\:color-light:disabled {
+  color: #e6e2e2 !important;
+}
+
+.h-\[310px\] {
+  height: 310px;
+  max-height: 310px;
+}
+
+.h-\[391px\] {
+  height: 391px;
+  max-height: 391px;
+}
+.bg-branded {
+  background-color: #fafafa;
+}
+
+.\[--booker-main-width\:511px\] {
+  --booker-main-width: 511px;
+}
+
+.\[--booker-meta-width\:308px\] {
+  --booker-meta-width: 308px;
+}
+
+.max-w-branded {
+  max-width: 819px;
+}
+
+.rounded-branded {
+  border-radius: 20px;
+}
+
+.rounded-branded-embed {
+  border-radius: 0px;
+}
+
+.w-min-100 {
+  min-width: 103px;
+}
+.w-max-220 {
+  max-width: 220px;
+}
+.w-max-212 {
+  max-width: 212px;
+}
+
+.h-min-48 {
+  min-height: 48px;
+}
+.h-min-115 {
+  min-height: 115px;
+}
+
+.w-max-266 {
+  max-width: 266px;
+}
+.rounded-40 {
+  border-radius: 40px;
+}
+
+.branded-border {
+  border: 1px solid #0b4736;
+}
+
+.branded-form-border {
+  border: 1px solid #a2a1a1;
+}
+
+.light-text {
+  color: #ffffff;
+}
+
+.bg-secondary {
+  background-color: #e95d2b;
+}
+
+.hover\:bg-branded-secondary:hover {
+  background-color: #b64312;
+}
+
+.bg-primary {
+  background-color: #0b4736;
+}
+
+.hover\:bg-branded-primary:hover {
+  background-color: #03201f;
+}
+
+.footer-border {
+  border-top: 1px solid #e6e2e2;
+}
+
+.ease-trans {
+  transition-duration: 0.3s;
+  transition-timing-function: ease-in-out;
+}
+
+.h-8-5 {
+  height: 2.125rem;
+}
+.h-8-5-max {
+  max-height: 2.125rem;
+}
+
+.h-5-5 {
+  height: 3.25rem;
+}
+
+.max-h-5-5 {
+  height: 3.25rem;
+}
+.w-5-5 {
+  height: 3.25rem;
+}
+
+.max-w-5-5 {
+  height: 3.25rem;
+}
+
+.branded-divider {
+  height: 299px;
+  width: 1px;
+  background: #e6e2e2;
+  position: absolute;
+  right: 0;
+  top: 40px;
+}
+
+.branded-submit {
+  position: absolute;
+  bottom: 0;
+  right: 0;
+  width: calc(var(--booker-meta-width) + var(--booker-main-width));
+}
+
+.focus\:custom-brand:focus {
+  --tw-ring-color: transparent !important;
+  --tw-ring-offset-shadow: none !important;
+  --tw-ring-shadow: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  outline-offset: 0;
+  border-color: #a2a1a1;
+}
+
+.focus-within\:custom-brand:focus-within {
+  --tw-ring-color: transparent !important;
+  --tw-ring-offset-shadow: none !important;
+  --tw-ring-shadow: none !important;
+  box-shadow: none !important;
+  outline: none !important;
+  outline-offset: 0;
+  border-color: #a2a1a1;
+}
+
+.branded-placeholder::placeholder {
+  color: #a2a1a1;
+  opacity: 1;
+}
+
+.branded-placeholder::-ms-input-placeholder {
+  color: #a2a1a1;
+}
+.react-tel-input .form-control {
+  color: #282d27 !important ;
+  font-size: 16px !important;
+}
+.react-tel-input .flag-dropdown {
+  border-radius: 40px 0 0 40px !important;
+}
+.react-tel-input .selected-flag {
+  border-radius: 40px 0 0 40px !important;
+  height: 95% !important;
+  top: 2.5% !important;
+}
+
+.branded-email-remove-btn .addon-wrapper {
+  position: absolute;
+  right: 0px;
+  height: 100%;
+  border-radius: 0 40px 40px 0 !important;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border: 1px solid #a2a1a1;
+}
+
+.branded-full-name label {
+  color: #282d27 !important;
+  font-size: 16px !important;
+  line-height: 20.8px !important;
+  font-family: var(--font-body) !important;
+}
+
+.branded-checkbox {
+  border: 1px solid #a2a1a1 !important;
+  background-color: #ffffff !important;
+}
+
+.checked\:branded-checkbox:checked {
+  border: 1px solid #a2a1a1 !important;
+  background-color: #ffffff !important;
+  background-image: url("https://fertilitymapperprod.blob.core.windows.net/assets/images/check.svg");
+  background-size: auto;
+}
+.hover\:branded-checkbox:hover {
+  border: 1px solid #a2a1a1 !important;
+  background-color: var(--cal-bg-subtle) !important;
+}
+.checked\:hover\:branded-checkbox:checked:hover {
+  border: 1px solid #a2a1a1 !important;
+  background-color: var(--cal-bg-subtle) !important;
+}
+.branded-checkbox-label a {
+  color: #0b4736;
+  text-decoration: underline;
+}
+
+.mt-2px {
+  margin-top: 2px;
+}
 @import "./raqb.css";

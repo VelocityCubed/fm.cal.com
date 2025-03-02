@@ -28,6 +28,7 @@ type BookEventFormProps = {
   renderConfirmNotVerifyEmailButtonCond: boolean;
   extraOptions: Record<string, string | string[]>;
   isPlatform?: boolean;
+  isBranded?: boolean;
   isVerificationCodeSending: boolean;
   shouldRenderCaptcha?: boolean;
 };
@@ -46,6 +47,7 @@ export const BookEventForm = ({
   extraOptions,
   isVerificationCodeSending,
   isPlatform = false,
+  isBranded = false,
   shouldRenderCaptcha,
 }: Omit<BookEventFormProps, "event"> & {
   eventQuery: {
@@ -93,7 +95,7 @@ export const BookEventForm = ({
   const watchedCfToken = bookingForm.watch("cfToken");
 
   return (
-    <div className="flex h-full flex-col">
+    <div className={isBranded ? "py-b-81 flex h-[391px] flex-col" : "flex h-full flex-col"}>
       <Form
         className="flex h-full flex-col"
         onChange={() => {
@@ -112,6 +114,7 @@ export const BookEventForm = ({
           locations={eventType.locations}
           rescheduleUid={rescheduleUid || undefined}
           bookingData={bookingData}
+          isBranded={isBranded}
         />
         {(errors.hasFormErrors || errors.hasDataErrors) && (
           <div data-testid="booking-fail">
@@ -125,7 +128,7 @@ export const BookEventForm = ({
           </div>
         )}
         {/* Cloudflare Turnstile Captcha */}
-        {!isPlatform && (
+        {!isPlatform && !isBranded && (
           <div className="text-subtle my-3 w-full text-xs">
             <Trans
               i18nKey="signing_up_terms"
@@ -149,7 +152,7 @@ export const BookEventForm = ({
           </div>
         )}
 
-        {isPlatformBookerEmbed && (
+        {isPlatformBookerEmbed && !isBranded && (
           <div className="text-subtle my-3 w-full text-xs">
             {t("proceeding_agreement")}{" "}
             <Link
@@ -170,14 +173,19 @@ export const BookEventForm = ({
             .
           </div>
         )}
-        <div className="modalsticky mt-auto flex justify-end space-x-2 rtl:space-x-reverse">
+        <div
+          className={
+            isBranded
+              ? "footer-border branded-submit sticky bottom-0 z-10 flex items-center justify-center px-6 py-4"
+              : "modalsticky mt-auto flex justify-end space-x-2 rtl:space-x-reverse"
+          }>
           {isInstantMeeting ? (
             <Button type="submit" color="primary" loading={loadingStates.creatingInstantBooking}>
               {isPaidEvent ? t("pay_and_book") : t("confirm")}
             </Button>
           ) : (
             <>
-              {!!onCancel && (
+              {!!onCancel && !isBranded && (
                 <Button color="minimal" type="button" onClick={onCancel} data-testid="back">
                   {t("back")}
                 </Button>
@@ -185,23 +193,34 @@ export const BookEventForm = ({
 
               <Button
                 type="submit"
-                color="primary"
+                color={isBranded ? "branded_sumbit" : "primary"}
                 disabled={!!shouldRenderCaptcha && !watchedCfToken}
                 loading={
                   loadingStates.creatingBooking ||
                   loadingStates.creatingRecurringBooking ||
                   isVerificationCodeSending
                 }
+                className={
+                  isBranded
+                    ? "hover:bg-branded-secondary w-max-266 body-btn flex h-12 w-auto flex-grow flex-col justify-center py-2"
+                    : ""
+                }
                 data-testid={
                   rescheduleUid && bookingData ? "confirm-reschedule-button" : "confirm-book-button"
                 }>
-                {rescheduleUid && bookingData
-                  ? t("reschedule")
-                  : renderConfirmNotVerifyEmailButtonCond
-                  ? isPaidEvent
-                    ? t("pay_and_book")
-                    : t("confirm")
-                  : t("verify_email_email_button")}
+                {rescheduleUid && bookingData ? (
+                  t("reschedule")
+                ) : renderConfirmNotVerifyEmailButtonCond ? (
+                  isPaidEvent ? (
+                    t("pay_and_book")
+                  ) : isBranded ? (
+                    <div className="font-normal-medium flex items-center gap-2">Schedule Appointment</div>
+                  ) : (
+                    t("confirm")
+                  )
+                ) : (
+                  t("verify_email_email_button")
+                )}
               </Button>
             </>
           )}

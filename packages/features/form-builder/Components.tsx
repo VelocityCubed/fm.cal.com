@@ -140,6 +140,26 @@ export const Components: Record<FieldType, Component> = {
         }
         const variant = props.variants[variantName];
         const variantField = variant.fields[0];
+
+        if (props.isBranded) {
+          return (
+            <InputField
+              name="name"
+              showAsteriskIndicator={true}
+              placeholder={props.placeholder}
+              label={props.label}
+              containerClassName={props.isBranded ? "branded-full-name w-full" : "w-full"}
+              readOnly={props.readOnly}
+              value={value}
+              required={variantField.required}
+              type="text"
+              onChange={(e) => {
+                props.setValue(e.target.value);
+              }}
+              className="focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark rounded-40 branded-form-border body-head-4 font-normal-medium font-circular h-min-48 px-4 py-2"
+            />
+          );
+        }
         return (
           <InputField
             name="name"
@@ -242,17 +262,27 @@ export const Components: Record<FieldType, Component> = {
         <>
           {value.length ? (
             <div>
-              <label htmlFor="guests" className="text-default  mb-1 block text-sm font-medium">
+              <label
+                htmlFor="guests"
+                className={
+                  props.isBranded
+                    ? "body-head-4 font-circular color-text-dark font-medium"
+                    : "text-default  mb-1 block text-sm font-medium"
+                }>
                 {label}
               </label>
               <ul>
                 {value.map((field, index) => (
-                  <li key={index}>
+                  <li key={index} className={props.isBranded ? "branded-email-remove-btn mb-4 mt-2" : ""}>
                     <EmailField
                       id={`${props.name}.${index}`}
                       disabled={readOnly}
                       value={value[index]}
-                      className={inputClassName}
+                      className={
+                        props.isBranded
+                          ? `${inputClassName} focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark rounded-40 branded-form-border body-head-4 font-normal-medium font-circular h-min-48  px-4 py-2`
+                          : inputClassName
+                      }
                       onChange={(e) => {
                         value[index] = e.target.value.toLowerCase();
                         setValue(value);
@@ -277,7 +307,21 @@ export const Components: Record<FieldType, Component> = {
                   </li>
                 ))}
               </ul>
-              {!readOnly && (
+              {!readOnly && props.isBranded && (
+                <Button
+                  data-testid="add-another-guest"
+                  type="button"
+                  color="branded_minimal_bg"
+                  variant="button"
+                  onClick={() => {
+                    value.push("");
+                    setValue(value);
+                  }}
+                  className="my-2 h-fit">
+                  <span className="font-normal-medium body-btn font-circular flex-1">{t("add_another")}</span>
+                </Button>
+              )}
+              {!readOnly && !props.isBranded && (
                 <Button
                   data-testid="add-another-guest"
                   type="button"
@@ -296,7 +340,21 @@ export const Components: Record<FieldType, Component> = {
             <></>
           )}
 
-          {!value.length && !readOnly && (
+          {!value.length && !readOnly && props.isBranded && (
+            <Button
+              data-testid="add-guests"
+              color="branded_minimal_bg"
+              variant="button"
+              onClick={() => {
+                value.push("");
+                setValue(value);
+              }}
+              className="mb-2 mr-auto h-fit whitespace-normal text-left">
+              <span className="font-normal-medium body-btn font-circular flex-1">{label}</span>
+            </Button>
+          )}
+
+          {!value.length && !readOnly && !props.isBranded && (
             <Button
               data-testid="add-guests"
               color="minimal"
@@ -336,13 +394,13 @@ export const Components: Record<FieldType, Component> = {
   },
   checkbox: {
     propsType: propsTypes.checkbox,
-    factory: ({ options, readOnly, setValue, value }) => {
+    factory: ({ options, readOnly, setValue, value, isBranded }) => {
       value = value || [];
       return (
         <div>
           {options.map((option, i) => {
             return (
-              <label key={i} className="block">
+              <label key={i} className={isBranded ? "flex flex-row items-start justify-start pb-4" : "block"}>
                 <input
                   type="checkbox"
                   disabled={readOnly}
@@ -353,11 +411,24 @@ export const Components: Record<FieldType, Component> = {
                     }
                     setValue(newValue);
                   }}
-                  className="border-default dark:border-default hover:bg-subtle checked:hover:bg-brand-default checked:bg-brand-default dark:checked:bg-brand-default dark:bg-darkgray-100 dark:hover:bg-subtle dark:checked:hover:bg-brand-default h-4 w-4 cursor-pointer rounded transition ltr:mr-2 rtl:ml-2"
+                  required={isBranded}
+                  className={
+                    isBranded
+                      ? "mt-2px branded-checkbox hover:branded-checkbox checked:hover:branded-checkbox checked:branded-checkbox h-4 w-4 cursor-pointer rounded transition ltr:mr-2 rtl:ml-2"
+                      : "border-default dark:border-default hover:bg-subtle checked:hover:bg-brand-default checked:bg-brand-default dark:checked:bg-brand-default dark:bg-darkgray-100 dark:hover:bg-subtle dark:checked:hover:bg-brand-default h-4 w-4 cursor-pointer rounded transition ltr:mr-2 rtl:ml-2"
+                  }
                   value={option.value}
                   checked={value.includes(option.value)}
                 />
-                <span className="text-emphasis me-2 ms-2 text-sm">{option.label ?? ""}</span>
+                <span
+                  className={
+                    isBranded
+                      ? "body-sml font-normal-medium color-text-dark font-circular branded-checkbox-label flex flex-col gap-2"
+                      : "text-emphasis me-2 ms-2 text-sm"
+                  }
+                  // eslint-disable-next-line react/no-danger
+                  dangerouslySetInnerHTML={{ __html: option.label ?? "" }}
+                />
               </label>
             );
           })}

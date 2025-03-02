@@ -50,10 +50,12 @@ export const FormBuilderField = ({
   field,
   readOnly,
   className,
+  isBranded = false,
 }: {
   field: RhfFormFields[number];
   readOnly: boolean;
   className: string;
+  isBranded: boolean;
 }) => {
   const { t } = useLocale();
   const { control, formState } = useFormContext();
@@ -82,6 +84,7 @@ export const FormBuilderField = ({
                 }}
                 noLabel={noLabel}
                 translatedDefaultLabel={translatedDefaultLabel}
+                isBranded={isBranded}
               />
               <ErrorMessage
                 name="responses"
@@ -132,12 +135,14 @@ const WithLabel = ({
   readOnly,
   htmlFor,
   noLabel = false,
+  isBranded = false,
 }: {
   field: Partial<RhfFormField>;
   readOnly: boolean;
   children: React.ReactNode;
   noLabel?: boolean;
   htmlFor: string;
+  isBranded?: boolean;
 }) => {
   const { t } = useLocale();
 
@@ -153,8 +158,15 @@ const WithLabel = ({
           field.label && (
             <div className="mb-2 flex items-center">
               <Label className="!mb-0 flex items-center" htmlFor={htmlFor}>
-                <span>{field.label}</span>
-                <span className="text-emphasis -mb-1 ml-1 text-sm font-medium leading-none">
+                <span className={isBranded ? "body-head-4 font-circular color-text-dark font-medium" : ""}>
+                  {field.label}
+                </span>
+                <span
+                  className={
+                    isBranded
+                      ? "body-head-4 font-circular color-text-dark font-medium"
+                      : "text-emphasis -mb-1 ml-1 text-sm font-medium leading-none"
+                  }>
                   {!readOnly && field.required ? "*" : ""}
                 </span>
                 {field.type === "phone" && <InfoBadge content={t("number_in_international_format")} />}
@@ -224,6 +236,7 @@ export const ComponentForField = ({
   readOnly,
   noLabel,
   translatedDefaultLabel,
+  isBranded = false,
 }: {
   field: Omit<RhfFormField, "editable" | "label"> & {
     // Label is optional because radioInput doesn't have a label
@@ -232,6 +245,7 @@ export const ComponentForField = ({
   readOnly: boolean;
   noLabel?: boolean;
   translatedDefaultLabel?: string;
+  isBranded?: boolean;
 } & ValueProps) => {
   const fieldType = field.type || "text";
   const componentConfig = Components[fieldType];
@@ -251,7 +265,12 @@ export const ComponentForField = ({
   }
   if (componentConfig.propsType === "text") {
     return (
-      <WithLabel field={field} htmlFor={field.name} readOnly={readOnly} noLabel={noLabel}>
+      <WithLabel
+        field={field}
+        htmlFor={field.name}
+        readOnly={readOnly}
+        noLabel={noLabel}
+        isBranded={isBranded}>
         <componentConfig.factory
           placeholder={field.placeholder}
           minLength={field.minLength}
@@ -261,6 +280,13 @@ export const ComponentForField = ({
           readOnly={readOnly}
           value={value as string}
           setValue={setValue as (arg: typeof value) => void}
+          className={
+            isBranded
+              ? field.name === "notes"
+                ? "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark branded-form-border body-head-4 font-normal-medium font-circular h-min-115 rounded-lg px-4 py-2"
+                : "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark rounded-40 branded-form-border body-head-4 font-normal-medium font-circular h-min-48 px-4 py-2"
+              : ""
+          }
         />
       </WithLabel>
     );
@@ -268,7 +294,12 @@ export const ComponentForField = ({
 
   if (componentConfig.propsType === "boolean") {
     return (
-      <WithLabel field={field} htmlFor={field.name} readOnly={readOnly} noLabel={noLabel}>
+      <WithLabel
+        field={field}
+        htmlFor={field.name}
+        readOnly={readOnly}
+        noLabel={noLabel}
+        isBranded={isBranded}>
         <componentConfig.factory
           name={field.name}
           label={field.label}
@@ -276,6 +307,13 @@ export const ComponentForField = ({
           value={value as boolean}
           setValue={setValue as (arg: typeof value) => void}
           placeholder={field.placeholder}
+          className={
+            isBranded
+              ? field.name === "notes"
+                ? "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark branded-form-border body-head-4 font-normal-medium font-circular h-min-115 rounded-lg px-4 py-2"
+                : "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark rounded-40 branded-form-border body-head-4 font-normal-medium font-circular h-min-48 px-4 py-2"
+              : ""
+          }
         />
       </WithLabel>
     );
@@ -283,7 +321,12 @@ export const ComponentForField = ({
 
   if (componentConfig.propsType === "textList") {
     return (
-      <WithLabel field={field} htmlFor={field.name} readOnly={readOnly} noLabel={noLabel}>
+      <WithLabel
+        field={field}
+        htmlFor={field.name}
+        readOnly={readOnly}
+        noLabel={noLabel}
+        isBranded={isBranded}>
         <componentConfig.factory
           placeholder={field.placeholder}
           name={field.name}
@@ -291,6 +334,14 @@ export const ComponentForField = ({
           readOnly={readOnly}
           value={value as string[]}
           setValue={setValue as (arg: typeof value) => void}
+          className={
+            isBranded
+              ? field.name === "notes"
+                ? "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark branded-form-border body-head-4 font-normal-medium font-circular h-min-115 rounded-lg px-4 py-2"
+                : "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark rounded-40 branded-form-border body-head-4 font-normal-medium font-circular h-min-48 px-4 py-2"
+              : ""
+          }
+          isBranded={isBranded}
         />
       </WithLabel>
     );
@@ -302,7 +353,12 @@ export const ComponentForField = ({
     }
 
     return (
-      <WithLabel field={field} htmlFor={field.name} readOnly={readOnly} noLabel={noLabel}>
+      <WithLabel
+        field={field}
+        htmlFor={field.name}
+        readOnly={readOnly}
+        noLabel={noLabel}
+        isBranded={isBranded}>
         <componentConfig.factory
           readOnly={readOnly}
           value={value as string}
@@ -310,6 +366,13 @@ export const ComponentForField = ({
           placeholder={field.placeholder}
           setValue={setValue as (arg: typeof value) => void}
           options={field.options.map((o) => ({ ...o, title: o.label }))}
+          className={
+            isBranded
+              ? field.name === "notes"
+                ? "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark branded-form-border body-head-4 font-normal-medium font-circular h-min-115 rounded-lg px-4 py-2"
+                : "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark rounded-40 branded-form-border body-head-4 font-normal-medium font-circular h-min-48 px-4 py-2"
+              : ""
+          }
         />
       </WithLabel>
     );
@@ -320,7 +383,12 @@ export const ComponentForField = ({
       throw new Error("Field options is not defined");
     }
     return (
-      <WithLabel field={field} htmlFor={field.name} readOnly={readOnly} noLabel={noLabel}>
+      <WithLabel
+        field={field}
+        htmlFor={field.name}
+        readOnly={readOnly}
+        noLabel={noLabel}
+        isBranded={isBranded}>
         <componentConfig.factory
           placeholder={field.placeholder}
           name={field.name}
@@ -328,6 +396,14 @@ export const ComponentForField = ({
           value={value as string[]}
           setValue={setValue as (arg: typeof value) => void}
           options={field.options.map((o) => ({ ...o, title: o.label }))}
+          isBranded={isBranded}
+          className={
+            isBranded
+              ? field.name === "notes"
+                ? "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark branded-form-border body-head-4 font-normal-medium font-circular h-min-115 rounded-lg px-4 py-2"
+                : "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark rounded-40 branded-form-border body-head-4 font-normal-medium font-circular h-min-48 px-4 py-2"
+              : ""
+          }
         />
       </WithLabel>
     );
@@ -344,7 +420,12 @@ export const ComponentForField = ({
     const options = field.options;
 
     return field.options.length ? (
-      <WithLabel field={field} htmlFor={field.name} readOnly={readOnly} noLabel={noLabel}>
+      <WithLabel
+        field={field}
+        htmlFor={field.name}
+        readOnly={readOnly}
+        noLabel={noLabel}
+        isBranded={isBranded}>
         <componentConfig.factory
           placeholder={field.placeholder}
           readOnly={readOnly}
@@ -356,6 +437,13 @@ export const ComponentForField = ({
           options={options}
           required={field.required}
           translatedDefaultLabel={translatedDefaultLabel}
+          className={
+            isBranded
+              ? field.name === "notes"
+                ? "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark branded-form-border body-head-4 font-normal-medium font-circular h-min-115 rounded-lg px-4 py-2"
+                : "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark rounded-40 branded-form-border body-head-4 font-normal-medium font-circular h-min-48 px-4 py-2"
+              : ""
+          }
         />
       </WithLabel>
     ) : null;
@@ -371,7 +459,9 @@ export const ComponentForField = ({
       <componentConfig.factory
         placeholder={field.placeholder}
         readOnly={readOnly}
+        isBranded={isBranded}
         name={field.name}
+        label={field.label}
         variant={field.variant}
         value={value as { value: string; optionValue: string }}
         setValue={setValue as (arg: Record<string, string> | string) => void}

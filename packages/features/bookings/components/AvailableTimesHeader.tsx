@@ -29,7 +29,7 @@ export const AvailableTimesHeader = ({
 }: AvailableTimesHeaderProps) => {
   const { t, i18n } = useLocale();
   const [layout] = useBookerStore((state) => [state.layout], shallow);
-  const isColumnView = layout === BookerLayouts.COLUMN_VIEW;
+  const isColumnView = layout === BookerLayouts.COLUMN_VIEW || layout === BookerLayouts.BRANDED_VIEW;
   const isMonthView = layout === BookerLayouts.MONTH_VIEW;
   const isToday = dayjs().isSame(date, "day");
 

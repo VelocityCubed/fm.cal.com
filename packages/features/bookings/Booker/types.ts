@@ -93,6 +93,7 @@ export interface BookerProps {
   areInstantMeetingParametersSet?: boolean | null;
   userLocale?: string | null;
   hasValidLicense?: boolean;
+  overrides: Override | null;
 }
 
 export type WrappedBookerPropsMain = {
@@ -162,4 +163,13 @@ export type CustomClassNames = {
     availableTimes?: string;
   };
   atomsWrapper?: string;
+};
+
+export type Override = {
+  memberName: string | null;
+  memberDescription: string | null;
+  memberImage: string | null;
+  clinicTitle: string | null;
+  clinicDescription: string | null;
+  clinicImage: string | null;
 };

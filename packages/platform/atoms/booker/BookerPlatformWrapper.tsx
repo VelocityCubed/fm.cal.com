@@ -244,12 +244,13 @@ export const BookerPlatformWrapper = (
     (bookerLayout.layout === BookerLayouts.WEEK_VIEW &&
       !!bookerLayout.extraDays &&
       dayjs(date).month() !== dayjs(date).add(bookerLayout.extraDays, "day").month()) ||
-    (bookerLayout.layout === BookerLayouts.COLUMN_VIEW &&
+    ((bookerLayout.layout === BookerLayouts.COLUMN_VIEW || layout === BookerLayouts.BRANDED_VIEW) &&
       dayjs(date).month() !== dayjs(date).add(bookerLayout.columnViewExtraDays.current, "day").month());
 
   const monthCount =
     ((bookerLayout.layout !== BookerLayouts.WEEK_VIEW && bookerState === "selecting_time") ||
-      bookerLayout.layout === BookerLayouts.COLUMN_VIEW) &&
+      bookerLayout.layout === BookerLayouts.COLUMN_VIEW ||
+      layout === BookerLayouts.BRANDED_VIEW) &&
     dayjs(date).add(1, "month").month() !==
       dayjs(date).add(bookerLayout.columnViewExtraDays.current, "day").month()
       ? 2

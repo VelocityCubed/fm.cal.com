@@ -1,10 +1,12 @@
 // We do not need to worry about importing framer-motion here as it is lazy imported in Booker.
 import * as HoverCard from "@radix-ui/react-hover-card";
+import advancedFormat from "dayjs/plugin/advancedFormat";
 import { AnimatePresence, m } from "framer-motion";
 import { useCallback, useMemo, useState } from "react";
 
 import { useIsPlatform } from "@calcom/atoms/monorepo";
 import type { IOutOfOfficeData } from "@calcom/core/getUserAvailability";
+import type { Dayjs } from "@calcom/dayjs";
 import dayjs from "@calcom/dayjs";
 import { OutOfOfficeInSlots } from "@calcom/features/bookings/Booker/components/OutOfOfficeInSlots";
 import type { IUseBookingLoadingStates } from "@calcom/features/bookings/Booker/components/hooks/useBookings";
@@ -23,6 +25,8 @@ import { getQueryParam } from "../Booker/utils/query-param";
 import { useCheckOverlapWithOverlay } from "../lib/useCheckOverlapWithOverlay";
 import { SeatsAvailabilityText } from "./SeatsAvailabilityText";
 
+dayjs.extend(advancedFormat);
+
 type TOnTimeSelect = (
   time: string,
   attendees: number,
@@ -34,6 +38,8 @@ export type AvailableTimesProps = {
   slots: IGetAvailableSlots["slots"][string];
   showTimeFormatToggle?: boolean;
   className?: string;
+  date?: Dayjs;
+  isBranded?: boolean;
 } & Omit<SlotItemProps, "slot">;
 
 type SlotItemProps = {
@@ -52,6 +58,7 @@ type SlotItemProps = {
   skipConfirmStep?: boolean;
   shouldRenderCaptcha?: boolean;
   watchedCfToken?: string;
+  isBranded?: boolean;
 };
 
 const SlotItem = ({
@@ -68,6 +75,7 @@ const SlotItem = ({
   skipConfirmStep,
   shouldRenderCaptcha,
   watchedCfToken,
+  isBranded,
 }: SlotItemProps) => {
   const { t } = useLocale();
 
@@ -145,12 +153,13 @@ const SlotItem = ({
           data-time={slot.time}
           onClick={onButtonClick}
           className={classNames(
-            `hover:border-brand-default min-h-9 mb-2 flex h-auto w-full flex-grow flex-col justify-center py-2`,
+            `hover:border-brand-default  flex flex-grow flex-col justify-center py-2`,
+            isBranded ? "w-min-100 body-btn h-12 w-auto" : "min-h-9 mb-2 h-auto w-full",
             selectedSlots?.includes(slot.time) && "border-brand-default",
             `${customClassNames}`
           )}
-          color="secondary">
-          <div className="flex items-center gap-2">
+          color={isBranded ? "branded" : "secondary"}>
+          <div className={classNames("flex items-center gap-2", isBranded ? "font-normal-medium" : "")}>
             {!hasTimeSlots && overlayCalendarToggled && (
               <span
                 className={classNames(
@@ -244,6 +253,8 @@ export const AvailableTimes = ({
   slots,
   showTimeFormatToggle = true,
   className,
+  date,
+  isBranded,
   ...props
 }: AvailableTimesProps) => {
   const { t } = useLocale();
@@ -259,7 +270,13 @@ export const AvailableTimes = ({
 
   return (
     <div className={classNames("text-default flex flex-col", className)}>
-      <div className="h-full pb-4">
+      {isBranded && date && (
+        <h4 className="body-head-4 font-normal-medium font-circular color-primary pb-6">
+          <span className="color-text-dark">{date.format("dddd")}</span>
+          {date.format(", MMMM Do, YYYY")}
+        </h4>
+      )}
+      <div className={classNames("h-full", isBranded ? "flex w-full flex-row flex-wrap gap-4" : "pb-4")}>
         {!slots.length && (
           <div
             data-testId="no-slots-available"
@@ -273,7 +290,7 @@ export const AvailableTimes = ({
         {oooBeforeSlots && !oooAfterSlots && <OOOSlot {...slots[0]} />}
         {slots.map((slot) => {
           if (slot.away) return null;
-          return <SlotItem key={slot.time} slot={slot} {...props} />;
+          return <SlotItem key={slot.time} slot={slot} {...props} isBranded={isBranded} />;
         })}
         {oooAfterSlots && !oooBeforeSlots && <OOOSlot {...slots[slots.length - 1]} className="pb-0" />}
       </div>

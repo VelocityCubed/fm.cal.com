@@ -39,18 +39,21 @@ export enum BookerLayouts {
   MONTH_VIEW = "month_view",
   WEEK_VIEW = "week_view",
   COLUMN_VIEW = "column_view",
+  BRANDED_VIEW = "branded_view",
 }
 
 export const bookerLayoutOptions = [
   BookerLayouts.MONTH_VIEW,
   BookerLayouts.WEEK_VIEW,
   BookerLayouts.COLUMN_VIEW,
+  BookerLayouts.BRANDED_VIEW,
 ];
 
 const layoutOptions = z.union([
   z.literal(bookerLayoutOptions[0]),
   z.literal(bookerLayoutOptions[1]),
   z.literal(bookerLayoutOptions[2]),
+  z.literal(bookerLayoutOptions[3]),
 ]);
 
 export const bookerLayouts = z
@@ -61,7 +64,7 @@ export const bookerLayouts = z
   .nullable();
 
 export const defaultBookerLayoutSettings = {
-  defaultLayout: BookerLayouts.MONTH_VIEW,
+  defaultLayout: BookerLayouts.BRANDED_VIEW,
   // if the user has no explicit layouts set (not in user profile and not in event settings), all layouts are enabled.
   enabledLayouts: bookerLayoutOptions,
 };

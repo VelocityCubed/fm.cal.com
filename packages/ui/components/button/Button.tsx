@@ -46,9 +46,80 @@ export const buttonClasses = cva(
       variant: {
         button: "",
         icon: "flex justify-center",
+        icon_branded: "flex justify-center",
         fab: "rounded-full justify-center md:rounded-md radix-state-open:rotate-45 md:radix-state-open:rotate-0 radix-state-open:shadown-none radix-state-open:ring-0 !shadow-none",
       },
       color: {
+        branded: [
+          "color-primary",
+          "font-circular",
+          "focus-visible:outline-none",
+          "focus-visible:ring-0",
+          "focus-visible:shadow-button-solid-brand-focused",
+          // Border
+          "branded-border rounded-40",
+          // Disabled
+          "disabled:color-light",
+          // Shadows and effects
+          "shadow-button-solid-brand-default",
+          "enabled:active:shadow-button-solid-brand-active",
+          "enabled:hover:shadow-button-solid-brand-hover",
+          "transition-shadow",
+          "transition-transform",
+          "duration-100",
+        ],
+        branded_minimal: [
+          "bg-transparent",
+          "focus-visible:outline-none",
+          "focus-visible:ring-0",
+          "focus-visible:shadow-button-solid-brand-focused",
+          "disabled:color-light",
+          "shadow-button-solid-brand-default",
+          "enabled:active:shadow-button-solid-brand-active",
+          "enabled:hover:shadow-button-solid-brand-hover",
+          "transition-shadow",
+          "transition-transform",
+          "duration-100",
+        ],
+        branded_minimal_bg: [
+          "ease-trans",
+          "bg-primary",
+          "light-text",
+          "font-circular",
+          "body-btn",
+          "focus-visible:outline-none",
+          "focus-visible:ring-0",
+          "focus-visible:shadow-button-solid-brand-focused",
+          "border-0 rounded-40",
+          "disabled:color-light",
+          "shadow-button-solid-brand-default",
+          "enabled:active:shadow-button-solid-brand-active",
+          "enabled:hover:shadow-button-solid-brand-hover",
+          "hover:bg-branded-primary",
+          "h-12",
+          "flex",
+          "w-full",
+          "flex-grow",
+          "flex-col",
+          "justify-center",
+          "py-2",
+          "w-max-212",
+        ],
+        branded_sumbit: [
+          "ease-trans",
+          "bg-secondary",
+          "light-text",
+          "font-circular",
+          "body-btn",
+          "focus-visible:outline-none",
+          "focus-visible:ring-0",
+          "focus-visible:shadow-button-solid-brand-focused",
+          "border-0 rounded-40",
+          "disabled:color-light",
+          "shadow-button-solid-brand-default",
+          "enabled:active:shadow-button-solid-brand-active",
+          "enabled:hover:shadow-button-solid-brand-hover",
+        ],
         primary:
           "bg-brand-default hover:bg-brand-emphasis focus-visible:outline-none focus-visible:ring-2 focus-visible:ring-offset focus-visible:ring-brand-default text-brand disabled:bg-brand-subtle disabled:text-brand-subtle disabled:opacity-40 disabled:hover:bg-brand-subtle disabled:hover:text-brand-default disabled:hover:opacity-40",
         secondary:
@@ -94,12 +165,37 @@ export const buttonClasses = cva(
           "text-red-700/30 dark:text-red-700/30 hover:text-red-700/30  border border-default text-emphasis",
       },
       {
+        loading: true,
+        color: "branded_minimal",
+        className: "bg-subtle text-emphasis/30",
+      },
+      {
+        loading: true,
+        color: "branded",
+        className: "bg-subtle text-emphasis/30",
+      },
+      {
+        loading: true,
+        color: "branded_sumbit",
+        className: "bg-subtle text-emphasis/30",
+      },
+      {
         variant: "icon",
         size: "base",
         className: "min-h-[36px] min-w-[36px] !p-2 hover:border-default",
       },
       {
         variant: "icon",
+        size: "sm",
+        className: "h-6 w-6 !p-1",
+      },
+      {
+        variant: "icon_branded",
+        size: "base",
+        className: "min-h-[36px] min-w-[36px] !p-2 hover:border-default",
+      },
+      {
+        variant: "icon_branded",
         size: "sm",
         className: "h-6 w-6 !p-1",
       },
@@ -174,6 +270,7 @@ export const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonPr
                 name={StartIcon}
                 className={classNames(
                   variant === "icon" && "h-4 w-4",
+                  variant === "icon_branded" && "h-6 w-6",
                   variant === "button" && "h-4 w-4 stroke-[1.5px] ltr:-ml-1 ltr:mr-2 rtl:-mr-1 rtl:ml-2"
                 )}
               />
@@ -213,6 +310,7 @@ export const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonPr
               className={classNames(
                 "inline-flex",
                 variant === "icon" && "h-4 w-4",
+                variant === "icon_branded" && "h-6 w-6",
                 variant === "button" && "h-4 w-4 stroke-[1.5px] ltr:-mr-1 ltr:ml-2 rtl:-ml-1 rtl:mr-2"
               )}
             />

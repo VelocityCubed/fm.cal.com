@@ -401,6 +401,7 @@
   "bookerlayout_month_view": "Month",
   "bookerlayout_week_view": "Weekly",
   "bookerlayout_column_view": "Column",
+  "bookerlayout_branded_view": "Custom",
   "bookerlayout_error_min_one_enabled": "At least one layout has to be enabled.",
   "bookerlayout_error_default_not_enabled": "The layout you selected as the default view is not part of the enabled layouts.",
   "bookerlayout_error_unknown_layout": "The layout you selected is not a valid layout.",

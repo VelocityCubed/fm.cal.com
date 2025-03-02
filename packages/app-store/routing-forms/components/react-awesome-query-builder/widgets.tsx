@@ -33,6 +33,7 @@ export type CommonProps<
   label?: string;
   value: TVal;
   setValue: (value: TVal) => void;
+  isBranded?: boolean;
   /**
    * required and other validations are supported using zodResolver from react-hook-form
    */

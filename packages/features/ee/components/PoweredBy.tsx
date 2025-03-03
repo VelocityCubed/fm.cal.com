@@ -20,10 +20,10 @@ const PoweredByCal = ({
         {!logoOnly && <>{t("powered_by")} </>}
         {APP_NAME === "Cal.com" || !hasValidLicense ? (
           <>
-           <img
+            <img
               className="-mt-px inline h-[40px] w-auto"
               src={`${process.env.NEXT_PUBLIC_WEBAPP_URL}/api/logo`}
-              alt="Fertility Mapper Logo"
+              alt="Fertility Mapper Logo V2"
             />
           </>
         ) : (

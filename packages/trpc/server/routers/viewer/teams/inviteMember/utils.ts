@@ -478,7 +478,7 @@ export async function sendSignupToOrganizationEmail({
     from: inviterName || `${team.name}'s admin`,
     to: usernameOrEmail,
     teamName: team.name,
-    joinLink: `${WEBAPP_URL}/signup?token=${token}&callbackUrl=/getting-started`,
+    joinLink: `${WEBAPP_URL}/signup?token=${token}&callbackUrl=getting-started`,
     isCalcomMember: false,
     isOrg: isOrg,
     parentTeamName: team?.parent?.name,
@@ -689,7 +689,7 @@ export const sendExistingUserTeamInviteEmails = async ({
           },
         });
 
-        inviteTeamOptions.joinLink = `${WEBAPP_URL}/signup?token=${token}&callbackUrl=/getting-started`;
+        inviteTeamOptions.joinLink = `${WEBAPP_URL}/signup?token=${token}&callbackUrl=getting-started`;
         inviteTeamOptions.isCalcomMember = false;
       }
 

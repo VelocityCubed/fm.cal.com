@@ -49,7 +49,7 @@ export const createInviteHandler = async ({ ctx, input }: CreateInviteOptions) =
 
 async function getInviteLink(token = "", isOrgContext = false) {
   const teamInviteLink = `${WEBAPP_URL}/teams?token=${token}`;
-  const orgInviteLink = `${WEBAPP_URL}/signup?token=${token}&callbackUrl=/getting-started`;
+  const orgInviteLink = `${WEBAPP_URL}/signup?token=${token}&callbackUrl=getting-started`;
   if (isOrgContext) return orgInviteLink;
   return teamInviteLink;
 }

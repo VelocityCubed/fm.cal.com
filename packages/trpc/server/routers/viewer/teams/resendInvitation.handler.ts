@@ -42,7 +42,7 @@ export const resendInvitationHandler = async ({ ctx, input }: InviteMemberOption
 
   if (verificationToken) {
     // Token only exists if user is CAL user but hasn't completed onboarding.
-    inviteTeamOptions.joinLink = `${WEBAPP_URL}/signup?token=${verificationToken.token}&callbackUrl=/getting-started`;
+    inviteTeamOptions.joinLink = `${WEBAPP_URL}/signup?token=${verificationToken.token}&callbackUrl=getting-started`;
     inviteTeamOptions.isCalcomMember = false;
   }
 

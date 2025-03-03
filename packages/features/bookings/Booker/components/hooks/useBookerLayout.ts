@@ -45,11 +45,11 @@ export const useBookerLayout = (event: Pick<BookerEvent, "profile"> | undefined 
   }, [isMobile, setLayout, layout, defaultLayout]);
   //setting layout from query param
   useEffect(() => {
-    const layout = getQueryParam("layout") as BookerLayouts;
+    const layout = getQueryParam("layout") ?? null;
     if (
       !isMobile &&
       !isEmbed &&
-      validateLayout(layout) &&
+      validateLayout(layout as BookerLayouts) &&
       bookerLayouts?.enabledLayouts?.length &&
       layout !== _layout
     ) {
@@ -70,6 +70,7 @@ export const useBookerLayout = (event: Pick<BookerEvent, "profile"> | undefined 
     // column_view doesn't support no-dialog Form
     // When it's supported, disable it for embed
     column_view: true,
+    branded_view: true,
   };
 
   const shouldShowFormInDialog = shouldShowFormInDialogMap[layout];

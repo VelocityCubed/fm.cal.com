@@ -13,6 +13,7 @@ export function transformBookerLayoutsApiToInternal(
     [BookerLayoutsInputEnum_2024_06_14.month]: BookerLayoutsOutputEnum_2024_06_14.month_view,
     [BookerLayoutsInputEnum_2024_06_14.week]: BookerLayoutsOutputEnum_2024_06_14.week_view,
     [BookerLayoutsInputEnum_2024_06_14.column]: BookerLayoutsOutputEnum_2024_06_14.column_view,
+    [BookerLayoutsInputEnum_2024_06_14.branded]: BookerLayoutsOutputEnum_2024_06_14.branded_view,
   };
 
   return {

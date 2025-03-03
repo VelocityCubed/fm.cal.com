@@ -41,7 +41,7 @@ export const useBookerLayout = (event: Pick<BookerEvent, "profile"> | undefined 
       setLayout("mobile_branded");
     } else if (isMobile && layout !== "mobile") {
       setLayout("mobile");
-    } else if (!isMobile && layout === "mobile") {
+    } else if (!isMobile && (layout === "mobile" || layout === "mobile_branded")) {
       setLayout(defaultLayout);
     }
   }, [isMobile, setLayout, layout, defaultLayout]);

@@ -143,7 +143,7 @@ export const resizeAnimationConfig: ResizeAnimationConfig = {
       "meta header header"
       "meta main main"
       `,
-      gridTemplateColumns: "var(--booker-meta-width) var(--booker-main-width)",
+      gridTemplateColumns: "2fr 3fr",
       gridTemplateRows: "auto",
     },
     // default: {

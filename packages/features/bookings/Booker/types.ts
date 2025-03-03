@@ -93,7 +93,7 @@ export interface BookerProps {
   areInstantMeetingParametersSet?: boolean | null;
   userLocale?: string | null;
   hasValidLicense?: boolean;
-  overrides: Override | null;
+  overrides?: Override | null;
 }
 
 export type WrappedBookerPropsMain = {

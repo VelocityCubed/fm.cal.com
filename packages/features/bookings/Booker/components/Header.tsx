@@ -96,8 +96,20 @@ export function Header({
   if (isBranded) {
     if (bookerState === "booking") {
       return (
-        <div className="px-l-6 px-r-10 py-b-6 py-t-10 relative z-10 flex flex-col gap-6">
-          <h2 className="font-circular body-head-2 color-primary font-medium">Enter Details</h2>
+        <div
+          className={
+            isMobile
+              ? "px-l-6 px-r-10 py-b-6 relative z-10 flex flex-col gap-6"
+              : "px-l-6 px-r-10 py-b-6 py-t-10 relative z-10 flex flex-col gap-6"
+          }>
+          <h2
+            className={
+              isMobile
+                ? "branded-mobile-border py-t-6 font-circular body-head-2 color-primary font-medium"
+                : "font-circular body-head-2 color-primary font-medium"
+            }>
+            Enter Details
+          </h2>
         </div>
       );
     }
@@ -111,13 +123,25 @@ export function Header({
     };
 
     return (
-      <div className="px-l-6 px-r-10 py-b-6 py-t-10 relative z-10 flex flex-col gap-6">
-        <h2 className="font-circular body-head-2 color-primary font-medium">Select a Date & Time</h2>
+      <div
+        className={
+          isMobile
+            ? "px-l-6 px-r-6 py-b-6  relative z-10 flex flex-col gap-6"
+            : "px-l-6 px-r-10 py-b-6 py-t-10 relative z-10 flex flex-col gap-6"
+        }>
+        <h2
+          className={
+            isMobile
+              ? "font-circular body-head-2 color-primary branded-mobile-border py-t-6 text-center font-medium"
+              : "font-circular body-head-2 color-primary font-medium"
+          }>
+          Select a Date & Time
+        </h2>
         <div className="flex w-full items-center justify-between rtl:flex-grow">
           <ButtonGroup>
             <Button
               disabled={!selectedDate.isAfter(dayjs())}
-              className="chev-btn color-primary group rtl:ml-1 rtl:rotate-180"
+              className="chev-btn color-primary group !p-0 rtl:ml-1 rtl:rotate-180"
               variant="icon_branded"
               color="branded_minimal"
               StartIcon="chevron-left"
@@ -128,7 +152,7 @@ export function Header({
           <FormattedSelectedDateRange />
           <ButtonGroup>
             <Button
-              className="chev-btn color-primary group rtl:mr-1 rtl:rotate-180"
+              className="chev-btn color-primary group !p-0 rtl:mr-1 rtl:rotate-180"
               variant="icon_branded"
               color="branded_minimal"
               StartIcon="chevron-right"

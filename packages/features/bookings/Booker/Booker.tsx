@@ -211,7 +211,8 @@ const BookerComponent = ({
         rescheduleUid={rescheduleUid}
         isVerificationCodeSending={isVerificationCodeSending}
         isPlatform={isPlatform}
-        isBranded={layout === BookerLayouts.BRANDED_VIEW}>
+        isBranded={layout === BookerLayouts.BRANDED_VIEW || layout === "mobile_branded"}
+        isMobile={isMobile}>
         <>
           {verifyCode && formEmail ? (
             <VerifyCodeDialog
@@ -324,7 +325,8 @@ const BookerComponent = ({
             layout !== BookerLayouts.BRANDED_VIEW && "bg-default",
             layout === BookerLayouts.BRANDED_VIEW && "bg-branded rounded-branded border-subtle",
             isEmbed && layout === BookerLayouts.BRANDED_VIEW && "rounded-branded-embed border-subtle",
-            (layout === BookerLayouts.MONTH_VIEW || (isEmbed && layout !== BookerLayouts.BRANDED_VIEW)) &&
+            (layout === BookerLayouts.MONTH_VIEW ||
+              (isEmbed && layout !== BookerLayouts.BRANDED_VIEW && layout !== "mobile_branded")) &&
               "border-subtle rounded-md",
             !isEmbed && "sm:transition-[width] sm:duration-300",
             isEmbed &&
@@ -355,7 +357,7 @@ const BookerComponent = ({
                     extraDays={layout === BookerLayouts.COLUMN_VIEW ? columnViewExtraDays.current : extraDays}
                     isMobile={isMobile}
                     nextSlots={nextSlots}
-                    isBranded={layout === BookerLayouts.BRANDED_VIEW}
+                    isBranded={layout === BookerLayouts.BRANDED_VIEW || layout === "mobile_branded"}
                     bookerState={bookerState}
                     renderOverlay={() =>
                       isEmbed ? (
@@ -382,7 +384,7 @@ const BookerComponent = ({
                 )}
               </BookerSection>
             )}
-            {layout !== BookerLayouts.BRANDED_VIEW && (
+            {layout !== BookerLayouts.BRANDED_VIEW && layout !== "mobile_branded" && (
               <StickyOnDesktop key="meta" className={classNames("relative z-10 flex [grid-area:meta]")}>
                 <BookerSection
                   area="meta"
@@ -416,7 +418,7 @@ const BookerComponent = ({
                 </BookerSection>
               </StickyOnDesktop>
             )}
-            {layout === BookerLayouts.BRANDED_VIEW && (
+            {(layout === BookerLayouts.BRANDED_VIEW || layout === "mobile_branded") && (
               <StickyOnDesktop key="meta" className={classNames("relative z-10 flex [grid-area:meta]")}>
                 <BookerSection area="meta" className="max-w-screen flex w-full flex-col">
                   <EventMeta
@@ -430,10 +432,11 @@ const BookerComponent = ({
                     isPending={event.isPending}
                     isPlatform={isPlatform}
                     isBranded={true}
+                    isMobile={isMobile}
                     overrides={overrides}
                     locale={userLocale}
                   />
-                  <div className="branded-divider" />
+                  {!isMobile && <div className="branded-divider" />}
                 </BookerSection>
               </StickyOnDesktop>
             )}
@@ -443,7 +446,11 @@ const BookerComponent = ({
               area="main"
               className={classNames(
                 "sticky top-0 h-full md:w-[var(--booker-main-width)]",
-                layout !== BookerLayouts.BRANDED_VIEW ? "ml-[-1px] p-6 md:border-l " : "px-l-6 px-r-10-half"
+                layout !== BookerLayouts.BRANDED_VIEW
+                  ? layout === "mobile_branded"
+                    ? "px-l-6 px-r-6"
+                    : "ml-[-1px] p-6 md:border-l "
+                  : "px-l-6 px-r-10-half"
               )}
               {...fadeInLeft}
               visible={bookerState === "booking" && !shouldShowFormInDialog}>
@@ -491,17 +498,24 @@ const BookerComponent = ({
               visible={
                 (layout !== BookerLayouts.WEEK_VIEW && bookerState === "selecting_time") ||
                 layout === BookerLayouts.COLUMN_VIEW ||
-                (layout === BookerLayouts.BRANDED_VIEW && bookerState !== "booking")
+                (layout === BookerLayouts.BRANDED_VIEW && bookerState !== "booking") ||
+                (layout === "mobile_branded" && bookerState !== "booking")
               }
               className={classNames(
                 "flex h-full w-full flex-col overflow-x-auto",
-                layout !== BookerLayouts.BRANDED_VIEW
+                layout !== BookerLayouts.BRANDED_VIEW && layout !== "mobile_branded"
                   ? "border-subtle rtl:border-default px-5 py-3 pb-0 rtl:border-r ltr:md:border-l"
+                  : layout === "mobile_branded"
+                  ? "px-l-6 px-r-6 py-b-10"
                   : "px-l-6 px-r-10 py-b-10",
-                layout === BookerLayouts.BRANDED_VIEW && "h-full overflow-hidden",
+                (layout === BookerLayouts.BRANDED_VIEW || layout === "mobile_branded") &&
+                  "h-full overflow-hidden",
                 layout === BookerLayouts.MONTH_VIEW &&
                   "h-full overflow-hidden md:w-[var(--booker-timeslots-width)]",
-                layout !== BookerLayouts.MONTH_VIEW && layout !== BookerLayouts.BRANDED_VIEW && "sticky top-0"
+                layout !== BookerLayouts.MONTH_VIEW &&
+                  layout !== BookerLayouts.BRANDED_VIEW &&
+                  layout !== "mobile_branded" &&
+                  "sticky top-0"
               )}
               ref={timeslotsRef}
               {...fadeInLeft}>

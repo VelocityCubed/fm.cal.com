@@ -271,7 +271,7 @@ export const AvailableTimes = ({
   return (
     <div className={classNames("text-default flex flex-col", className)}>
       {isBranded && date && (
-        <h4 className="body-head-4 font-normal-medium font-circular color-primary pb-6">
+        <h4 className="body-head-4 font-normal-medium font-circular color-primary pb-4">
           <span className="color-text-dark">{date.format("dddd")}</span>
           {date.format(", MMMM Do, YYYY")}
         </h4>

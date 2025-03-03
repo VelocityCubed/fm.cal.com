@@ -29,6 +29,7 @@ type BookEventFormProps = {
   extraOptions: Record<string, string | string[]>;
   isPlatform?: boolean;
   isBranded?: boolean;
+  isMobile?: boolean;
   isVerificationCodeSending: boolean;
   shouldRenderCaptcha?: boolean;
 };
@@ -48,6 +49,7 @@ export const BookEventForm = ({
   isVerificationCodeSending,
   isPlatform = false,
   isBranded = false,
+  isMobile = false,
   shouldRenderCaptcha,
 }: Omit<BookEventFormProps, "event"> & {
   eventQuery: {
@@ -95,7 +97,14 @@ export const BookEventForm = ({
   const watchedCfToken = bookingForm.watch("cfToken");
 
   return (
-    <div className={isBranded ? "py-b-81 flex h-[391px] flex-col" : "flex h-full flex-col"}>
+    <div
+      className={
+        isBranded
+          ? isMobile
+            ? "py-b-81 flex h-full flex-col"
+            : "py-b-81 flex h-[391px] flex-col"
+          : "flex h-full flex-col"
+      }>
       <Form
         className="flex h-full flex-col"
         onChange={() => {
@@ -115,6 +124,7 @@ export const BookEventForm = ({
           rescheduleUid={rescheduleUid || undefined}
           bookingData={bookingData}
           isBranded={isBranded}
+          isMobile={isMobile}
         />
         {(errors.hasFormErrors || errors.hasDataErrors) && (
           <div data-testid="booking-fail">
@@ -176,7 +186,9 @@ export const BookEventForm = ({
         <div
           className={
             isBranded
-              ? "footer-border branded-submit sticky bottom-0 z-10 flex items-center justify-center px-6 py-4"
+              ? isMobile
+                ? "footer-border branded-mobile-submit sticky bottom-0 z-10 flex items-center justify-center px-6 py-4"
+                : "footer-border branded-submit sticky bottom-0 z-10 flex items-center justify-center px-6 py-4"
               : "modalsticky mt-auto flex justify-end space-x-2 rtl:space-x-reverse"
           }>
           {isInstantMeeting ? (

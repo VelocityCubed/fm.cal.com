@@ -728,12 +728,27 @@ select:focus {
   border-radius: 40px;
 }
 
+.max-w-\[26px\] {
+  max-width: 26px !important;
+  min-width: 26px !important;
+}
+
+.max-h-\[26px\] {
+  max-height: 26px !important;
+  min-height: 26px !important;
+}
+
+
 .branded-border {
   border: 1px solid #0b4736;
 }
 
 .branded-form-border {
   border: 1px solid #a2a1a1;
+}
+
+.branded-mobile-border {
+  border-top: 1px solid #E6E2E2;
 }
 
 .light-text {
@@ -801,6 +816,14 @@ select:focus {
   bottom: 0;
   right: 0;
   width: calc(var(--booker-meta-width) + var(--booker-main-width));
+}
+
+.branded-mobile-submit {
+  position: fixed;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    background: #FAFAFA;
 }
 
 .focus\:custom-brand:focus {

@@ -104,7 +104,7 @@ export const AvailableTimeSlots = ({
 
   return (
     <>
-      {layout !== BookerLayouts.BRANDED_VIEW && (
+      {layout !== BookerLayouts.BRANDED_VIEW && layout !== "mobile_branded" && (
         <div className={classNames(`flex`, `${customClassNames?.availableTimeSlotsContainer}`)}>
           {isLoading ? (
             <div className="mb-3 h-8" />
@@ -139,7 +139,8 @@ export const AvailableTimeSlots = ({
           limitHeight &&
             layout === BookerLayouts.BRANDED_VIEW &&
             "scroll-bar h-[310px] flex-grow overflow-auto",
-          !limitHeight && "flex h-full w-full flex-row gap-4",
+          !limitHeight && layout !== "mobile_branded" && "flex h-full w-full flex-row gap-4",
+          !limitHeight && layout === "mobile_branded" && "flex h-full w-full flex-col gap-6",
           `${customClassNames?.availableTimeSlotsContainer}`
         )}>
         {isLoading && // Shows exact amount of days as skeleton.
@@ -151,9 +152,11 @@ export const AvailableTimeSlots = ({
               key={slots.date}
               className={classNames(
                 "w-full",
-                layout !== BookerLayouts.BRANDED_VIEW
+                layout !== BookerLayouts.BRANDED_VIEW && layout !== "mobile_branded"
                   ? "scroll-bar h-full overflow-y-auto overflow-x-hidden"
-                  : "mb-6"
+                  : layout !== "mobile_branded"
+                  ? "mb-6"
+                  : ""
               )}>
               <AvailableTimes
                 className={customClassNames?.availableTimeSlotsContainer}
@@ -164,7 +167,7 @@ export const AvailableTimeSlots = ({
                 showAvailableSeatsCount={showAvailableSeatsCount}
                 skipConfirmStep={skipConfirmStep}
                 date={dayjs(slots.date)}
-                isBranded={layout === BookerLayouts.BRANDED_VIEW}
+                isBranded={layout === BookerLayouts.BRANDED_VIEW || layout === "mobile_branded"}
                 {...props}
               />
             </div>

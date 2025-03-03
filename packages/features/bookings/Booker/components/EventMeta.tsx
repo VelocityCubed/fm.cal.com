@@ -48,6 +48,7 @@ export const EventMeta = ({
   isPending,
   isPlatform = true,
   isBranded = false,
+  isMobile = false,
   classNames,
   locale,
   overrides = null,
@@ -77,6 +78,7 @@ export const EventMeta = ({
   isPending: boolean;
   isPlatform?: boolean;
   isBranded?: boolean;
+  isMobile?: boolean;
   classNames?: {
     eventMetaContainer?: string;
     eventMetaTitle?: string;
@@ -153,7 +155,7 @@ export const EventMeta = ({
   return (
     <div
       className={`${classNames?.eventMetaContainer || ""} ${
-        isBranded ? "px-r-6 px-l-10 py-b-6 py-t-10" : "p-6"
+        isBranded ? (isMobile ? "px-l-6 px-r-6 py-t-6 py-b-6" : "px-r-6 px-l-10 py-b-6 py-t-10") : "p-6"
       } relative z-10 `}
       data-testid="event-meta">
       {isPending && (
@@ -162,15 +164,20 @@ export const EventMeta = ({
         </m.div>
       )}
       {!isPending && !!event && isBranded && (
-        <m.div {...fadeInUp} layout transition={{ ...fadeInUp.transition, delay: 0.3 }}>
+        <m.div
+          {...fadeInUp}
+          layout
+          transition={{ ...fadeInUp.transition, delay: 0.3 }}
+          className={isMobile ? "" : ""}>
           <div className="flex flex-col gap-6">
-            <div className="flex flex-row items-center justify-start gap-4">
+            <div className="flex flex-row items-center justify-start gap-6">
               <img
                 src={overrides?.clinicImage ?? "https://fertilitymapper.com/assets/logo_small.svg"}
                 className="h-8-5 h-8-5-max w-auto"
                 alt="Clinic Logo"
               />
-              <EventTitle className={`${classNames?.eventMetaTitle} body-head-2 font-circular font-medium`}>
+              <EventTitle
+                className={`${classNames?.eventMetaTitle} body-head-2 font-circular color-primary font-medium`}>
                 {overrides?.clinicTitle ?? "Expert Call"}
               </EventTitle>
             </div>

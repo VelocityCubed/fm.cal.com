@@ -80,6 +80,9 @@ export const buttonClasses = cva(
           "transition-shadow",
           "transition-transform",
           "duration-100",
+          "max-w-[26px]",
+          "max-h-[26px]",
+          "!p-0",
         ],
         branded_minimal_bg: [
           "ease-trans",

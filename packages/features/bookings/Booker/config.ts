@@ -71,6 +71,19 @@ export const resizeAnimationConfig: ResizeAnimationConfig = {
       gridTemplateRows: "minmax(min-content,max-content) 1fr",
     },
   },
+  mobile_branded: {
+    default: {
+      width: "100%",
+      minHeight: "0px",
+      gridTemplateAreas: `
+          "meta"
+          "header"
+          "main"
+        `,
+      gridTemplateColumns: "100%",
+      gridTemplateRows: "minmax(min-content,max-content) 1fr",
+    },
+  },
   month_view: {
     default: {
       width: "calc(var(--booker-meta-width) + var(--booker-main-width))",
@@ -252,6 +265,10 @@ export const extraDaysConfig = {
     // but this is simply here to make the types a lot easier..
     desktop: 0,
     tablet: 0,
+  },
+  mobile_branded: {
+    desktop: 7,
+    tablet: 7,
   },
   [BookerLayouts.MONTH_VIEW]: {
     desktop: 0,

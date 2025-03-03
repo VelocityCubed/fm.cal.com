@@ -37,7 +37,9 @@ export const useBookerLayout = (event: Pick<BookerEvent, "profile"> | undefined 
     : bookerLayouts.defaultLayout;
 
   useEffect(() => {
-    if (isMobile && layout !== "mobile") {
+    if (isMobile && (layout === "branded_view" || "mobile_branded")) {
+      setLayout("mobile_branded");
+    } else if (isMobile && layout !== "mobile") {
       setLayout("mobile");
     } else if (!isMobile && layout === "mobile") {
       setLayout(defaultLayout);
@@ -70,7 +72,8 @@ export const useBookerLayout = (event: Pick<BookerEvent, "profile"> | undefined 
     // column_view doesn't support no-dialog Form
     // When it's supported, disable it for embed
     column_view: true,
-    branded_view: true,
+    branded_view: false,
+    mobile_branded: false,
   };
 
   const shouldShowFormInDialog = shouldShowFormInDialogMap[layout];

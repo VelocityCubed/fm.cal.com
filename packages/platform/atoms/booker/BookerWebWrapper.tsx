@@ -40,7 +40,7 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
   const clinic = searchParams?.get("clinic") ?? null;
   const mem = searchParams?.get("mem") ?? null;
   let overrides = null;
-  if (bookerLayout.layout === BookerLayouts.BRANDED_VIEW) {
+  if (bookerLayout.layout === BookerLayouts.BRANDED_VIEW || bookerLayout.layout === "mobile_branded") {
     overrides = BookerOverrides({ clinic, member: mem });
   }
 
@@ -159,6 +159,9 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
     bookingForm: bookerForm.bookingForm,
     metadata: metadata ?? {},
     teamMemberEmail: props.teamMemberEmail,
+    clinic: clinic,
+    mem: mem,
+    layout: bookerLayout.layout,
   });
 
   const verifyCode = useVerifyCode({

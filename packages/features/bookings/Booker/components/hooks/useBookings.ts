@@ -49,6 +49,9 @@ export interface IUseBookings {
   bookingForm: UseBookingFormReturnType["bookingForm"];
   metadata: Record<string, string>;
   teamMemberEmail?: string | null;
+  clinic?: string | null;
+  mem?: string | null;
+  layout?: string | null;
 }
 
 const getBookingSuccessfulEventPayload = (booking: {
@@ -101,7 +104,16 @@ const storeInLocalStorage = ({
   localStorage.setItem(STORAGE_KEY, value);
 };
 
-export const useBookings = ({ event, hashedLink, bookingForm, metadata, teamMemberEmail }: IUseBookings) => {
+export const useBookings = ({
+  event,
+  hashedLink,
+  bookingForm,
+  metadata,
+  teamMemberEmail,
+  clinic,
+  mem,
+  layout,
+}: IUseBookings) => {
   const router = useRouter();
   const eventSlug = useBookerStore((state) => state.eventSlug);
   const eventTypeId = useBookerStore((state) => state.eventId);
@@ -261,6 +273,9 @@ export const useBookings = ({ event, hashedLink, bookingForm, metadata, teamMemb
       const query = {
         isSuccessBookingPage: true,
         email: bookingForm.getValues("responses.email"),
+        layout: layout,
+        clinic: clinic,
+        mem: mem,
         eventTypeSlug: eventSlug,
         seatReferenceUid: "seatReferenceUid" in booking ? booking.seatReferenceUid : null,
         formerTime:

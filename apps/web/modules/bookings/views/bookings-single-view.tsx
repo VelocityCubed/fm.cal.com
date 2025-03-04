@@ -43,6 +43,7 @@ import { useRouterQuery } from "@calcom/lib/hooks/useRouterQuery";
 import useTheme from "@calcom/lib/hooks/useTheme";
 import isSmsCalEmail from "@calcom/lib/isSmsCalEmail";
 import { markdownToSafeHTML } from "@calcom/lib/markdownToSafeHTML";
+import { markdownToSafeHTMLClient } from "@calcom/lib/markdownToSafeHTMLClient";
 import { getEveryFreqFor } from "@calcom/lib/recurringStrings";
 import { getIs24hClockFromLocalStorage, isBrowserLocale24h } from "@calcom/lib/timeFormat";
 import { localStorage } from "@calcom/lib/webstorage";
@@ -65,6 +66,7 @@ import CancelBooking from "@calcom/web/components/booking/CancelBooking";
 import EventReservationSchema from "@calcom/web/components/schemas/EventReservationSchema";
 import { timeZone } from "@calcom/web/lib/clock";
 
+import { BookerOverrides } from "../lib/BookerOverrides";
 import type { PageProps } from "./bookings-single-view.getServerSideProps";
 
 const stringToBoolean = z
@@ -337,10 +339,17 @@ export default function Success(props: PageProps) {
     }
     return t(`emailed_you_and_attendees${titleSuffix}`);
   }
+  const layout = searchParams?.get("layout");
 
   // This is a weird case where the same route can be opened in booking flow as a success page or as a booking detail page from the app
   // As Booking Page it has to support configured theme, but as booking detail page it should not do any change. Let Shell.tsx handle it.
-  useTheme(isSuccessBookingPage ? props.profile.theme : "system");
+  useTheme(
+    layout === "branded_view" || layout === "mobile_branded"
+      ? "lightt"
+      : isSuccessBookingPage
+      ? props.profile.theme
+      : "system"
+  );
   useBrandColors({
     brandColor: props.profile.brandColor,
     darkBrandColor: props.profile.darkBrandColor,
@@ -379,6 +388,12 @@ export default function Success(props: PageProps) {
   const isPastBooking = isBookingInPast;
   const isRerouting = searchParams?.get("cal.rerouting") === "true";
   const isRescheduled = bookingInfo?.rescheduled;
+  const clinic = searchParams?.get("clinic");
+  const mem = searchParams?.get("mem");
+  let overrides = null;
+  if (layout === "mobile_branded" || layout === "branded_view") {
+    overrides = BookerOverrides({ clinic, member: mem });
+  }
 
   const successPageHeadline = (() => {
     if (needsConfirmationAndReschedulable) {
@@ -423,16 +438,20 @@ export default function Success(props: PageProps) {
           status={status}
         />
       )}
-      {isLoggedIn && !isEmbed && !isFeedbackMode && (
-        <div className="-mb-4 ml-4 mt-2">
-          <Link
-            href={allRemainingBookings ? "/bookings/recurring" : "/bookings/upcoming"}
-            data-testid="back-to-bookings"
-            className="hover:bg-subtle text-subtle hover:text-default mt-2 inline-flex px-1 py-2 text-sm transition dark:hover:bg-transparent">
-            <Icon name="chevron-left" className="h-5 w-5 rtl:rotate-180" /> {t("back_to_bookings")}
-          </Link>
-        </div>
-      )}
+      {isLoggedIn &&
+        !isEmbed &&
+        !isFeedbackMode &&
+        layout !== "branded_view" &&
+        layout !== "mobile_branded" && (
+          <div className="-mb-4 ml-4 mt-2">
+            <Link
+              href={allRemainingBookings ? "/bookings/recurring" : "/bookings/upcoming"}
+              data-testid="back-to-bookings"
+              className="hover:bg-subtle text-subtle hover:text-default mt-2 inline-flex px-1 py-2 text-sm transition dark:hover:bg-transparent">
+              <Icon name="chevron-left" className="h-5 w-5 rtl:rotate-180" /> {t("back_to_bookings")}
+            </Link>
+          </div>
+        )}
       <BookingPageTagManager
         eventType={{ ...eventType, metadata: eventTypeMetaDataSchemaWithTypedApps.parse(eventType.metadata) }}
       />
@@ -441,24 +460,39 @@ export default function Success(props: PageProps) {
           <div
             className={classNames(
               shouldAlignCentrally ? "text-center" : "",
-              "flex items-end justify-center px-4 pb-20 pt-4 sm:flex sm:p-0"
+              layout !== "mobile_branded" && "flex items-end justify-center px-4 pb-20 pt-4 sm:flex sm:p-0",
+              layout === "mobile_branded" && "justify center flex items-end p-0 sm:flex sm:p-0"
             )}>
             <div
               className={classNames(
-                "main my-4 flex flex-col transition-opacity sm:my-0 ",
+                "main transition-opacity",
+                layout !== "mobile_branded" && "flex flex-col ",
+                (layout === "branded_view" || layout === "mobile_branded") &&
+                  "h-full min-h-[calc(100dvh)] items-center justify-center",
+                layout === "mobile_branded" && "h-full min-h-[calc(100dvh)]",
+                layout !== "branded_view" && layout !== "mobile_branded" && " my-4   sm:my-0 ",
                 isEmbed ? "" : " inset-0"
               )}
               aria-hidden="true">
               <div
                 className={classNames(
-                  "inline-block transform overflow-hidden rounded-lg border sm:my-8 sm:max-w-xl",
-                  !isBackgroundTransparent && " bg-default dark:bg-muted border-booker border-booker-width",
-                  "px-8 pb-4 pt-5 text-left align-bottom transition-all sm:w-full sm:py-8 sm:align-middle"
+                  "inline-block transform overflow-hidden rounded-lg",
+                  layout !== "mobile_branded" && "border sm:my-8 sm:max-w-xl",
+                  !isBackgroundTransparent &&
+                    layout !== "mobile_branded" &&
+                    " bg-default dark:bg-muted border-booker border-booker-width",
+                  layout !== "branded_view" &&
+                    layout !== "mobile_branded" &&
+                    "pb-4 pt-5 sm:py-8 sm:align-middle",
+                  "px-8 text-left align-bottom transition-all sm:w-full",
+                  layout === "branded_view" && "border-subtle bg-branded rounded-branded py-t-10 py-b-10",
+                  layout === "mobile_branded" &&
+                    "bg-branded py-t-10 py-b-10 h-full min-h-[calc(100dvh)] w-full"
                 )}
                 role="dialog"
                 aria-modal="true"
                 aria-labelledby="modal-headline">
-                {!isFeedbackMode && (
+                {!isFeedbackMode && layout !== "branded_view" && layout !== "mobile_branded" && (
                   <>
                     <div
                       className={classNames(isRoundRobin && "min-w-32 min-h-24 relative mx-auto h-24 w-32")}>
@@ -774,7 +808,13 @@ export default function Success(props: PageProps) {
                             team={eventType?.team?.name}
                             teamId={eventType?.team?.id}
                             setIsCancellationMode={setIsCancellationMode}
-                            theme={isSuccessBookingPage ? props.profile.theme : "light"}
+                            theme={
+                              layout === "branded_view" || layout === "mobile_branded"
+                                ? "light"
+                                : isSuccessBookingPage
+                                ? props.profile.theme
+                                : "light"
+                            }
                             allRemainingBookings={allRemainingBookings}
                             seatReferenceUid={seatReferenceUid}
                             bookingCancelledEventProps={bookingCancelledEventProps}
@@ -956,6 +996,109 @@ export default function Success(props: PageProps) {
                         </div>
                       </>
                     )}
+                  </>
+                )}
+                {!isFeedbackMode && (layout === "branded_view" || layout === "mobile_branded") && (
+                  <>
+                    <div className="text-center">
+                      {!isEmbed && (
+                        <div className="mb-10 flex flex-col items-center justify-center gap-6">
+                          <div
+                            className={classNames(
+                              "orange-bg flex items-center justify-center rounded-full",
+                              layout === "branded_view" && "max-w-14 h-14 max-h-14 w-14 ",
+                              layout === "mobile_branded" && "max-w-8 h-8 max-h-8 w-8"
+                            )}>
+                            <img
+                              src="https://fertilitymapperprod.blob.core.windows.net/assets/images/check-icon.svg"
+                              className={classNames(
+                                layout === "branded_view" && "h-t1 max-h-t1 max-w-4 w-4",
+                                layout === "mobile_branded" && "h-t2 max-h-t2 max-w-t2 w-t2"
+                              )}
+                              alt="Check Icon"
+                            />
+                          </div>
+                          <h3
+                            className="font-mackinac body-head-1 color-primary font-bold"
+                            data-testid={isCancelled ? "cancelled-headline" : ""}
+                            id="modal-headline">
+                            You’re booked in!
+                          </h3>
+                        </div>
+                      )}
+                      <div>
+                        <p className="color-body-text body-normal font-normal-medium font-circular text-left">
+                          A calendar invite has been sent to your email address. Ahead of the call, you might
+                          like to read our guide on{" "}
+                          <a
+                            className="branded-link"
+                            href="https://fertilitymapper.com/fertility/path/questions-at-your-first-clinic-consultation/">
+                            {" "}
+                            what to ask the clinic
+                          </a>
+                          , to help you feel prepared, confident and make the most of your conversation.
+                        </p>
+                      </div>
+
+                      <div className="text-default mt-6 text-left rtl:text-right">
+                        <div className="branded-border-bottom pb-4 ">
+                          <RecurringBookings
+                            eventType={eventType}
+                            duration={calculatedDuration}
+                            recurringBookings={props.recurringBookings}
+                            allRemainingBookings={allRemainingBookings}
+                            date={date}
+                            is24h={is24h}
+                            isCancelled={isCancelled}
+                            tz={tz}
+                            layout={layout}
+                          />
+                        </div>
+                        <div className="mt-4 flex flex-row items-center justify-start gap-4">
+                          <img
+                            src={
+                              overrides?.clinicImage ?? "https://fertilitymapper.com/assets/logo_small.svg"
+                            }
+                            className="h-8-5 h-8-5-max w-auto"
+                            alt="Clinic Logo"
+                          />
+                          <h3 className="body-head-sm font-circular color-primary font-medium">
+                            {overrides?.clinicTitle ?? "Expert Call"}
+                          </h3>
+                        </div>
+
+                        <div className="mt-4 flex flex-row items-center justify-start gap-6 last:mb-0">
+                          <img
+                            src={
+                              overrides?.memberImage ??
+                              "https://fertilitymapper.com/assets/images/kayleigh.webp"
+                            }
+                            className="max-h-5-5 h-5-5 w-5-5 max-w-5-5 rounded-full"
+                            alt="Clinician Image"
+                          />
+                          <div className="flex flex-col gap-1">
+                            <div
+                              className="color-text-dark font-circular font-normal-medium body-head-4"
+                              // eslint-disable-next-line react/no-danger
+                              dangerouslySetInnerHTML={{
+                                __html: markdownToSafeHTMLClient(
+                                  overrides?.memberName ?? "Kayleigh Hartigan"
+                                ),
+                              }}
+                            />
+                            <div
+                              className="color-body-text font-circular body-sml font-normal-medium"
+                              // eslint-disable-next-line react/no-danger
+                              dangerouslySetInnerHTML={{
+                                __html: markdownToSafeHTMLClient(
+                                  overrides?.memberDescription ?? "Founder and CEO"
+                                ),
+                              }}
+                            />
+                          </div>
+                        </div>
+                      </div>
+                    </div>
                   </>
                 )}
                 {isFeedbackMode &&
@@ -1144,6 +1287,7 @@ type RecurringBookingsProps = {
   allRemainingBookings: boolean;
   isCancelled: boolean;
   tz: string;
+  layout?: string | null;
 };
 
 function RecurringBookings({
@@ -1155,6 +1299,7 @@ function RecurringBookings({
   is24h,
   isCancelled,
   tz,
+  layout = "",
 }: RecurringBookingsProps) {
   const [moreEventsVisible, setMoreEventsVisible] = useState(false);
   const {
@@ -1221,6 +1366,31 @@ function RecurringBookings({
           </Collapsible>
         )}
       </>
+    );
+  }
+
+  if (layout === "branded_view" || layout === "mobile_branded") {
+    const formattedDate = formatToLocalizedDate(date, language, "full", tz);
+    const dayOfWeek = formattedDate.split(",")[0];
+    return (
+      <div className="mt-4 flex flex-row items-center justify-start gap-4 ">
+        <div className="max-h-5-5 h-5-5 w-5-5 max-w-5-5 pale-rey-bg flex items-center justify-center rounded-full">
+          <img
+            src="https://fertilitymapperprod.blob.core.windows.net/assets/images/calendar-icon.svg"
+            className="max-w-6 h-6 max-h-6 w-6"
+            alt="Calendar Icon"
+          />
+        </div>
+
+        <div
+          className={classNames(
+            isCancelled ? "line-through" : "",
+            "color-primary font-circular font-normal-medium body-head-4"
+          )}>
+          <span className="color-text-dark font-medium">{dayOfWeek}, </span>
+          <span>{formatToLocalizedDate(date, language, "long", tz)}</span>
+        </div>
+      </div>
     );
   }
 

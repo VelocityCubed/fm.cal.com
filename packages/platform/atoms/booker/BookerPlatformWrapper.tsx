@@ -101,7 +101,7 @@ export type BookerPlatformWrapperAtomPropsForTeam = BookerPlatformWrapperAtomPro
 export const BookerPlatformWrapper = (
   props: BookerPlatformWrapperAtomPropsForIndividual | BookerPlatformWrapperAtomPropsForTeam
 ) => {
-  const { view = "MONTH_VIEW", bannerUrl, routingFormSearchParams } = props;
+  const { view = "BRANDED_VIEW", bannerUrl, routingFormSearchParams } = props;
   const layout = BookerLayouts[view];
 
   const { clientId } = useAtomsContext();

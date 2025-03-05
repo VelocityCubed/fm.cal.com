@@ -63,7 +63,7 @@ export function transformApiEventTypeForAtom(
   const confirmationPolicyTransformed = transformConfirmationPolicyApiToInternal(confirmationPolicy);
   const defaultEventBookerLayouts = {
     enabledLayouts: [...bookerLayoutOptions],
-    defaultLayout: BookerLayouts.MONTH_VIEW,
+    defaultLayout: BookerLayouts.BRANDED_VIEW,
   };
   const firstUsersMetadata = userMetadataSchema.parse(user.metadata || {});
   const bookerLayouts = bookerLayoutsSchema.parse(
@@ -181,7 +181,7 @@ export function transformApiTeamEventTypeForAtom(
   const confirmationPolicyTransformed = transformConfirmationPolicyApiToInternal(confirmationPolicy);
   const defaultEventBookerLayouts = {
     enabledLayouts: [...bookerLayoutOptions],
-    defaultLayout: BookerLayouts.MONTH_VIEW,
+    defaultLayout: BookerLayouts.BRANDED_VIEW,
   };
   const firstUsersMetadata = userMetadataSchema.parse({});
   const bookerLayouts = bookerLayoutsSchema.parse(

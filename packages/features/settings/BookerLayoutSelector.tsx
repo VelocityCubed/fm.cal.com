@@ -124,7 +124,7 @@ const BookerLayoutFields = ({
 
   const disableFields = showUserSettings && !isOverridingSettings;
   const shownSettings = disableFields ? user?.defaultBookerLayouts : settings;
-  const defaultLayout = shownSettings?.defaultLayout || BookerLayouts.MONTH_VIEW;
+  const defaultLayout = shownSettings?.defaultLayout || BookerLayouts.BRANDED_VIEW;
 
   // Converts the settings array into a boolean object, which can be used as form values.
   const toggleValues: BookerLayoutState = bookerLayoutOptions.reduce((layouts, layout) => {
@@ -149,7 +149,7 @@ const BookerLayoutFields = ({
         // If default layout is toggled off, we set the default layout to the first enabled layout
         // if there's none enabled, we set it to month view.
         defaultLayout: isDefaultLayoutToggledOff
-          ? firstEnabledLayout || BookerLayouts.MONTH_VIEW
+          ? firstEnabledLayout || BookerLayouts.BRANDED_VIEW
           : defaultLayout,
       });
     },

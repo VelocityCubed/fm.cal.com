@@ -179,7 +179,7 @@ const EmailEmbed = ({
     username,
     eventSlug: eventType?.slug ?? "",
     eventId: eventType?.id,
-    layout: BookerLayouts.MONTH_VIEW,
+    layout: BookerLayouts.BRANDED_VIEW,
     org: orgSlug,
     isTeamEvent,
   });
@@ -614,7 +614,7 @@ const EmbedTypeCodeAndPreviewDialogContent = ({
   const [isEmbedCustomizationOpen, setIsEmbedCustomizationOpen] = useState(true);
   const [isBookingCustomizationOpen, setIsBookingCustomizationOpen] = useState(true);
   const defaultConfig = {
-    layout: BookerLayouts.MONTH_VIEW,
+    layout: BookerLayouts.BRANDED_VIEW,
   };
 
   const paletteDefaultValue = (paletteName: string) => {

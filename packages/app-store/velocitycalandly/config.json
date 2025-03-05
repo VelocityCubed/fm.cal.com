@@ -3,7 +3,7 @@
   "slug": "velocitycalandly",
   "type": "velocitycalandly_calendar",
   "logo": "icon.svg",
-  "url": "https://example.com/link",
+  "url": "https://fertilitymapper.com",
   "variant": "calendar",
   "categories": [
     "calendar"
@@ -13,5 +13,6 @@
   "description": "Velocity calandly integration",
   "isTemplate": false,
   "__createdUsingCli": true,
-  "__template": "general-app-settings"
+  
+  "__template": "calendar"
 }

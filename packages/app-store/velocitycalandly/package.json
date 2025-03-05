@@ -4,11 +4,12 @@
   "name": "@calcom/velocitycalandly",
   "version": "0.0.0",
   "main": "./index.ts",
+  "description": "Velocity calandly integration",
   "dependencies": {
-    "@calcom/lib": "*"
+    "@calcom/lib": "*",
+    "@calcom/prisma": "*"
   },
   "devDependencies": {
     "@calcom/types": "*"
-  },
-  "description": "Velocity calandly integration"
+  }
 }

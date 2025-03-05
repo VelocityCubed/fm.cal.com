@@ -1,5 +1,8 @@
 import type { NextApiRequest, NextApiResponse } from "next";
 
+import { symmetricEncrypt } from "@calcom/lib/crypto";
+import prisma from "@calcom/prisma";
+
 import getAppKeysFromSlug from "../../_utils/getAppKeysFromSlug";
 import { encodeOAuthState } from "../../_utils/oauth/encodeOAuthState";
 import config from "../config.json";
@@ -28,6 +31,15 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   console.log("client_secret", client_secret);
 
   const state = encodeOAuthState(req);
+  const user = await prisma.user.findFirstOrThrow({
+    where: {
+      id: req.session?.user?.id,
+    },
+    select: {
+      id: true,
+      email: true,
+    },
+  });
 
   // const params = {
   //   client_id,
@@ -65,7 +77,20 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     res.status(response.status).json({ error: "Error fetching data from Calendly" });
   }
 
-  const data = await response.json();
+  const data2 = await response.json();
+
+  const data = {
+    type: "velocitycalandly_calendar",
+    key: symmetricEncrypt(JSON.stringify({}), process.env.CALENDSO_ENCRYPTION_KEY || ""),
+    userId: user.id,
+    teamId: null,
+    appId: "velocitycalandly",
+    invalid: false,
+  };
+
+  await prisma.credential.create({
+    data,
+  });
 
   // console.log("response data", data);
   // for (const ent of data.collection) {

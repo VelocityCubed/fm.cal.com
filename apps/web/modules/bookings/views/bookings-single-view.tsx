@@ -36,6 +36,7 @@ import {
   formatToLocalizedTime,
   formatToLocalizedTimezone,
 } from "@calcom/lib/date-fns";
+import { getAvatarUrl } from "@calcom/lib/getAvatarUrl";
 import useGetBrandingColours from "@calcom/lib/getBrandColours";
 import { useCompatSearchParams } from "@calcom/lib/hooks/useCompatSearchParams";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
@@ -43,7 +44,6 @@ import { useRouterQuery } from "@calcom/lib/hooks/useRouterQuery";
 import useTheme from "@calcom/lib/hooks/useTheme";
 import isSmsCalEmail from "@calcom/lib/isSmsCalEmail";
 import { markdownToSafeHTML } from "@calcom/lib/markdownToSafeHTML";
-import { markdownToSafeHTMLClient } from "@calcom/lib/markdownToSafeHTMLClient";
 import { getEveryFreqFor } from "@calcom/lib/recurringStrings";
 import { getIs24hClockFromLocalStorage, isBrowserLocale24h } from "@calcom/lib/timeFormat";
 import { localStorage } from "@calcom/lib/webstorage";
@@ -389,10 +389,9 @@ export default function Success(props: PageProps) {
   const isRerouting = searchParams?.get("cal.rerouting") === "true";
   const isRescheduled = bookingInfo?.rescheduled;
   const clinic = searchParams?.get("clinic");
-  const mem = searchParams?.get("mem");
   let overrides = null;
   if (layout === "mobile_branded" || layout === "branded_view") {
-    overrides = BookerOverrides({ clinic, member: mem });
+    overrides = BookerOverrides({ clinic });
   }
 
   const successPageHeadline = (() => {
@@ -1076,33 +1075,20 @@ export default function Success(props: PageProps) {
                         </div>
 
                         <div className="mt-4 flex flex-row items-center justify-start gap-6 last:mb-0">
-                          <img
-                            src={
-                              overrides?.memberImage ??
-                              "https://fertilitymapper.com/assets/images/kayleigh.webp"
-                            }
-                            className="max-h-5-5 h-5-5 w-5-5 max-w-5-5 rounded-full"
-                            alt="Clinician Image"
+                          <Avatar
+                            alt={props.profile.name}
+                            size="custom"
+                            imageSrc={getAvatarUrl(props.profile.image)}
                           />
                           <div className="flex flex-col gap-1">
-                            <div
-                              className="color-text-dark font-circular font-normal-medium body-head-4"
-                              // eslint-disable-next-line react/no-danger
-                              dangerouslySetInnerHTML={{
-                                __html: markdownToSafeHTMLClient(
-                                  overrides?.memberName ?? "Kayleigh Hartigan"
-                                ),
-                              }}
-                            />
-                            <div
-                              className="color-body-text font-circular body-sml font-normal-medium"
-                              // eslint-disable-next-line react/no-danger
-                              dangerouslySetInnerHTML={{
-                                __html: markdownToSafeHTMLClient(
-                                  overrides?.memberDescription ?? "Founder and CEO"
-                                ),
-                              }}
-                            />
+                            <p className="color-text-dark font-circular font-normal-medium body-head-4">
+                              {props.profile.name}
+                            </p>
+                            {props.profile.bio && (
+                              <p className="color-body-text font-circular body-sml font-normal-medium max-w-175 line-clamp-2 text-ellipsis">
+                                {props.profile.bio}
+                              </p>
+                            )}
                           </div>
                         </div>
                       </div>

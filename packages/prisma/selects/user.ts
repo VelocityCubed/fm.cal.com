@@ -37,6 +37,8 @@ export const baseUserSelect = Prisma.validator<Prisma.UserSelect>()({
   hideBranding: true,
   theme: true,
   brandColor: true,
+  bio: true,
+  avatarUrl: true,
   darkBrandColor: true,
   ...availabilityUserSelect,
 });
@@ -50,6 +52,8 @@ export const userSelect = Prisma.validator<Prisma.UserArgs>()({
     hideBranding: true,
     theme: true,
     brandColor: true,
+    bio: true,
+    avatarUrl: true,
     darkBrandColor: true,
     metadata: true,
     ...availabilityUserSelect,

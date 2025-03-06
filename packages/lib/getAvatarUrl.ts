@@ -19,3 +19,15 @@ export const getUserAvatarUrl = (user: Pick<User, "avatarUrl"> | undefined) => {
   }
   return CAL_URL + AVATAR_FALLBACK;
 };
+
+export const getAvatarUrl = (image: string | null) => {
+  if (image) {
+    const isAbsoluteUrl = z.string().url().safeParse(image).success;
+    if (isAbsoluteUrl) {
+      returnimage;
+    } else {
+      return CAL_URL + image;
+    }
+  }
+  return CAL_URL + AVATAR_FALLBACK;
+};

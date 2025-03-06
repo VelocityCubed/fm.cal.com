@@ -1,6 +1,6 @@
 "use client";
 
-export const BookerOverrides = (props: { clinic: string | null; member: string | null }) => {
+export const BookerOverrides = (props: { clinic: string | null }) => {
   let overrides = {
     clinicTitle: "Expert Call",
     clinicDescription:
@@ -8,7 +8,7 @@ export const BookerOverrides = (props: { clinic: string | null; member: string |
     clinicImage: "https://fertilitymapper.com/assets/logo_small.svg",
   };
 
-  if (props.clinic && props.clinic === "Aria Fertility" && props.member && props.member === "xf") {
+  if (props.clinic && props.clinic === "Aria Fertility") {
     overrides = {
       clinicImage: "https://fertilitymapperprod.blob.core.windows.net/clinics/aria-fertility/icon.png",
       clinicTitle: "Speak To A Doctor",

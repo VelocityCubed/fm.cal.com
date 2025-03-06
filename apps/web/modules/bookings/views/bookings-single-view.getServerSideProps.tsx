@@ -138,6 +138,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     brandColor: eventType.team ? null : eventType.users[0].brandColor || null,
     darkBrandColor: eventType.team ? null : eventType.users[0].darkBrandColor || null,
     slug: eventType.team?.slug || eventType.users[0]?.username || null,
+    image: eventType.users[0]?.avatarUrl || null,
+    bio: eventType.users[0]?.bio || null,
   };
 
   if (bookingInfo !== null && eventType.seatsPerTimeSlot) {

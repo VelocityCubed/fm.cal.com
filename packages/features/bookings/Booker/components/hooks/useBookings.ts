@@ -50,7 +50,6 @@ export interface IUseBookings {
   metadata: Record<string, string>;
   teamMemberEmail?: string | null;
   clinic?: string | null;
-  mem?: string | null;
   layout?: string | null;
 }
 
@@ -111,7 +110,6 @@ export const useBookings = ({
   metadata,
   teamMemberEmail,
   clinic,
-  mem,
   layout,
 }: IUseBookings) => {
   const router = useRouter();
@@ -275,7 +273,6 @@ export const useBookings = ({
         email: bookingForm.getValues("responses.email"),
         layout: layout,
         clinic: clinic,
-        mem: mem,
         eventTypeSlug: eventSlug,
         seatReferenceUid: "seatReferenceUid" in booking ? booking.seatReferenceUid : null,
         formerTime:

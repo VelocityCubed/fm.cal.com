@@ -38,10 +38,9 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
   });
   const bookerLayout = useBookerLayout(event.data);
   const clinic = searchParams?.get("clinic") ?? null;
-  const mem = searchParams?.get("mem") ?? null;
   let overrides = null;
   if (bookerLayout.layout === BookerLayouts.BRANDED_VIEW || bookerLayout.layout === "mobile_branded") {
-    overrides = BookerOverrides({ clinic, member: mem });
+    overrides = BookerOverrides({ clinic });
   }
 
   const selectedDate = searchParams?.get("date");
@@ -160,7 +159,6 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
     metadata: metadata ?? {},
     teamMemberEmail: props.teamMemberEmail,
     clinic: clinic,
-    mem: mem,
     layout: bookerLayout.layout,
   });
 

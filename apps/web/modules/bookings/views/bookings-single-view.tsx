@@ -1076,13 +1076,13 @@ export default function Success(props: PageProps) {
 
                         <div className="mt-4 flex flex-row items-center justify-start gap-6 last:mb-0">
                           <Avatar
-                            alt={props.profile.name}
+                            alt={props.profile.name ?? ""}
                             size="custom"
                             imageSrc={getAvatarUrl(props.profile.image)}
                           />
                           <div className="flex flex-col gap-1">
                             <p className="color-text-dark font-circular font-normal-medium body-head-4">
-                              {props.profile.name}
+                              {props.profile.name ?? ""}
                             </p>
                             {props.profile.bio && (
                               <p className="color-body-text font-circular body-sml font-normal-medium max-w-175 line-clamp-2 text-ellipsis">

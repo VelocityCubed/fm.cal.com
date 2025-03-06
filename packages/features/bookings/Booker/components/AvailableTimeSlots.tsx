@@ -138,7 +138,7 @@ export const AvailableTimeSlots = ({
             "scroll-bar flex-grow overflow-auto md:h-[400px]",
           limitHeight &&
             layout === BookerLayouts.BRANDED_VIEW &&
-            "scroll-bar h-[310px] flex-grow overflow-auto",
+            "scroll-bar h-[388px] flex-grow overflow-auto",
           !limitHeight && layout !== "mobile_branded" && "flex h-full w-full flex-row gap-4",
           !limitHeight && layout === "mobile_branded" && "flex h-full w-full flex-col gap-6",
           `${customClassNames?.availableTimeSlotsContainer}`

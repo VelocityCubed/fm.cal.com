@@ -324,14 +324,12 @@ const BookerComponent = ({
             // We remove border only when the content covers entire viewport. Because in embed, it can almost never be the case that it covers entire viewport, we show the border there
             layout !== BookerLayouts.BRANDED_VIEW && "bg-default",
             layout === BookerLayouts.BRANDED_VIEW && "bg-branded rounded-branded border-subtle",
-            isEmbed && layout === BookerLayouts.BRANDED_VIEW && "rounded-branded-embed border-subtle",
+            isEmbed && layout === BookerLayouts.BRANDED_VIEW && "rounded-branded-embed",
             (layout === BookerLayouts.MONTH_VIEW ||
               (isEmbed && layout !== BookerLayouts.BRANDED_VIEW && layout !== "mobile_branded")) &&
               "border-subtle rounded-md",
             !isEmbed && "sm:transition-[width] sm:duration-300",
-            isEmbed &&
-              (layout === BookerLayouts.MONTH_VIEW || layout === BookerLayouts.BRANDED_VIEW) &&
-              "border-booker sm:border-booker-width",
+            isEmbed && layout === BookerLayouts.MONTH_VIEW && "border-booker sm:border-booker-width",
             !isEmbed &&
               (layout === BookerLayouts.MONTH_VIEW || layout === BookerLayouts.BRANDED_VIEW) &&
               `border-subtle border`,

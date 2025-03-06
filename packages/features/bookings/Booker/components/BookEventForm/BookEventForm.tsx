@@ -102,7 +102,7 @@ export const BookEventForm = ({
         isBranded
           ? isMobile
             ? "py-b-81 flex h-full flex-col"
-            : "py-b-81 flex h-[391px] flex-col"
+            : "py-b-81 flex h-[480px] flex-col"
           : "flex h-full flex-col"
       }>
       <Form

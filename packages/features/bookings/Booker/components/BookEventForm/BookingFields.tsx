@@ -42,7 +42,7 @@ export const BookingFields = ({
         isBranded
           ? isMobile
             ? "flex flex-col"
-            : "scroll-bar px-r-10-half flex h-[391px] flex-col overflow-auto"
+            : "scroll-bar px-r-10-half flex h-[480px] flex-col overflow-auto"
           : ""
       }>
       {fields.map((field, index) => {

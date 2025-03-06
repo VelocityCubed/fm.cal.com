@@ -58,6 +58,7 @@ export const buttonClasses = cva(
           "focus-visible:shadow-button-solid-brand-focused",
           // Border
           "branded-border rounded-40",
+          "hover:branded-border",
           // Disabled
           "disabled:color-light",
           // Shadows and effects

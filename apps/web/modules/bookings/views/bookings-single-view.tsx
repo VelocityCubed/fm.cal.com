@@ -468,7 +468,11 @@ export default function Success(props: PageProps) {
                 "main transition-opacity",
                 layout !== "mobile_branded" && "flex flex-col ",
                 (layout === "branded_view" || layout === "mobile_branded") &&
+                  !isEmbed &&
                   "h-full min-h-[calc(100dvh)] items-center justify-center",
+                (layout === "branded_view" || layout === "mobile_branded") &&
+                  isEmbed &&
+                  "h-full min-h-[calc(100dvh)] items-center justify-start",
                 layout === "mobile_branded" && "h-full min-h-[calc(100dvh)]",
                 layout !== "branded_view" && layout !== "mobile_branded" && " my-4   sm:my-0 ",
                 isEmbed ? "" : " inset-0"
@@ -477,15 +481,19 @@ export default function Success(props: PageProps) {
               <div
                 className={classNames(
                   "inline-block transform overflow-hidden rounded-lg",
-                  layout !== "mobile_branded" && "border sm:my-8 sm:max-w-xl",
+                  layout !== "mobile_branded" && !isEmbed && "border sm:my-8 sm:max-w-xl",
                   !isBackgroundTransparent &&
                     layout !== "mobile_branded" &&
+                    !isEmbed &&
                     " bg-default dark:bg-muted border-booker border-booker-width",
                   layout !== "branded_view" &&
                     layout !== "mobile_branded" &&
                     "pb-4 pt-5 sm:py-8 sm:align-middle",
                   "px-8 text-left align-bottom transition-all sm:w-full",
-                  layout === "branded_view" && "border-subtle bg-branded rounded-branded py-t-10 py-b-10",
+                  (layout === "branded_view" || layout === "mobile_branded") && isEmbed && "w-[352px] !px-0",
+                  layout === "branded_view" &&
+                    !isEmbed &&
+                    "border-subtle bg-branded rounded-branded py-t-10 py-b-10",
                   layout === "mobile_branded" &&
                     "bg-branded py-t-10 py-b-10 h-full min-h-[calc(100dvh)] w-full"
                 )}
@@ -1214,6 +1222,7 @@ export default function Success(props: PageProps) {
                       <p className="font-semibold">{t("google_new_spam_policy")}</p>
                       <span className="underline">
                         <a
+                          rel="noopener"
                           target="_blank"
                           href="https://cal.com/blog/google-s-new-spam-policy-may-be-affecting-your-invitations">
                           {t("resolve")}

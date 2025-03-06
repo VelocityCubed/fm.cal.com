@@ -137,7 +137,7 @@ export const resizeAnimationConfig: ResizeAnimationConfig = {
   branded_view: {
     default: {
       width: "calc(var(--booker-meta-width) + var(--booker-main-width))",
-      minHeight: "450px",
+      minHeight: "573px",
       height: "auto",
       gridTemplateAreas: `
       "meta header header"

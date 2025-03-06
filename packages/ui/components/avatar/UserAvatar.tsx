@@ -33,6 +33,7 @@ const indicatorBySize = {
   mdLg: "h-5 w-5", //40px
   lg: "h-6 w-6", // 64px
   xl: "h-10 w-10", // 96px
+  custom: "h-5-5 w-5-5", // 52px
 } as const;
 
 function OrganizationIndicator({

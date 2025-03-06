@@ -1,3 +1,5 @@
+import isSameOrAfter from "dayjs/plugin/isSameOrAfter";
+import isSameOrBefore from "dayjs/plugin/isSameOrBefore";
 import { useRef } from "react";
 
 import dayjs from "@calcom/dayjs";
@@ -12,6 +14,9 @@ import { BookerLayouts } from "@calcom/prisma/zod-utils";
 import { AvailableTimesHeader } from "../../components/AvailableTimesHeader";
 import { useBookerStore } from "../store";
 import type { useScheduleForEventReturnType } from "../utils/event";
+
+dayjs.extend(isSameOrAfter);
+dayjs.extend(isSameOrBefore);
 
 type AvailableTimeSlotsProps = {
   extraDays?: number;
@@ -65,6 +70,11 @@ export const AvailableTimeSlots = ({
   const [layout] = useBookerStore((state) => [state.layout]);
   const isColumnView = layout === BookerLayouts.COLUMN_VIEW || layout === BookerLayouts.BRANDED_VIEW;
   const containerRef = useRef<HTMLDivElement | null>(null);
+  const startDate = dayjs(selectedDate);
+  const endDate = startDate.add(
+    layout === BookerLayouts.COLUMN_VIEW ? extraDays ?? 0 : (extraDays ?? 0) - 1,
+    "days"
+  );
 
   const onTimeSelect = (
     time: string,
@@ -101,6 +111,11 @@ export const AvailableTimeSlots = ({
     : [];
 
   const slotsPerDay = useSlotsForAvailableDates(dates, schedule?.slots);
+
+  const filteredSlots = slotsPerDay.filter(
+    (item) =>
+      dayjs(item.date).isSameOrAfter(startDate, "day") && dayjs(item.date).isSameOrBefore(endDate, "day")
+  );
 
   return (
     <>
@@ -145,19 +160,12 @@ export const AvailableTimeSlots = ({
         )}>
         {isLoading && // Shows exact amount of days as skeleton.
           Array.from({ length: 1 + (extraDays ?? 0) }).map((_, i) => <AvailableTimesSkeleton key={i} />)}
-        {!isLoading &&
+        {layout !== BookerLayouts.BRANDED_VIEW &&
+          layout !== "mobile_branded" &&
+          !isLoading &&
           slotsPerDay.length > 0 &&
           slotsPerDay.map((slots) => (
-            <div
-              key={slots.date}
-              className={classNames(
-                "w-full",
-                layout !== BookerLayouts.BRANDED_VIEW && layout !== "mobile_branded"
-                  ? "scroll-bar h-full overflow-y-auto overflow-x-hidden"
-                  : layout !== "mobile_branded"
-                  ? "mb-6"
-                  : ""
-              )}>
+            <div key={slots.date} className="scroll-bar mb-6 h-full w-full overflow-y-auto overflow-x-hidden">
               <AvailableTimes
                 className={customClassNames?.availableTimeSlotsContainer}
                 customClassNames={customClassNames?.availableTimes}
@@ -167,7 +175,26 @@ export const AvailableTimeSlots = ({
                 showAvailableSeatsCount={showAvailableSeatsCount}
                 skipConfirmStep={skipConfirmStep}
                 date={dayjs(slots.date)}
-                isBranded={layout === BookerLayouts.BRANDED_VIEW || layout === "mobile_branded"}
+                isBranded={false}
+                {...props}
+              />
+            </div>
+          ))}
+        {(layout === BookerLayouts.BRANDED_VIEW || layout === "mobile_branded") &&
+          !isLoading &&
+          filteredSlots.length > 0 &&
+          filteredSlots.map((slots) => (
+            <div key={slots.date} className={classNames(layout !== "mobile_branded" ? "mb-6" : "")}>
+              <AvailableTimes
+                className={customClassNames?.availableTimeSlotsContainer}
+                customClassNames={customClassNames?.availableTimes}
+                showTimeFormatToggle={!isColumnView}
+                onTimeSelect={onTimeSelect}
+                slots={slots.slots}
+                showAvailableSeatsCount={showAvailableSeatsCount}
+                skipConfirmStep={skipConfirmStep}
+                date={dayjs(slots.date)}
+                isBranded={true}
                 {...props}
               />
             </div>

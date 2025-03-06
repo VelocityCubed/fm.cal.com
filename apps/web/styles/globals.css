@@ -1023,4 +1023,7 @@ select:focus {
     text-decoration: underline;
     font-weight: 500;
 }
+.max-w-175 {
+  max-width: 175px;
+}
 @import "./raqb.css";

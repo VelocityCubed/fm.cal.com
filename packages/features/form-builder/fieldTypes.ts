@@ -21,11 +21,11 @@ const configMap: Record<FieldType, Omit<z.infer<typeof fieldTypeConfigSchema>, "
           label: "first_last_name",
           fieldsMap: {
             firstName: {
-              label: "First name",
+              defaultLabel: "First name",
               canChangeRequirability: false,
             },
             lastName: {
-              label: "Last name",
+              defaultLabel: "Last name",
               canChangeRequirability: true,
             },
           },

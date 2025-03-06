@@ -140,61 +140,78 @@ export const ensureBookingInputsHaveSystemFields = ({
   // These fields should be added before other user fields
   const systemBeforeFields: typeof bookingFields = [
     {
-      type: "name",
-      // This is the `name` of the main field
       name: "name",
-      editable: "system",
-      // This Label is used in Email only as of now.
+      type: "name",
+      label: "Your name",
       defaultLabel: "your_name",
       required: true,
-      sources: [
-        {
-          label: "Default",
-          id: "default",
-          type: "default",
-        },
-      ],
-    },
-    {
-      defaultLabel: "email_address",
-      type: "email",
-      name: "email",
-      required: !isEmailFieldOptional,
-      editable: isOrgTeamEvent ? "system-but-optional" : "system",
-      sources: [
-        {
-          label: "Default",
-          id: "default",
-          type: "default",
-        },
-      ],
-    },
-
-    {
-      defaultLabel: "location",
-      type: "radioInput",
-      name: "location",
-      editable: "system",
-      hideWhenJustOneOption: true,
-      required: false,
-      getOptionsAt: "locations",
-      optionsInputs: {
-        attendeeInPerson: {
-          type: "address",
-          required: true,
-          placeholder: "",
-        },
-        somewhereElse: {
-          type: "text",
-          required: true,
-          placeholder: "",
-        },
-        phone: {
-          type: "phone",
-          required: true,
-          placeholder: "",
+      variant: "firstAndLastName",
+      variantsConfig: {
+        variants: {
+          fullName: {
+            fields: [
+              {
+                name: "fullName",
+                type: "text",
+                label: "your_name",
+                placeholder: "",
+                required: true,
+              },
+            ],
+          },
+          firstAndLastName: {
+            fields: [
+              {
+                name: "firstName",
+                type: "text",
+                label: "First name",
+                placeholder: "",
+                required: true,
+              },
+              {
+                name: "lastName",
+                type: "text",
+                label: "Last name",
+                placeholder: "",
+                required: true,
+              },
+            ],
+          },
         },
       },
+      sources: [{ id: "default", type: "default", label: "Default" }],
+      editable: "system",
+    },
+    {
+      name: "email",
+      type: "email",
+      label: "Email",
+      hidden: false,
+      sources: [{ id: "default", type: "default", label: "Default" }],
+      editable: "system",
+      required: true,
+      placeholder: "",
+      defaultLabel: "email_address",
+    },
+    {
+      name: "guests",
+      type: "multiemail",
+      hidden: false,
+      sources: [{ id: "default", type: "default", label: "Default" }],
+      editable: "system-but-optional",
+      required: false,
+      label: "Add Guests",
+      defaultLabel: "additional_guests",
+      placeholder: "",
+      defaultPlaceholder: "email",
+    },
+    {
+      defaultLabel: "phone_number",
+      label: "Phone number",
+      type: "phone",
+      name: "attendeePhoneNumber",
+      required: true,
+      editable: "system",
       sources: [
         {
           label: "Default",
@@ -202,6 +219,239 @@ export const ensureBookingInputsHaveSystemFields = ({
           type: "default",
         },
       ],
+    },
+    {
+      name: "dateOfBirth",
+      type: "text",
+      label: "Date of birth (dd/mm/yyyy)*",
+      placeholder: "dd/mm/yyyy",
+      required: true,
+      editable: "user",
+      sources: [
+        {
+          id: "user",
+          type: "user",
+          label: "User",
+          fieldRequired: true,
+        },
+      ],
+    },
+    {
+      name: "underlying_conditions",
+      type: "multiselect",
+      label: "Do you have any underlying conditions?",
+      placeholder: "",
+      required: true,
+      options: [
+        {
+          label: "None",
+          value: "None",
+        },
+        {
+          label: "Adenomyosis",
+          value: "Adenomyosis",
+        },
+        {
+          label: "Asherman's syndrome",
+          value: "Asherman's syndrome",
+        },
+        {
+          label: "Diabetes",
+          value: "Diabetes",
+        },
+        {
+          label: "Endometriosis",
+          value: "Endometriosis",
+        },
+        {
+          label: "Fibroids",
+          value: "Fibroids",
+        },
+        {
+          label: "Immunological infertility",
+          value: "Immunological infertility",
+        },
+        {
+          label: "Male factor infertility",
+          value: "Male factor infertility",
+        },
+        {
+          label: "Mayer-Rokitansky-Kuster-Hauser (MRKH) Syndrome",
+          value: "Mayer-Rokitansky-Kuster-Hauser (MRKH) Syndrome",
+        },
+        {
+          label: " Polycystic ovary syndrome (PCOS)",
+          value: "Polycystic ovary syndrome (PCOS)",
+        },
+        {
+          label: "Poor egg quality/insufficient egg reserves",
+          value: "Poor egg quality/insufficient egg reserves",
+        },
+        {
+          label: "Previous sterilisation/sterilisation reversal",
+          value: "Previous sterilisation/sterilisation reversal",
+        },
+        {
+          label: "Recurrent loss",
+          value: "Recurrent loss",
+        },
+        {
+          label: " Secondary infertility",
+          value: "Secondary infertility",
+        },
+        {
+          label: " Thyroid problem",
+          value: "Thyroid problem",
+        },
+        {
+          label: " Tubal blockage",
+          value: "Tubal blockage",
+        },
+        {
+          label: "Unexplained infertility",
+          value: "Unexplained infertility",
+        },
+        {
+          label: " Uterine problems",
+          value: "Uterine problems",
+        },
+        {
+          label: " I don't want to share",
+          value: "I don't want to share",
+        },
+        {
+          label: "I don't know",
+          value: "I don't know",
+        },
+      ],
+      editable: "user",
+      sources: [
+        {
+          id: "user",
+          type: "user",
+          label: "User",
+          fieldRequired: true,
+        },
+      ],
+    },
+    {
+      name: "treatment_type",
+      type: "multiselect",
+      label: "What type of treatment are you looking for?",
+      placeholder: "",
+      required: true,
+      options: [
+        {
+          label: "I don't know yet",
+          value: "I don't know yet",
+        },
+        {
+          label: "I'm hoping to speak to the clinic for advice on what’s best for me",
+          value: "I'm hoping to speak to the clinic for advice on what’s best for me",
+        },
+        {
+          label: " Initial tests",
+          value: "Initial tests",
+        },
+        {
+          label: " IVF",
+          value: "IVF",
+        },
+        {
+          label: "IUI or donor insemination",
+          value: "IUI or donor insemination",
+        },
+        {
+          label: "Shared motherhood",
+          value: "Shared motherhood",
+        },
+        {
+          label: "Egg freezing",
+          value: "Egg freezing",
+        },
+        {
+          label: "Embryo freezing",
+          value: "Embryo freezing",
+        },
+        {
+          label: "Frozen embryo transfer (FET)",
+          value: "Frozen embryo transfer (FET)",
+        },
+        {
+          label: " Frozen egg thaw transfer (using frozen eggs)",
+          value: "Frozen egg thaw transfer (using frozen eggs)",
+        },
+        {
+          label: "Freeze and share programme",
+          value: "Freeze and share programme",
+        },
+        {
+          label: "Donor egg IVF",
+          value: "Donor egg IVF",
+        },
+        {
+          label: "Sperm freezing",
+          value: "Sperm freezing",
+        },
+        {
+          label: "Surgical sperm retrieval, such as PESA or TESA",
+          value: "Surgical sperm retrieval, such as PESA or TESA",
+        },
+        {
+          label: " Surrogacy",
+          value: "Surrogacy",
+        },
+      ],
+      editable: "user",
+      sources: [
+        {
+          id: "user",
+          type: "user",
+          label: "User",
+          fieldRequired: true,
+        },
+      ],
+      disableOnPrefill: false,
+    },
+    {
+      name: "notes",
+      type: "textarea",
+      sources: [{ id: "default", type: "default", label: "Default" }],
+      editable: "system-but-optional",
+      required: false,
+      label:
+        "Anything you’d like to share (health concerns, medical information, treatment priorities, fertility intentions) that may help the clinic prepare for your conversation?",
+      defaultLabel: "additional_notes",
+      placeholder: "Please share anything that will help prepare for our conversation.",
+      defaultPlaceholder: "share_additional_notes",
+    },
+    {
+      name: "consent_personal_data",
+      type: "checkbox",
+      label: "Data Processing Consent",
+      placeholder: "",
+      required: true,
+      options: [
+        {
+          label:
+            "<span>I consent to the processing of my personal data by Fertility Mapper as detailed in their Privacy Policies. I understand that I have the right to withdraw my consent any time.</span>",
+          value: "User has consented to the processing of their personal data by Fertility Mapper",
+        },
+        {
+          label: "removeOption",
+          value: "removeOption",
+        },
+      ],
+      editable: "user",
+      sources: [
+        {
+          id: "user",
+          type: "user",
+          label: "User",
+          fieldRequired: true,
+        },
+      ],
+      disableOnPrefill: false,
     },
   ];
   if (isOrgTeamEvent) {
@@ -232,37 +482,6 @@ export const ensureBookingInputsHaveSystemFields = ({
       required: true,
       hidden: hideBookingTitle,
       defaultPlaceholder: "",
-      sources: [
-        {
-          label: "Default",
-          id: "default",
-          type: "default",
-        },
-      ],
-    },
-    {
-      defaultLabel: "additional_notes",
-      type: "textarea",
-      name: "notes",
-      editable: "system-but-optional",
-      required: additionalNotesRequired,
-      defaultPlaceholder: "share_additional_notes",
-      sources: [
-        {
-          label: "Default",
-          id: "default",
-          type: "default",
-        },
-      ],
-    },
-    {
-      defaultLabel: "additional_guests",
-      type: "multiemail",
-      editable: "system-but-optional",
-      name: "guests",
-      defaultPlaceholder: "email",
-      required: false,
-      hidden: disableGuests,
       sources: [
         {
           label: "Default",

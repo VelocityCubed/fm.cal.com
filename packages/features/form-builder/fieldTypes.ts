@@ -15,17 +15,17 @@ const configMap: Record<FieldType, Omit<z.infer<typeof fieldTypeConfigSchema>, "
     systemOnly: true,
     variantsConfig: {
       toggleLabel: 'Split "Full name" into "First name" and "Last name"',
-      defaultVariant: "fullName",
+      defaultVariant: "firstAndLastName",
       variants: {
         firstAndLastName: {
           label: "first_last_name",
           fieldsMap: {
             firstName: {
-              defaultLabel: "first_name",
+              label: "First name",
               canChangeRequirability: false,
             },
             lastName: {
-              defaultLabel: "last_name",
+              label: "Last name",
               canChangeRequirability: true,
             },
           },
@@ -57,7 +57,7 @@ const configMap: Record<FieldType, Omit<z.infer<typeof fieldTypeConfigSchema>, "
               {
                 name: "lastName",
                 type: "text",
-                required: false,
+                required: true,
               },
             ],
           },

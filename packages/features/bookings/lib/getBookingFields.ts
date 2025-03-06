@@ -437,10 +437,6 @@ export const ensureBookingInputsHaveSystemFields = ({
             "<span>I consent to the processing of my personal data by Fertility Mapper as detailed in their Privacy Policies. I understand that I have the right to withdraw my consent any time.</span>",
           value: "User has consented to the processing of their personal data by Fertility Mapper",
         },
-        {
-          label: "removeOption",
-          value: "removeOption",
-        },
       ],
       editable: "user",
       sources: [

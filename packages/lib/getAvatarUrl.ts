@@ -24,7 +24,7 @@ export const getAvatarUrl = (image: string | null) => {
   if (image) {
     const isAbsoluteUrl = z.string().url().safeParse(image).success;
     if (isAbsoluteUrl) {
-      returnimage;
+      return image;
     } else {
       return CAL_URL + image;
     }

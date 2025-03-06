@@ -471,7 +471,7 @@ export default function Success(props: PageProps) {
                   "h-full min-h-[calc(100dvh)] items-center justify-center",
                 (layout === "branded_view" || layout === "mobile_branded") &&
                   isEmbed &&
-                  "h-full min-h-[calc(100dvh)] items-center justify-start",
+                  "h-full items-center justify-start",
                 layout === "mobile_branded" && "h-full min-h-[calc(100dvh)]",
                 layout !== "branded_view" && layout !== "mobile_branded" && " my-4   sm:my-0 ",
                 isEmbed ? "" : " inset-0"

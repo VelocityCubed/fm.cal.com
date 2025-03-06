@@ -166,9 +166,6 @@ export type CustomClassNames = {
 };
 
 export type Override = {
-  memberName: string | null;
-  memberDescription: string | null;
-  memberImage: string | null;
   clinicTitle: string | null;
   clinicDescription: string | null;
   clinicImage: string | null;

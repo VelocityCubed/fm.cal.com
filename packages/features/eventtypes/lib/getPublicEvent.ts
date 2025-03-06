@@ -36,6 +36,7 @@ const userSelect = Prisma.validator<Prisma.UserSelect>()({
   name: true,
   weekStart: true,
   brandColor: true,
+  bio: true,
   darkBrandColor: true,
   theme: true,
   metadata: true,
@@ -102,6 +103,7 @@ const getPublicEventSelect = (fetchAllUsers: boolean) => {
             logoUrl: true,
           },
         },
+        bio: true,
         isPrivate: true,
       },
     },
@@ -294,6 +296,7 @@ export const getPublicEvent = async (
         bookerLayouts: bookerLayoutsSchema.parse(
           firstUsersMetadata?.defaultBookerLayouts || defaultEventBookerLayouts
         ),
+        bio: users[0].bio,
         ...(orgDetails
           ? {
               image: getPlaceholderAvatar(orgDetails?.logoUrl, orgDetails?.name),
@@ -552,6 +555,7 @@ function getProfileFromEvent(event: GetProfileFromEventInput) {
       eventMetaData?.bookerLayouts ||
         (userMetaData && "defaultBookerLayouts" in userMetaData ? userMetaData.defaultBookerLayouts : null)
     ),
+    bio: profile.bio,
   };
 }
 

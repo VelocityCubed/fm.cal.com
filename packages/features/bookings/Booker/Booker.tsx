@@ -594,7 +594,7 @@ const BookerComponent = ({
             className={classNames(
               "mb-6 mt-auto pt-6",
               hasDarkBackground ? "dark" : "",
-              layout === BookerLayouts.MONTH_VIEW || layout === BookerLayouts.BRANDED_VIEW
+              layout === BookerLayouts.MONTH_VIEW || (layout === BookerLayouts.BRANDED_VIEW && !isEmbed)
                 ? "block"
                 : "hidden"
             )}>

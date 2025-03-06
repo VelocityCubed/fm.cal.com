@@ -17,9 +17,16 @@ export interface EventMembersProps {
   users: BookerEvent["subsetOfUsers"];
   profile: BookerEvent["profile"];
   entity: BookerEvent["entity"];
+  isBranded?: boolean;
 }
 
-export const EventMembers = ({ schedulingType, users, profile, entity }: EventMembersProps) => {
+export const EventMembers = ({
+  schedulingType,
+  users,
+  profile,
+  entity,
+  isBranded = false,
+}: EventMembersProps) => {
   const username = useBookerStore((state) => state.username);
   const isDynamic = !!(username && username.indexOf("+") > -1);
   const isEmbed = useIsEmbed();
@@ -54,7 +61,7 @@ export const EventMembers = ({ schedulingType, users, profile, entity }: EventMe
   return (
     <>
       <AvatarGroup
-        size="sm"
+        size={isBranded ? "custom" : "sm"}
         className="border-muted"
         items={[
           ...orgOrTeamAvatarItem,
@@ -70,15 +77,38 @@ export const EventMembers = ({ schedulingType, users, profile, entity }: EventMe
           })),
         ]}
       />
-
-      <p className="text-subtle mt-2 text-sm font-semibold">
-        {showOnlyProfileName
-          ? profile.name
-          : shownUsers
-              .map((user) => user.name)
-              .filter((name) => name)
-              .join(", ")}
-      </p>
+      {isBranded && (
+        <div className="flex max-w-full flex-col gap-1">
+          <p className="color-text-dark font-circular font-normal-medium body-head-4">
+            {showOnlyProfileName
+              ? profile.name
+              : shownUsers
+                  .map((user) => user.name)
+                  .filter((name) => name)
+                  .join(", ")}
+          </p>
+          {profile.bio && (
+            <p className="color-body-text font-circular body-sml font-normal-medium max-w-175 line-clamp-2 text-ellipsis">
+              {profile.bio}
+            </p>
+          )}
+        </div>
+      )}
+      {!isBranded && (
+        <p
+          className={
+            isBranded
+              ? "color-text-dark font-circular font-normal-medium body-head-4"
+              : "text-subtle mt-2 text-sm font-semibold"
+          }>
+          {showOnlyProfileName
+            ? profile.name
+            : shownUsers
+                .map((user) => user.name)
+                .filter((name) => name)
+                .join(", ")}
+        </p>
+      )}
     </>
   );
 };

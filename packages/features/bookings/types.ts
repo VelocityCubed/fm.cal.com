@@ -24,7 +24,7 @@ type BookerEventUser = Pick<
   bookerUrl: string;
 };
 
-type BookerEventProfile = Pick<PublicEvent["profile"], "name" | "image" | "bookerLayouts">;
+type BookerEventProfile = Pick<PublicEvent["profile"], "name" | "image" | "bookerLayouts" | "bio">;
 
 export type BookerEvent = Pick<
   PublicEvent,

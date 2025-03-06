@@ -10,6 +10,7 @@ export type OrgProfile = {
   username: string;
   organizationId: number;
   organization: OrganizationWithRequestedSlug;
+  bio?: string | null;
 };
 
 export type PersonalProfile = {
@@ -18,6 +19,7 @@ export type PersonalProfile = {
   username: string;
   organizationId: null;
   organization: null;
+  bio?: string | null;
 };
 
 export type UserAsPersonalProfile = {
@@ -26,6 +28,7 @@ export type UserAsPersonalProfile = {
   username: string | null;
   organizationId: null;
   organization: null;
+  bio?: string | null;
 };
 
 export type UserProfile = PersonalProfile | OrgProfile | UserAsPersonalProfile;

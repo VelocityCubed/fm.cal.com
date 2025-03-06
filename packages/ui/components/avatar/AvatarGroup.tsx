@@ -3,7 +3,7 @@ import classNames from "@calcom/lib/classNames";
 import { Avatar } from "./Avatar";
 
 export type AvatarGroupProps = {
-  size: "sm" | "lg";
+  size: "sm" | "lg" | "custom";
   items: {
     image: string;
     title?: string;

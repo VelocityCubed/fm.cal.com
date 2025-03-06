@@ -86,9 +86,6 @@ export const EventMeta = ({
   };
   locale?: string | null;
   overrides?: {
-    memberName: string | null;
-    memberDescription: string | null;
-    memberImage: string | null;
     clinicTitle: string | null;
     clinicDescription: string | null;
     clinicImage: string | null;
@@ -195,29 +192,13 @@ export const EventMeta = ({
             </EventMetaBlock>
 
             <div className="flex flex-row items-center justify-start gap-4">
-              <img
-                src={overrides?.memberImage ?? "https://fertilitymapper.com/assets/images/kayleigh.webp"}
-                className="max-h-5-5 h-5-5 w-5-5 max-w-5-5 rounded-full"
-                alt="Clinician Image"
+              <EventMembers
+                schedulingType={event.schedulingType}
+                users={event.subsetOfUsers}
+                profile={event.profile}
+                entity={event.entity}
+                isBranded={isBranded}
               />
-              <div className="flex flex-col gap-1">
-                <EventMetaBlock contentClassName="color-text-dark font-circular font-normal-medium body-head-4">
-                  <div
-                    // eslint-disable-next-line react/no-danger
-                    dangerouslySetInnerHTML={{
-                      __html: markdownToSafeHTMLClient(overrides?.memberName ?? "Kayleigh Hartigan"),
-                    }}
-                  />
-                </EventMetaBlock>
-                <EventMetaBlock contentClassName="color-body-text font-circular body-sml font-normal-medium">
-                  <div
-                    // eslint-disable-next-line react/no-danger
-                    dangerouslySetInnerHTML={{
-                      __html: markdownToSafeHTMLClient(overrides?.memberDescription ?? "Founder and CEO"),
-                    }}
-                  />
-                </EventMetaBlock>
-              </div>
             </div>
           </div>
         </m.div>

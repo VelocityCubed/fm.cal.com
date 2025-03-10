@@ -340,7 +340,7 @@ export default function Success(props: PageProps) {
     return t(`emailed_you_and_attendees${titleSuffix}`);
   }
   const layout = searchParams?.get("layout");
-  const multiClinics = searchParams?.get("multiClinics");
+  const multiClinics = searchParams?.get("multiClinics") && searchParams?.get("multiClinics") === "true";
 
   // This is a weird case where the same route can be opened in booking flow as a success page or as a booking detail page from the app
   // As Booking Page it has to support configured theme, but as booking detail page it should not do any change. Let Shell.tsx handle it.

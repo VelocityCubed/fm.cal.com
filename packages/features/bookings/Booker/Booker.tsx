@@ -79,7 +79,7 @@ const BookerComponent = ({
   isBookingDryRun: isBookingDryRunProp,
   renderCaptcha,
   overrides = null,
-  multiClinic = false,
+  multiClinics = false,
 }: BookerProps & WrappedBookerProps) => {
   const searchParams = useCompatSearchParams();
   const isPlatformBookerEmbed = useIsPlatformBookerEmbed();
@@ -334,7 +334,7 @@ const BookerComponent = ({
             !isEmbed &&
               (layout === BookerLayouts.MONTH_VIEW || layout === BookerLayouts.BRANDED_VIEW) &&
               `border-subtle border`,
-            multiClinic && "multi-columns",
+            multiClinics && "multi-columns",
             !isEmbed && "branded-max-w",
             `${customClassNames?.bookerContainer}`
           )}>
@@ -419,7 +419,7 @@ const BookerComponent = ({
                 </BookerSection>
               </StickyOnDesktop>
             )}
-            {(layout === BookerLayouts.BRANDED_VIEW || layout === "mobile_branded") && !multiClinic && (
+            {(layout === BookerLayouts.BRANDED_VIEW || layout === "mobile_branded") && !multiClinics && (
               <StickyOnDesktop key="meta" className={classNames("relative z-10 flex [grid-area:meta]")}>
                 <BookerSection area="meta" className="max-w-screen flex w-full flex-col">
                   <EventMeta
@@ -447,7 +447,7 @@ const BookerComponent = ({
               area="main"
               className={classNames(
                 "sticky top-0 h-full ",
-                !multiClinic && "md:w-[var(--booker-main-width)]",
+                !multiClinics && "md:w-[var(--booker-main-width)]",
                 layout !== BookerLayouts.BRANDED_VIEW
                   ? layout === "mobile_branded"
                     ? "px-l-6 px-r-6"

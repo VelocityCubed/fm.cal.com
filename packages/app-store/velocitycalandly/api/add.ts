@@ -4,6 +4,7 @@ import { symmetricEncrypt } from "@calcom/lib/crypto";
 import prisma from "@calcom/prisma";
 
 import getAppKeysFromSlug from "../../_utils/getAppKeysFromSlug";
+import getInstalledAppPath from "../../_utils/getInstalledAppPath";
 import { encodeOAuthState } from "../../_utils/oauth/encodeOAuthState";
 import config from "../config.json";
 import { appKeysSchema as calandlyKeysSchema } from "../zod";
@@ -29,7 +30,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   const appKeys = await getAppKeysFromSlug(config.slug);
   const { client_id, client_secret } = calandlyKeysSchema.parse(appKeys);
   console.log("client_secret", client_secret);
-
+  debugger;
   const state = encodeOAuthState(req);
   const user = await prisma.user.findFirstOrThrow({
     where: {
@@ -79,7 +80,7 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
 
   const data2 = await response.json();
 
-  const data = {
+  const data3 = {
     type: "velocitycalandly_calendar",
     key: symmetricEncrypt(JSON.stringify({}), process.env.CALENDSO_ENCRYPTION_KEY || ""),
     userId: user.id,
@@ -88,8 +89,25 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
     invalid: false,
   };
 
-  await prisma.credential.create({
-    data,
+  const credential = await prisma.credential.create({
+    data: data3,
+  });
+
+  const selectedCalendarWhereUnique = {
+    userId: req.session?.user.id ?? 0,
+    integration: "velocitycalandly_calendar",
+    externalId: "123", // Using the owner URI as externalId
+  };
+  const data = {
+    ...selectedCalendarWhereUnique,
+    credentialId: credential.id,
+  };
+
+  await prisma.selectedCalendar.create({
+    data: {
+      ...selectedCalendarWhereUnique,
+      credentialId: credential.id,
+    },
   });
 
   // console.log("response data", data);
@@ -97,7 +115,8 @@ export default async function handler(req: NextApiRequest, res: NextApiResponse)
   //   console.log("ent", ent);
   // }
   console.log("success received from calandly");
-  res.status(200).json({});
+  const path = getInstalledAppPath({ variant: "calendar", slug: "velocitycalandly" });
+  res.redirect(path);
   //res.status(200).json("");
 }
 

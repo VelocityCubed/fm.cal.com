@@ -6,6 +6,7 @@ import { Button, TextField } from "@calcom/ui";
 export default function AppSettings() {
   const { t } = useLocale();
   const [input, setInput] = useState("");
+  debugger;
 
   return (
     <div className="space-y-4 px-4 pb-4 pt-4 text-sm">

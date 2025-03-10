@@ -1,3 +1,4 @@
+import getAppKeysFromSlug from "@calcom/app-store/_utils/getAppKeysFromSlug";
 import type {
   Calendar,
   CalendarEvent,
@@ -6,6 +7,9 @@ import type {
   NewCalendarEventType,
   SelectedCalendarEventTypeIds,
 } from "@calcom/types/Calendar";
+
+import config from "../config.json";
+import { appKeysSchema as calandlyKeysSchema } from "../zod";
 
 // This implementation assumes that you have an API key for Calendly and that
 // Calendly endpoints follow these REST conventions.
@@ -36,6 +40,7 @@ export default class CalandlyCalendarService implements Calendar {
 
   async createEvent(event: CalendarEvent, credentialId: number): Promise<NewCalendarEventType> {
     console.log("create");
+    debugger;
     // Map your CalendarEvent to Calendly's event creation payload.
     const payload = {
       // Example mapping – adjust these keys to what Calendly expects.
@@ -48,7 +53,7 @@ export default class CalandlyCalendarService implements Calendar {
 
     const response = await fetch(`${this.baseUrl}/scheduled_events`, {
       method: "POST",
-      headers: await getHeaders(),
+      headers: await this.getHeaders(),
       body: JSON.stringify(payload),
     });
     if (!response.ok) {
@@ -63,6 +68,7 @@ export default class CalandlyCalendarService implements Calendar {
     externalCalendarId?: string | null
   ): Promise<NewCalendarEventType | NewCalendarEventType[]> {
     console.log("update");
+    debugger;
     // Map the CalendarEvent properties to the payload expected by Calendly.
     const payload = {
       name: event.title,
@@ -74,7 +80,7 @@ export default class CalandlyCalendarService implements Calendar {
 
     const response = await fetch(`${this.baseUrl}/scheduled_events/${uid}`, {
       method: "PATCH",
-      headers: await getHeaders(),
+      headers: await this.getHeaders(),
       body: JSON.stringify(payload),
     });
     if (!response.ok) {
@@ -85,9 +91,10 @@ export default class CalandlyCalendarService implements Calendar {
 
   async deleteEvent(uid: string, event: CalendarEvent, externalCalendarId?: string | null): Promise<unknown> {
     console.log("delete");
+    debugger;
     const response = await fetch(`${this.baseUrl}/scheduled_events/${uid}`, {
       method: "DELETE",
-      headers: await getHeaders(),
+      headers: await this.getHeaders(),
     });
     if (!response.ok) {
       throw new Error(`Error deleting event: ${response.statusText}`);
@@ -102,13 +109,14 @@ export default class CalandlyCalendarService implements Calendar {
     shouldServeCache = false
   ): Promise<EventBusyDate[]> {
     console.log("getAvailablility");
+    debugger;
     // Build a cache key based on the dates and the selected calendar IDs.
-    const calendarIds = selectedCalendars.map((cal) => cal.id).join(",");
-    const cacheKey = `${dateFrom}-${dateTo}-${calendarIds}`;
+    // const calendarIds = selectedCalendars.map((cal) => cal.id).join(",");
+    // const cacheKey = `${dateFrom}-${dateTo}-${calendarIds}`;
 
-    if (shouldServeCache && this.availabilityCache[cacheKey]) {
-      return this.availabilityCache[cacheKey];
-    }
+    // if (shouldServeCache && this.availabilityCache[cacheKey]) {
+    //   return this.availabilityCache[cacheKey];
+    // }
 
     // Assume Calendly exposes an availability endpoint that accepts these query parameters.
     const queryParams = new URLSearchParams({
@@ -116,19 +124,37 @@ export default class CalandlyCalendarService implements Calendar {
       date_to: dateTo,
       calendar_ids: calendarIds,
     });
+    try {
+      // const response = await fetch(`${this.baseUrl}/availability?${queryParams.toString()}`, {
+      //   headers: await this.getHeaders(),
+      // });
 
-    const response = await fetch(`${this.baseUrl}/availability?${queryParams.toString()}`, {
-      headers: await getHeaders(),
-    });
-    if (!response.ok) {
-      throw new Error(`Error fetching availability: ${response.statusText}`);
+      const userUri = "https://api.calendly.com/users/AAAAAAAAAAAAAAAA";
+      // Format dates for Calendly API
+      const minStartTime = dayjs(dateFrom).format("YYYY-MM-DDTHH:mm:ss[Z]");
+      const maxStartTime = dayjs(dateTo).format("YYYY-MM-DDTHH:mm:ss[Z]");
+
+      // Fetch scheduled events within the time range
+      const response = await this.fetcher(
+        `/scheduled_events?user=${userUri}&min_start_time=${minStartTime}&max_start_time=${maxStartTime}&status=active`,
+        {
+          method: "GET",
+        }
+      );
+
+      const responseData = await handleErrorsJson<{ collection: any[] }>(response);
+
+      // Convert Calendly events to busy times
+      const busyTimes: EventBusyDate[] = responseData.collection.map((event) => ({
+        start: event.start_time,
+        end: event.end_time,
+      }));
+
+      return busyTimes;
+    } catch (error) {
+      this.log.error(error);
+      return [];
     }
-    const data = await response.json();
-    // Assuming the response returns an object with a `data` array.
-    const busyDates: EventBusyDate[] = data.data;
-    // Cache the result.
-    this.availabilityCache[cacheKey] = busyDates;
-    return busyDates;
   }
 
   async getAvailabilityWithTimeZones(
@@ -149,6 +175,7 @@ export default class CalandlyCalendarService implements Calendar {
 
   async fetchAvailabilityAndSetCache(selectedCalendars: IntegrationCalendar[]): Promise<unknown> {
     console.log("fetchAndCache");
+    debugger;
     // For demonstration, fetch availability for a set period (e.g. from now to tomorrow)
     const now = new Date();
     const tomorrow = new Date(now.getTime() + 24 * 60 * 60 * 1000);
@@ -161,11 +188,22 @@ export default class CalandlyCalendarService implements Calendar {
     console.log("listCal");
     // Assuming Calendly provides a user endpoint that returns calendars.
     const response = await fetch(`${this.baseUrl}/users/me/calendars`, {
-      headers: await getHeaders(),
+      headers: await this.getHeaders(),
     });
     if (!response.ok) {
       throw new Error(`Error listing calendars: ${response.statusText}`);
     }
+
+    const calendar: IntegrationCalendar = {
+      externalId: cal.id ?? "No Id",
+      integration: this.integrationName,
+      name: cal.name ?? "No calendar name",
+      primary: cal.isDefaultCalendar ?? false,
+      readOnly: !cal.canEdit && true,
+      email: email ?? "",
+    };
+    return calendar;
+
     const data = await response.json();
     // Assume the calendars are in the `data` array.
     return data.data;
@@ -176,6 +214,7 @@ export default class CalandlyCalendarService implements Calendar {
     eventTypeIds: SelectedCalendarEventTypeIds;
   }): Promise<unknown> {
     console.log("watchCal");
+    debugger;
     // To subscribe to webhook notifications for calendar events, you would call Calendly’s hooks endpoint.
     const payload = {
       calendar_id: options.calendarId,
@@ -186,7 +225,7 @@ export default class CalandlyCalendarService implements Calendar {
 
     const response = await fetch(`${this.baseUrl}/hooks`, {
       method: "POST",
-      headers: await getHeaders(),
+      headers: await this.getHeaders(),
       body: JSON.stringify(payload),
     });
     if (!response.ok) {
@@ -205,7 +244,7 @@ export default class CalandlyCalendarService implements Calendar {
       calendar_id: options.calendarId,
     });
     const response = await fetch(`${this.baseUrl}/hooks?${queryParams.toString()}`, {
-      headers: await getHeaders(),
+      headers: await this.getHeaders(),
     });
     if (!response.ok) {
       throw new Error(`Error retrieving hooks: ${response.statusText}`);
@@ -220,7 +259,7 @@ export default class CalandlyCalendarService implements Calendar {
     for (const hook of hooks) {
       const delResponse = await fetch(`${this.baseUrl}/hooks/${hook.id}`, {
         method: "DELETE",
-        headers: await getHeaders(),
+        headers: await this.getHeaders(),
       });
       if (!delResponse.ok) {
         throw new Error(`Error removing calendar watch: ${delResponse.statusText}`);

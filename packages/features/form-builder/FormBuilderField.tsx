@@ -49,12 +49,12 @@ type ValueProps =
 export const FormBuilderField = ({
   field,
   readOnly,
-  className,
+  className = "",
   isBranded = false,
 }: {
   field: RhfFormFields[number];
   readOnly: boolean;
-  className: string;
+  className?: string;
   isBranded: boolean;
 }) => {
   const { t } = useLocale();

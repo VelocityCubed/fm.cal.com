@@ -38,6 +38,7 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
   });
   const bookerLayout = useBookerLayout(event.data);
   const clinic = searchParams?.get("clinic") ?? null;
+  const multiClinic = searchParams?.get("multiClinics") === "true";
   let overrides = null;
   if (bookerLayout.layout === BookerLayouts.BRANDED_VIEW || bookerLayout.layout === "mobile_branded") {
     overrides = BookerOverrides({ clinic });
@@ -248,6 +249,7 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
       userLocale={session?.user.locale}
       renderCaptcha
       overrides={overrides}
+      multiClinic={multiClinic}
     />
   );
 };

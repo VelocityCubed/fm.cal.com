@@ -66,8 +66,19 @@ export const FormBuilderField = ({
   );
 
   const shouldBeDisabled = useShouldBeDisabledDueToPrefill(field);
+  if (field.name === "treatmentType" && formState.defaultValues?.responses?.treatmentType?.length > 0) {
+    field.hidden = true;
+  }
+  if (
+    field.name === "underlyingConditions" &&
+    formState.defaultValues?.responses?.underlyingConditions?.length > 0
+  ) {
+    field.hidden = true;
+  }
   return (
-    <div data-fob-field-name={field.name} className={classNames(className, hidden ? "hidden" : "")}>
+    <div
+      data-fob-field-name={field.name}
+      className={classNames(className, hidden || field.hidden ? "hidden" : "mb-4")}>
       <Controller
         control={control}
         // Make it a variable

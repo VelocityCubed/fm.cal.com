@@ -94,6 +94,7 @@ export interface BookerProps {
   userLocale?: string | null;
   hasValidLicense?: boolean;
   overrides?: Override | null;
+  multiClinic?: boolean | null;
 }
 
 export type WrappedBookerPropsMain = {

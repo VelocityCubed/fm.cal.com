@@ -1034,4 +1034,10 @@ border-color: #292929 !important;
 .max-w-175 {
   max-width: 175px;
 }
+.multi-columns {
+  grid-template-columns: 7fr 8fr !important;
+}
+.branded-max-w {
+  max-width: calc(var(--booker-meta-width) + var(--booker-main-width));
+}
 @import "./raqb.css";

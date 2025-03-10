@@ -147,7 +147,6 @@ export const BookingFields = ({
 
         return (
           <FormBuilderField
-            className="mb-4"
             field={{ ...field, hidden }}
             readOnly={readOnly}
             key={index}

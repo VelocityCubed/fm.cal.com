@@ -494,20 +494,12 @@ export const ensureBookingInputsHaveSystemFields = ({
       options: [
         {
           label:
-            "<span>I consent to the processing of my personal data</span><i>By checking this box, I consent to Fertility Mapper  processing my personal and health data in compliance with data protection legislation, and in accordance with its <a href='https://fertilitymapper.com/privacy-policy/'>Privacy Policy</a>. I understand that my consent is voluntary and can be withdrawn at any time by contacting <a href='mailto:hello@fertilitymapper.com'>mailto:hello@fertilitymapper.com</a>.</i>",
+            "<span>I consent to the processing of my personal data by Fertility Mapper as detailed in their Privacy Policies. I understand that I have the right to withdraw my consent any time.</span>",
           value: "User has consented to the processing of their personal data by Fertility Mapper",
         },
         {
-          label:
-            "<span>I agree to the sharing of my personal data with Essential Fertility</span> <i>By checking this box, I give my consent for Fertility Mapper to share my personal data, including health and fertility-related information, with Essential Fertility to facilitate my appointment booking. I understand that my consent is voluntary and can be withdrawn at any time by contacting <a href='mailto:hello@fertilitymapper.com'>mailto:hello@fertilitymapper.com</a>.</i>",
-          value:
-            "User has consented to Fertility Mapper sharing their personal data with Essential Fertility",
-        },
-        {
-          label:
-            "<span>I agree to Essential Fertility sharing my personal data with Fertility Mapper</span> <i>By checking this box, I consent to Essential Fertility sharing status reports and records of fertility treatment provided by Essential Fertility and fees paid to Essential Fertility with Fertility Mapper ,  to verify the success of my booking and to ensure appropriate follow-ups. All shared information will be treated with confidentiality and in compliance with data protection legislation, as detailed in Essential Fertility's <a href='https://www.essentialfertility.co.uk/privacy/'>Privacy Policy</a>. I understand that my consent is voluntary and can be withdrawn at any time by contacting <a href='mailto:enquiries@essentialfertility.co.uk'>enquiries@essentialfertility.co.uk</a>.</i>",
-          value:
-            "User has consented to Essential Fertility sharing their personal data with Fertility Mapper",
+          label: "removeOption",
+          value: "removeOption",
         },
       ],
       sources: [

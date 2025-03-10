@@ -63,7 +63,7 @@ export const Select = <
         dropdownIndicator: () => "text-default",
         control: (state) =>
           cx(
-            "bg-default border-default !min-h-9 h-9 text-sm leading-4 placeholder:text-sm placeholder:font-normal dark:focus:border-emphasis focus-within:outline-none focus-within:ring-2 focus-within:ring-brand-default hover:border-emphasis rounded-md transition border",
+            "hover:border-emphasis dark:focus:border-emphasis border-default bg-default placeholder:text-muted text-emphasis focus:ring-brand-default focus:border-subtle focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark rounded-40 branded-form-border body-head-4 font-circular h-min-48 disabled:bg-subtle disabled:hover:border-subtle mb-2 block flex h-9 w-full flex-row rounded-md border px-4 py-2 text-sm leading-4 transition focus:outline-none focus:ring-2 ",
             state.isMulti
               ? variant === "checkbox"
                 ? "px-3 py-2 h-fit"
@@ -84,7 +84,7 @@ export const Select = <
           ),
         menu: () =>
           cx(
-            " rounded-md bg-default text-sm leading-4 text-default mt-1 border border-subtle",
+            "font-circular rounded-md bg-default text-sm leading-4 text-default mt-1 border border-subtle",
             innerClassNames?.menu
           ),
         groupHeading: () => "leading-none text-xs uppercase text-default pl-2.5 pt-4 pb-2",

@@ -401,7 +401,9 @@ export const ComponentForField = ({
             isBranded
               ? field.name === "notes"
                 ? "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark branded-form-border body-head-4 font-normal-medium font-circular h-min-115 rounded-lg px-4 py-2"
-                : "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark rounded-40 branded-form-border body-head-4 font-normal-medium font-circular h-min-48 px-4 py-2"
+                : fieldType === "checkbox"
+                ? "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark rounded-40 branded-form-border body-head-4 font-normal-medium font-circular h-min-48 px-4 py-2"
+                : ""
               : ""
           }
         />

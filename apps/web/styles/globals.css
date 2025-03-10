@@ -765,7 +765,7 @@ select:focus {
 }
 
 .h-min-48 {
-  min-height: 48px;
+  min-height: 48px !important;
 }
 .h-min-115 {
   min-height: 115px;

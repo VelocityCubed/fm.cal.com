@@ -66,7 +66,10 @@ export const ControlComponent = <
   const dataTestId = controlProps.selectProps["data-testid"] ?? "select-control";
   return (
     <span data-testid={dataTestId}>
-      <reactSelectComponents.Control {...controlProps} />
+      <reactSelectComponents.Control
+        {...controlProps}
+        className="hover:border-emphasis dark:focus:border-emphasis border-default bg-default placeholder:text-muted text-emphasis focus:ring-brand-default focus:border-subtle focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark rounded-40 branded-form-border body-head-4 font-circular h-min-48 disabled:bg-subtle disabled:hover:border-subtle mb-2 block flex h-9 w-full flex-row rounded-md border px-4 py-2 text-sm leading-4 transition focus:outline-none focus:ring-2 disabled:cursor-not-allowed"
+      />
     </span>
   );
 };

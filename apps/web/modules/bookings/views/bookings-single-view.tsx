@@ -463,8 +463,10 @@ export default function Success(props: PageProps) {
               layout !== "mobile_branded" &&
                 !multiClinics &&
                 "flex items-end justify-center px-4 pb-20 pt-4 sm:flex sm:p-0",
-              layout !== "mobile_branded" && multiClinics && "flex items-end justify-end p-0",
-              layout === "mobile_branded" && "justify center flex items-end p-0 sm:flex sm:p-0"
+              layout !== "mobile_branded" && isEmbed && multiClinics && "flex items-end justify-end p-0",
+              layout === "mobile_branded" &&
+                !multiClinics &&
+                "justify center flex items-end p-0 sm:flex sm:p-0"
             )}>
             <div
               className={classNames(
@@ -480,6 +482,7 @@ export default function Success(props: PageProps) {
                 layout !== "branded_view" && layout !== "mobile_branded" && " my-4   sm:my-0 ",
                 isEmbed ? "" : " inset-0",
                 (layout === "branded_view" || layout === "mobile_branded") &&
+                  isEmbed &&
                   multiClinics &&
                   "multi-clinic-p w-[434px]"
               )}

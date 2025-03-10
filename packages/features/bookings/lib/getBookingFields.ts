@@ -140,25 +140,15 @@ export const ensureBookingInputsHaveSystemFields = ({
   // These fields should be added before other user fields
   const systemBeforeFields: typeof bookingFields = [
     {
-      name: "name",
       type: "name",
+      name: "name",
+      editable: "system",
       label: "Your name",
       defaultLabel: "your_name",
       required: true,
       variant: "firstAndLastName",
       variantsConfig: {
         variants: {
-          fullName: {
-            fields: [
-              {
-                name: "fullName",
-                type: "text",
-                label: "your_name",
-                placeholder: "",
-                required: true,
-              },
-            ],
-          },
           firstAndLastName: {
             fields: [
               {
@@ -179,39 +169,6 @@ export const ensureBookingInputsHaveSystemFields = ({
           },
         },
       },
-      sources: [{ id: "default", type: "default", label: "Default" }],
-      editable: "system",
-    },
-    {
-      name: "email",
-      type: "email",
-      label: "Email",
-      hidden: false,
-      sources: [{ id: "default", type: "default", label: "Default" }],
-      editable: "system",
-      required: true,
-      placeholder: "",
-      defaultLabel: "email_address",
-    },
-    {
-      name: "guests",
-      type: "multiemail",
-      hidden: false,
-      sources: [{ id: "default", type: "default", label: "Default" }],
-      editable: "system-but-optional",
-      required: false,
-      label: "Add Guests",
-      defaultLabel: "additional_guests",
-      placeholder: "",
-      defaultPlaceholder: "email",
-    },
-    {
-      defaultLabel: "phone_number",
-      label: "Phone number",
-      type: "phone",
-      name: "attendeePhoneNumber",
-      required: true,
-      editable: "system",
       sources: [
         {
           label: "Default",
@@ -221,26 +178,127 @@ export const ensureBookingInputsHaveSystemFields = ({
       ],
     },
     {
-      name: "dateOfBirth",
-      type: "text",
-      label: "Date of birth (dd/mm/yyyy)*",
-      placeholder: "dd/mm/yyyy",
-      required: true,
-      editable: "user",
+      label: "Email",
+      defaultLabel: "email_address",
+      type: "email",
+      name: "email",
+      required: !isEmailFieldOptional,
+      editable: isOrgTeamEvent ? "system-but-optional" : "system",
       sources: [
         {
-          id: "user",
-          type: "user",
-          label: "User",
-          fieldRequired: true,
+          label: "Default",
+          id: "default",
+          type: "default",
         },
       ],
     },
     {
-      name: "underlying_conditions",
-      type: "multiselect",
-      label: "Do you have any underlying conditions?",
+      defaultLabel: "location",
+      type: "radioInput",
+      name: "location",
+      editable: "system",
+      hideWhenJustOneOption: true,
+
+      required: false,
+      getOptionsAt: "locations",
+      optionsInputs: {
+        attendeeInPerson: {
+          type: "address",
+          required: true,
+          placeholder: "",
+        },
+        somewhereElse: {
+          type: "text",
+          required: true,
+          placeholder: "",
+        },
+        phone: {
+          type: "phone",
+          required: true,
+          placeholder: "",
+        },
+      },
+
+      sources: [
+        {
+          label: "Default",
+          id: "default",
+          type: "default",
+        },
+      ],
+    },
+  ];
+  if (isOrgTeamEvent) {
+    systemBeforeFields.splice(2, 0, {
+      defaultLabel: "phone_number",
+      type: "phone",
+      name: "attendeePhoneNumber",
+      required: false,
+      hidden: true,
+      editable: "system-but-optional",
+      sources: [
+        {
+          label: "Default",
+          id: "default",
+          type: "default",
+        },
+      ],
+    });
+  }
+
+  // These fields should be added after other user fields
+  const systemAfterFields: typeof bookingFields = [
+    {
+      label: "Add Guests",
+      defaultLabel: "additional_guests",
+      type: "multiemail",
+      editable: "system-but-optional",
+      name: "guests",
       placeholder: "",
+      defaultPlaceholder: "email",
+      required: false,
+      hidden: disableGuests,
+      sources: [
+        {
+          label: "Default",
+          id: "default",
+          type: "default",
+        },
+      ],
+    },
+    {
+      label: "Phone number",
+      defaultLabel: "phone_number",
+      type: "phone",
+      name: "attendeePhoneNumber",
+      required: true,
+      editable: "system-but-optional",
+      sources: [
+        {
+          label: "Default",
+          id: "default",
+          type: "default",
+        },
+      ],
+    },
+    {
+      label: "Date of birth (dd/mm/yyyy)",
+      type: "text",
+      name: "dateOfBirth",
+      required: true,
+      editable: "user",
+      sources: [
+        {
+          label: "user",
+          id: "user",
+          type: "user",
+        },
+      ],
+    },
+    {
+      label: "Do you have any underlying conditions?",
+      type: "multiselect",
+      name: "underlyingConditions",
       required: true,
       options: [
         {
@@ -324,20 +382,19 @@ export const ensureBookingInputsHaveSystemFields = ({
           value: "I don't know",
         },
       ],
-      editable: "system",
+      editable: "user",
       sources: [
         {
-          id: "default",
-          type: "default",
-          label: "default",
+          label: "user",
+          id: "user",
+          type: "user",
         },
       ],
     },
     {
-      name: "treatment_type",
-      type: "multiselect",
       label: "What type of treatment are you looking for?",
-      placeholder: "",
+      type: "multiselect",
+      name: "treatmentType",
       required: true,
       options: [
         {
@@ -401,61 +458,25 @@ export const ensureBookingInputsHaveSystemFields = ({
           value: "Surrogacy",
         },
       ],
-      editable: "system",
-      sources: [
-        {
-          id: "default",
-          type: "default",
-          label: "default",
-        },
-      ],
-      disableOnPrefill: false,
-    },
-    {
-      name: "notes",
-      type: "textarea",
-      sources: [{ id: "default", type: "default", label: "Default" }],
-      editable: "system-but-optional",
-      required: false,
-      label:
-        "Anything you’d like to share (health concerns, medical information, treatment priorities, fertility intentions) that may help the clinic prepare for your conversation?",
-      defaultLabel: "additional_notes",
-      placeholder: "Please share anything that will help prepare for our conversation.",
-      defaultPlaceholder: "share_additional_notes",
-    },
-    {
-      name: "consent_personal_data",
-      type: "checkbox",
-      label: "Data Processing Consent",
-      placeholder: "",
-      required: true,
-      options: [
-        {
-          label:
-            "<span>I consent to the processing of my personal data by Fertility Mapper as detailed in their Privacy Policies. I understand that I have the right to withdraw my consent any time.</span>",
-          value: "User has consented to the processing of their personal data by Fertility Mapper",
-        },
-      ],
       editable: "user",
       sources: [
         {
+          label: "user",
           id: "user",
           type: "user",
-          label: "User",
-          fieldRequired: true,
         },
       ],
-      disableOnPrefill: false,
     },
-  ];
-  if (isOrgTeamEvent) {
-    systemBeforeFields.splice(2, 0, {
-      defaultLabel: "phone_number",
-      type: "phone",
-      name: "attendeePhoneNumber",
-      required: false,
-      hidden: true,
+    {
+      label:
+        "Anything you’d like to share (health concerns, medical information, treatment priorities, fertility intentions) that may help the clinic prepare for your conversation?",
+      defaultLabel: "additional_notes",
+      type: "textarea",
+      name: "notes",
       editable: "system-but-optional",
+      required: additionalNotesRequired,
+      placeholder: "Please share anything that will help prepare for our conversation.",
+      defaultPlaceholder: "share_additional_notes",
       sources: [
         {
           label: "Default",
@@ -463,11 +484,40 @@ export const ensureBookingInputsHaveSystemFields = ({
           type: "default",
         },
       ],
-    });
-  }
-
-  // These fields should be added after other user fields
-  const systemAfterFields: typeof bookingFields = [
+    },
+    {
+      label: "Data Processing Consent",
+      type: "checkbox",
+      name: "personalDataConsent",
+      required: true,
+      editable: "user",
+      options: [
+        {
+          label:
+            "<span>I consent to the processing of my personal data</span><i>By checking this box, I consent to Fertility Mapper  processing my personal and health data in compliance with data protection legislation, and in accordance with its <a href='https://fertilitymapper.com/privacy-policy/'>Privacy Policy</a>. I understand that my consent is voluntary and can be withdrawn at any time by contacting <a href='mailto:hello@fertilitymapper.com'>mailto:hello@fertilitymapper.com</a>.</i>",
+          value: "User has consented to the processing of their personal data by Fertility Mapper",
+        },
+        {
+          label:
+            "<span>I agree to the sharing of my personal data with Manchester Fertility</span> <i>By checking this box, I give my consent for Fertility Mapper to share my personal data, including health and fertility-related information, with Manchester Fertility to facilitate my appointment booking. I understand that my consent is voluntary and can be withdrawn at any time by contacting <a href='mailto:hello@fertilitymapper.com'>mailto:hello@fertilitymapper.com</a>.</i>",
+          value:
+            "User has consented to Fertility Mapper sharing their personal data with Manchester Fertility",
+        },
+        {
+          label:
+            "<span>I agree to Manchester Fertility sharing my personal data with Fertility Mapper</span> <i>By checking this box, I consent to  Manchester Fertility sharing status reports and records of fertility treatment provided by Manchester Fertility and fees paid to Manchester Fertility with Fertility Mapper ,  to verify the success of my booking and to ensure appropriate follow-ups. All shared information will be treated with confidentiality and in compliance with data protection legislation, as detailed in Manchester Fertility's  <a href='https://url.uk.m.mimecastprotect.com/s/y6P-CKr7mh02WyZCNPyg5?domain=manchesterfertility.com/'>Privacy Policy</a>. I understand that my consent is voluntary and can be withdrawn at any time by contacting <a href='mailto:info@manchesterfertility.com'>info@manchesterfertility.com</a>.</i>",
+          value:
+            "User has consented to Manchester Fertility sharing their personal data with Fertility Mapper",
+        },
+      ],
+      sources: [
+        {
+          label: "user",
+          id: "user",
+          type: "user",
+        },
+      ],
+    },
     {
       defaultLabel: "what_is_this_meeting_about",
       type: "text",

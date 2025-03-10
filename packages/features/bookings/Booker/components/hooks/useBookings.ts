@@ -51,6 +51,7 @@ export interface IUseBookings {
   teamMemberEmail?: string | null;
   clinic?: string | null;
   layout?: string | null;
+  multiClinics?: boolean;
 }
 
 const getBookingSuccessfulEventPayload = (booking: {
@@ -111,6 +112,7 @@ export const useBookings = ({
   teamMemberEmail,
   clinic,
   layout,
+  multiClinics = false,
 }: IUseBookings) => {
   const router = useRouter();
   const eventSlug = useBookerStore((state) => state.eventSlug);
@@ -273,6 +275,7 @@ export const useBookings = ({
         email: bookingForm.getValues("responses.email"),
         layout: layout,
         clinic: clinic,
+        multiClinics: multiClinics,
         eventTypeSlug: eventSlug,
         seatReferenceUid: "seatReferenceUid" in booking ? booking.seatReferenceUid : null,
         formerTime:

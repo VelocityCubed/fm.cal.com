@@ -161,6 +161,7 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
     teamMemberEmail: props.teamMemberEmail,
     clinic: clinic,
     layout: bookerLayout.layout,
+    multiClinics: multiClinic,
   });
 
   const verifyCode = useVerifyCode({

@@ -340,6 +340,7 @@ export default function Success(props: PageProps) {
     return t(`emailed_you_and_attendees${titleSuffix}`);
   }
   const layout = searchParams?.get("layout");
+  const multiClinics = searchParams?.get("multiClinics");
 
   // This is a weird case where the same route can be opened in booking flow as a success page or as a booking detail page from the app
   // As Booking Page it has to support configured theme, but as booking detail page it should not do any change. Let Shell.tsx handle it.
@@ -459,7 +460,10 @@ export default function Success(props: PageProps) {
           <div
             className={classNames(
               shouldAlignCentrally ? "text-center" : "",
-              layout !== "mobile_branded" && "flex items-end justify-center px-4 pb-20 pt-4 sm:flex sm:p-0",
+              layout !== "mobile_branded" &&
+                !multiClinics &&
+                "flex items-end justify-center px-4 pb-20 pt-4 sm:flex sm:p-0",
+              layout !== "mobile_branded" && multiClinics && "flex items-end justify-end p-0",
               layout === "mobile_branded" && "justify center flex items-end p-0 sm:flex sm:p-0"
             )}>
             <div
@@ -474,7 +478,10 @@ export default function Success(props: PageProps) {
                   "h-full items-center justify-start",
                 layout === "mobile_branded" && "h-full min-h-[calc(100dvh)]",
                 layout !== "branded_view" && layout !== "mobile_branded" && " my-4   sm:my-0 ",
-                isEmbed ? "" : " inset-0"
+                isEmbed ? "" : " inset-0",
+                (layout === "branded_view" || layout === "mobile_branded") &&
+                  multiClinics &&
+                  "multi-clinic-p w-[434px]"
               )}
               aria-hidden="true">
               <div
@@ -1034,6 +1041,11 @@ export default function Success(props: PageProps) {
                         </div>
                       )}
                       <div>
+                        {multiClinics && isEmbed && (
+                          <h4 className="font-circular color-primary body-head-2 mb-6 text-left font-medium">
+                            You are scheduled!
+                          </h4>
+                        )}
                         <p className="color-body-text body-normal font-normal-medium font-circular text-left">
                           A calendar invite has been sent to your email address. Ahead of the call, you might
                           like to read our guide on{" "}
@@ -1201,7 +1213,10 @@ export default function Success(props: PageProps) {
               </div>
               {isGmail && !isFeedbackMode && (
                 <Alert
-                  className="main -mb-20 mt-4 inline-block ltr:text-left rtl:text-right sm:-mt-4 sm:mb-4 sm:w-full sm:max-w-xl sm:align-middle"
+                  className={classNames(
+                    "main -mb-20 mt-4 inline-block ltr:text-left rtl:text-right sm:-mt-4 sm:mb-4 sm:w-full sm:max-w-xl sm:align-middle",
+                    multiClinics && "mt-6"
+                  )}
                   severity="warning"
                   message={
                     <div>

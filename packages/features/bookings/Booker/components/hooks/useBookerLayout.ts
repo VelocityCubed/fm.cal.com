@@ -18,14 +18,17 @@ export type UseBookerLayoutType = ReturnType<typeof useBookerLayout>;
 export const useBookerLayout = (event: Pick<BookerEvent, "profile"> | undefined | null) => {
   const [_layout, setLayout] = useBookerStore((state) => [state.layout, state.setLayout], shallow);
   const isEmbed = useIsEmbed();
-  const isMobile = useMediaQuery("(max-width: 768px)");
+  const isMobile = useMediaQuery(
+    "(max-width: 768px)",
+    _layout === "branded_view" || _layout === "mobile_branded" ? isEmbed : false
+  );
   const isTablet = useMediaQuery("(max-width: 1024px)");
   const embedUiConfig = useEmbedUiConfig();
 
   // In Embed we give preference to embed configuration for the layout.If that's not set, we use the App configuration for the event layout
   // But if it's mobile view, there is only one layout supported which is 'mobile'
   const layout =
-    _layout === "branded_view"
+    _layout === "branded_view" || _layout === "mobile_branded"
       ? _layout
       : isEmbed
       ? isMobile

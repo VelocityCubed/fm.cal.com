@@ -326,6 +326,7 @@ const BookerComponent = ({
             layout !== BookerLayouts.BRANDED_VIEW && "bg-default",
             layout === BookerLayouts.BRANDED_VIEW && "bg-branded rounded-branded border-subtle",
             isEmbed && layout === BookerLayouts.BRANDED_VIEW && "rounded-branded-embed",
+            isEmbed && layout === "mobile_branded" && "bg-branded",
             (layout === BookerLayouts.MONTH_VIEW ||
               (isEmbed && layout !== BookerLayouts.BRANDED_VIEW && layout !== "mobile_branded")) &&
               "border-subtle rounded-md",
@@ -334,7 +335,7 @@ const BookerComponent = ({
             !isEmbed &&
               (layout === BookerLayouts.MONTH_VIEW || layout === BookerLayouts.BRANDED_VIEW) &&
               `border-subtle border`,
-            multiClinics && "multi-columns",
+            multiClinics && layout === BookerLayouts.BRANDED_VIEW && "multi-columns",
             !isEmbed && "branded-max-w",
             `${customClassNames?.bookerContainer}`
           )}>

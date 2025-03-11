@@ -478,13 +478,11 @@ export default function Success(props: PageProps) {
                 (layout === "branded_view" || layout === "mobile_branded") &&
                   isEmbed &&
                   "h-full items-center justify-start",
-                layout === "mobile_branded" && "h-full min-h-[calc(100dvh)]",
+                layout === "mobile_branded" && "h-full",
+                layout === "mobile_branded" && !isEmbed && "min-h-[calc(100dvh)]",
                 layout !== "branded_view" && layout !== "mobile_branded" && " my-4   sm:my-0 ",
                 isEmbed ? "" : " inset-0",
-                (layout === "branded_view" || layout === "mobile_branded") &&
-                  isEmbed &&
-                  multiClinics &&
-                  "multi-clinic-p w-[434px]"
+                layout === "branded_view" && isEmbed && multiClinics && "multi-clinic-p w-[434px]"
               )}
               aria-hidden="true">
               <div
@@ -499,12 +497,13 @@ export default function Success(props: PageProps) {
                     layout !== "mobile_branded" &&
                     "pb-4 pt-5 sm:py-8 sm:align-middle",
                   "px-8 text-left align-bottom transition-all sm:w-full",
-                  (layout === "branded_view" || layout === "mobile_branded") && isEmbed && "w-[352px] !px-0",
+                  layout === "branded_view" && isEmbed && "w-[352px] !px-0",
                   layout === "branded_view" &&
                     !isEmbed &&
                     "border-subtle bg-branded rounded-branded py-t-10 py-b-10",
-                  layout === "mobile_branded" &&
-                    "bg-branded py-t-10 py-b-10 h-full min-h-[calc(100dvh)] w-full"
+                  layout === "mobile_branded" && "bg-branded  h-full w-full",
+                  layout === "mobile_branded" && isEmbed && "px-l-6 px-r-6 rounded-none",
+                  layout === "mobile_branded" && !isEmbed && "py-t-10 py-b-10 min-h-[calc(100dvh)]"
                 )}
                 role="dialog"
                 aria-modal="true"
@@ -1017,7 +1016,11 @@ export default function Success(props: PageProps) {
                 )}
                 {!isFeedbackMode && (layout === "branded_view" || layout === "mobile_branded") && (
                   <>
-                    <div className="text-center">
+                    <div
+                      className={classNames(
+                        "text-center",
+                        layout === "mobile_branded" && isEmbed && "py-t-6 branded-mobile-border"
+                      )}>
                       {!isEmbed && (
                         <div className="mb-10 flex flex-col items-center justify-center gap-6">
                           <div
@@ -1045,7 +1048,12 @@ export default function Success(props: PageProps) {
                       )}
                       <div>
                         {multiClinics && isEmbed && (
-                          <h4 className="font-circular color-primary body-head-2 mb-6 text-left font-medium">
+                          <h4
+                            className={classNames(
+                              "font-circular color-primary body-head-2 mb-6  font-medium",
+                              layout === "branded_view" && "text-left",
+                              layout === "mobile_branded" && "text-center"
+                            )}>
                             You are scheduled!
                           </h4>
                         )}
@@ -1219,7 +1227,8 @@ export default function Success(props: PageProps) {
                   className={classNames(
                     "main inline-block ltr:text-left rtl:text-right sm:mb-4 sm:w-full sm:max-w-xl sm:align-middle",
                     !isEmbed && "-mb-20 mt-4 sm:-mt-4 ",
-                    isEmbed && "mt-6"
+                    isEmbed && (layout === "branded_view" || layout === "mobile_branded") && "mt-6",
+                    isEmbed && layout === "mobile_branded" && "mx-6"
                   )}
                   severity="warning"
                   message={

@@ -1217,8 +1217,9 @@ export default function Success(props: PageProps) {
               {isGmail && !isFeedbackMode && (
                 <Alert
                   className={classNames(
-                    "main -mb-20 mt-4 inline-block ltr:text-left rtl:text-right sm:-mt-4 sm:mb-4 sm:w-full sm:max-w-xl sm:align-middle",
-                    multiClinics && "mt-6"
+                    "main inline-block ltr:text-left rtl:text-right sm:mb-4 sm:w-full sm:max-w-xl sm:align-middle",
+                    !isEmbed && "-mb-20 mt-4 sm:-mt-4 ",
+                    isEmbed && "mt-6"
                   )}
                   severity="warning"
                   message={

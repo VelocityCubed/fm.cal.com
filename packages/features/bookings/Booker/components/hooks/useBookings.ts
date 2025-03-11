@@ -19,6 +19,7 @@ import { bookingMetadataSchema } from "@calcom/prisma/zod-utils";
 import { trpc } from "@calcom/trpc";
 import { showToast } from "@calcom/ui";
 
+import { UseBookerOverrides } from "./useBookerOverrides";
 import type { UseBookingFormReturnType } from "./useBookingForm";
 
 export interface IUseBookings {
@@ -230,6 +231,10 @@ export const useBookings = ({
           })
         );
       } else {
+        let overrides = null;
+        if (layout === "branded_view" || layout === "mobile_branded") {
+          overrides = UseBookerOverrides({ clinic });
+        }
         sdkActionManager?.fire("bookingSuccessful", {
           booking: booking,
           eventType: event.data,
@@ -241,6 +246,7 @@ export const useBookings = ({
             timeZone: booking.user?.timeZone || "Europe/London",
           },
           confirmed: !(booking.status === BookingStatus.PENDING && event.data?.requiresConfirmation),
+          overrides: overrides,
         });
 
         sdkActionManager?.fire(
@@ -248,6 +254,7 @@ export const useBookings = ({
           getBookingSuccessfulEventPayload({
             ...booking,
             isRecurring: false,
+            overrides: overrides,
           })
         );
       }

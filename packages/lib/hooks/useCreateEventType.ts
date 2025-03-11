@@ -17,7 +17,7 @@ export type CreateEventTypeFormValues = z.infer<typeof createEventTypeInput>;
 export const useCreateEventTypeForm = () => {
   const form = useForm<CreateEventTypeFormValues>({
     defaultValues: {
-      length: 15,
+      length: 20,
     },
     resolver: zodResolver(createEventTypeInput),
   });

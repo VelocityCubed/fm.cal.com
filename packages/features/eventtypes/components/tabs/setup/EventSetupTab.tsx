@@ -291,7 +291,7 @@ export const EventSetupTab = (
               data-testid="duration"
               {...(isManagedEventType || isChildrenManagedEventType ? lengthLockedProps : {})}
               label={t("duration")}
-              defaultValue={formMethods.getValues("length") ?? 15}
+              defaultValue={formMethods.getValues("length") ?? 20}
               {...formMethods.register("length")}
               addOnSuffix={<>{t("minutes")}</>}
               min={1}

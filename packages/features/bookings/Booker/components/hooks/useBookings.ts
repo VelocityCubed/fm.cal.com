@@ -64,6 +64,7 @@ const getBookingSuccessfulEventPayload = (booking: {
   paymentRequired: boolean;
   uid?: string;
   isRecurring: boolean;
+  overrides?: any;
 }) => {
   return {
     uid: booking.uid,
@@ -74,6 +75,7 @@ const getBookingSuccessfulEventPayload = (booking: {
     status: booking.status,
     paymentRequired: booking.paymentRequired,
     isRecurring: booking.isRecurring,
+    overrides: booking.overrides,
   };
 };
 

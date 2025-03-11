@@ -31,7 +31,7 @@ export type EventDataMap = {
     status: string | undefined;
     paymentRequired: boolean;
     isRecurring: boolean;
-    overrides: unknown;
+    overrides?: unknown;
     /**
      * This is only used for recurring bookings
      */

@@ -326,7 +326,7 @@ const BookerComponent = ({
             layout !== BookerLayouts.BRANDED_VIEW && "bg-default",
             layout === BookerLayouts.BRANDED_VIEW && "bg-branded rounded-branded border-subtle",
             isEmbed && layout === BookerLayouts.BRANDED_VIEW && "rounded-branded-embed",
-            isEmbed && layout === "mobile_branded" && "bg-branded",
+            isEmbed && layout === "mobile_branded" && "bg-branded mobile-embed-doc-size",
             (layout === BookerLayouts.MONTH_VIEW ||
               (isEmbed && layout !== BookerLayouts.BRANDED_VIEW && layout !== "mobile_branded")) &&
               "border-subtle rounded-md",
@@ -518,7 +518,8 @@ const BookerComponent = ({
                 layout !== BookerLayouts.MONTH_VIEW &&
                   layout !== BookerLayouts.BRANDED_VIEW &&
                   layout !== "mobile_branded" &&
-                  "sticky top-0"
+                  "sticky top-0",
+                layout === "mobile_branded" && isEmbed && "h-auto"
               )}
               ref={timeslotsRef}
               {...fadeInLeft}>

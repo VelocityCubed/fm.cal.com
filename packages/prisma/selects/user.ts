@@ -40,27 +40,6 @@ export const baseUserSelect = Prisma.validator<Prisma.UserSelect>()({
   bio: true,
   avatarUrl: true,
   darkBrandColor: true,
-  teams: {
-    select: {
-      team: {
-        select: {
-          id: true,
-          name: true,
-          logoUrl: true,
-          hideBranding: true,
-          slug: true,
-          eventTypes: {
-            select: {
-              id: true,
-              title: true,
-              slug: true,
-              eventName: true,
-            },
-          },
-        },
-      },
-    },
-  },
   ...availabilityUserSelect,
 });
 
@@ -77,27 +56,6 @@ export const userSelect = Prisma.validator<Prisma.UserArgs>()({
     avatarUrl: true,
     darkBrandColor: true,
     metadata: true,
-    teams: {
-      select: {
-        team: {
-          select: {
-            id: true,
-            name: true,
-            logoUrl: true,
-            hideBranding: true,
-            slug: true,
-            eventTypes: {
-              select: {
-                id: true,
-                title: true,
-                slug: true,
-                eventName: true,
-              },
-            },
-          },
-        },
-      },
-    },
     ...availabilityUserSelect,
   },
 });

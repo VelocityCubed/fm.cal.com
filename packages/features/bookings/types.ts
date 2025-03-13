@@ -1,4 +1,4 @@
-import type { SchedulingType, Team } from "@prisma/client";
+import type { SchedulingType } from "@prisma/client";
 import type { ErrorOption, FieldPath } from "react-hook-form";
 
 import type { BookingCreateBody } from "@calcom/prisma/zod-utils";
@@ -24,7 +24,7 @@ type BookerEventUser = Pick<
   bookerUrl: string;
 };
 
-type BookerEventProfile = Pick<PublicEvent["profile"], "name" | "image" | "bookerLayouts" | "bio" | "teams">;
+type BookerEventProfile = Pick<PublicEvent["profile"], "name" | "image" | "bookerLayouts" | "bio">;
 
 export type BookerEvent = Pick<
   PublicEvent,
@@ -57,7 +57,7 @@ export type BookerEvent = Pick<
 > & {
   subsetOfUsers: BookerEventUser[];
   showInstantEventConnectNowModal: boolean;
-} & { profile: BookerEventProfile } & ({ team?: Team | null } | null);
+} & { profile: BookerEventProfile };
 
 export type ValidationErrors<T extends object> = { key: FieldPath<T>; error: ErrorOption }[];
 

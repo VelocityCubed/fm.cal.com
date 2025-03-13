@@ -47,7 +47,6 @@ import { markdownToSafeHTML } from "@calcom/lib/markdownToSafeHTML";
 import { getEveryFreqFor } from "@calcom/lib/recurringStrings";
 import { getIs24hClockFromLocalStorage, isBrowserLocale24h } from "@calcom/lib/timeFormat";
 import { localStorage } from "@calcom/lib/webstorage";
-import type { Team } from "@calcom/prisma/client";
 import { BookingStatus, SchedulingType } from "@calcom/prisma/enums";
 import { bookingMetadataSchema, eventTypeMetaDataSchemaWithTypedApps } from "@calcom/prisma/zod-utils";
 import { trpc } from "@calcom/trpc/react";
@@ -389,15 +388,6 @@ export default function Success(props: PageProps) {
   const isPastBooking = isBookingInPast;
   const isRerouting = searchParams?.get("cal.rerouting") === "true";
   const isRescheduled = bookingInfo?.rescheduled;
-
-  let teamLogo = "";
-
-  props.profile?.teams?.forEach((t: any) => {
-    const found = t.team?.eventTypes?.find((ev: any) => ev.slug === bookingInfo.eventType?.slug);
-    if (found) {
-      teamLogo = (t.team as Team).logoUrl ?? "";
-    }
-  });
 
   const successPageHeadline = (() => {
     if (needsConfirmationAndReschedulable) {
@@ -1093,7 +1083,7 @@ export default function Success(props: PageProps) {
                         </div>
                         <div className="mt-4 flex flex-row items-center justify-start gap-6">
                           <img
-                            src={getImageUrl(teamLogo)}
+                            src="https://fertilitymapper.com/assets/logo_small.svg"
                             className="max-h-5-5 h-5-5 w-5-5 max-w-5-5"
                             alt="Clinic Logo"
                           />

@@ -40,27 +40,6 @@ const userSelect = Prisma.validator<Prisma.UserSelect>()({
   darkBrandColor: true,
   theme: true,
   metadata: true,
-  teams: {
-    select: {
-      team: {
-        select: {
-          id: true,
-          name: true,
-          logoUrl: true,
-          hideBranding: true,
-          slug: true,
-          eventTypes: {
-            select: {
-              id: true,
-              title: true,
-              slug: true,
-              eventName: true,
-            },
-          },
-        },
-      },
-    },
-  },
   organization: {
     select: {
       id: true,
@@ -318,7 +297,6 @@ export const getPublicEvent = async (
           firstUsersMetadata?.defaultBookerLayouts || defaultEventBookerLayouts
         ),
         bio: users[0].bio,
-        teams: users[0].teams,
         ...(orgDetails
           ? {
               image: getPlaceholderAvatar(orgDetails?.logoUrl, orgDetails?.name),
@@ -494,11 +472,9 @@ export const getPublicEvent = async (
   if (event.team?.isPrivate && !isTeamAdminOrOwner && !isOrgAdminOrOwner) {
     users = [];
   }
-  const team = getTeamForUserEvent(eventWithUserProfiles);
 
   return {
     ...eventWithUserProfiles,
-    team: team,
     bookerLayouts: bookerLayoutsSchema.parse(eventMetaData?.bookerLayouts || null),
     description: markdownToSafeHTML(eventWithUserProfiles.description),
     metadata: eventMetaData,
@@ -581,21 +557,7 @@ function getProfileFromEvent(event: GetProfileFromEventInput) {
         (userMetaData && "defaultBookerLayouts" in userMetaData ? userMetaData.defaultBookerLayouts : null)
     ),
     bio: profile.bio,
-    teams: owner?.teams || ("teams" in profile ? profile.teams : null) || null,
   };
-}
-
-function getTeamForUserEvent(event: GetProfileFromEventInput) {
-  const profile = getProfileFromEvent(event);
-  let team = null;
-
-  profile?.teams?.forEach((t: any) => {
-    const found = t.team?.eventTypes?.find((ev: { slug: string }) => ev.slug === event.slug);
-    if (found) {
-      team = t.team;
-    }
-  });
-  return team;
 }
 
 async function getUsersFromEvent(

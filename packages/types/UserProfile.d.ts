@@ -11,7 +11,6 @@ export type OrgProfile = {
   organizationId: number;
   organization: OrganizationWithRequestedSlug;
   bio?: string | null;
-  teams?: Array<Team>;
 };
 
 export type PersonalProfile = {
@@ -21,7 +20,6 @@ export type PersonalProfile = {
   organizationId: null;
   organization: null;
   bio?: string | null;
-  teams?: Array<Team>;
 };
 
 export type UserAsPersonalProfile = {
@@ -31,7 +29,6 @@ export type UserAsPersonalProfile = {
   organizationId: null;
   organization: null;
   bio?: string | null;
-  teams?: Array<Team>;
 };
 
 export type UserProfile = PersonalProfile | OrgProfile | UserAsPersonalProfile;

@@ -10,7 +10,6 @@ import { SeatsAvailabilityText } from "@calcom/features/bookings/components/Seat
 import { EventMetaBlock } from "@calcom/features/bookings/components/event-meta/Details";
 import { useTimePreferences } from "@calcom/features/bookings/lib";
 import type { BookerEvent } from "@calcom/features/bookings/types";
-import { getImageUrl } from "@calcom/lib/getAvatarUrl";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { markdownToSafeHTMLClient } from "@calcom/lib/markdownToSafeHTMLClient";
 import type { EventTypeTranslation } from "@calcom/prisma/client";
@@ -74,7 +73,6 @@ export const EventMeta = ({
     | "isDynamic"
     | "fieldTranslations"
     | "autoTranslateDescriptionEnabled"
-    | "team"
   > | null;
   isPending: boolean;
   isPlatform?: boolean;
@@ -165,11 +163,7 @@ export const EventMeta = ({
           <div className="flex flex-col gap-4">
             <div className="flex flex-row items-center justify-start gap-6">
               <img
-                src={
-                  event.team?.logoUrl
-                    ? getImageUrl(event.team?.logoUrl)
-                    : "https://fertilitymapper.com/assets/logo_small.svg"
-                }
+                src="https://fertilitymapper.com/assets/logo_small.svg"
                 className="max-h-5-5 h-5-5 w-5-5 max-w-5-5"
                 alt="Clinic Logo"
               />

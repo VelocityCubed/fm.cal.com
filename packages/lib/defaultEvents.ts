@@ -57,7 +57,6 @@ const user: User & { credentials: CredentialPayload[] } = {
   travelSchedules: [],
   bio: "",
   avatarUrl: "",
-  teams: [],
 };
 
 const customInputs: CustomInputSchema[] = [];

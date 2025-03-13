@@ -19,6 +19,27 @@ export const getEventTypesFromDB = async (id: number) => {
     timeZone: true,
     bio: true,
     avatarUrl: true,
+    teams: {
+      select: {
+        team: {
+          select: {
+            id: true,
+            name: true,
+            logoUrl: true,
+            hideBranding: true,
+            slug: true,
+            eventTypes: {
+              select: {
+                id: true,
+                title: true,
+                slug: true,
+                eventName: true,
+              },
+            },
+          },
+        },
+      },
+    },
   };
   const eventType = await prisma.eventType.findUnique({
     where: {
@@ -66,6 +87,7 @@ export const getEventTypesFromDB = async (id: number) => {
           id: true,
           slug: true,
           name: true,
+          logoUrl: true,
           hideBranding: true,
         },
       },

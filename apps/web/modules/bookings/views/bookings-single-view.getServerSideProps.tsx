@@ -140,6 +140,7 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
     slug: eventType.team?.slug || eventType.users[0]?.username || null,
     image: eventType.users[0]?.avatarUrl || null,
     bio: eventType.users[0]?.bio || null,
+    teams: eventType.users[0]?.teams || null,
   };
 
   if (bookingInfo !== null && eventType.seatsPerTimeSlot) {
@@ -215,8 +216,8 @@ export async function getServerSideProps(context: GetServerSidePropsContext) {
   return {
     props: {
       orgSlug: currentOrgDomain,
-      themeBasis: eventType.team ? eventType.team.slug : eventType.users[0]?.username,
-      hideBranding: eventType.team ? eventType.team.hideBranding : eventType.users[0].hideBranding,
+      themeBasis: eventType.team ? eventType.team?.slug : eventType.users[0]?.username,
+      hideBranding: eventType.team ? eventType.team?.hideBranding : eventType.users[0].hideBranding,
       profile,
       eventType,
       recurringBookings: await getRecurringBookings(bookingInfo.recurringEventId),

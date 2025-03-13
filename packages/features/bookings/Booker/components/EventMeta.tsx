@@ -10,6 +10,7 @@ import { SeatsAvailabilityText } from "@calcom/features/bookings/components/Seat
 import { EventMetaBlock } from "@calcom/features/bookings/components/event-meta/Details";
 import { useTimePreferences } from "@calcom/features/bookings/lib";
 import type { BookerEvent } from "@calcom/features/bookings/types";
+import { getImageUrl } from "@calcom/lib/getAvatarUrl";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { markdownToSafeHTMLClient } from "@calcom/lib/markdownToSafeHTMLClient";
 import type { EventTypeTranslation } from "@calcom/prisma/client";
@@ -51,7 +52,6 @@ export const EventMeta = ({
   isMobile = false,
   classNames,
   locale,
-  overrides = null,
 }: {
   event?: Pick<
     BookerEvent,
@@ -74,6 +74,7 @@ export const EventMeta = ({
     | "isDynamic"
     | "fieldTranslations"
     | "autoTranslateDescriptionEnabled"
+    | "team"
   > | null;
   isPending: boolean;
   isPlatform?: boolean;
@@ -85,11 +86,6 @@ export const EventMeta = ({
     eventMetaTimezoneSelect?: string;
   };
   locale?: string | null;
-  overrides?: {
-    clinicTitle: string | null;
-    clinicDescription: string | null;
-    clinicImage: string | null;
-  } | null;
 }) => {
   const { timeFormat, timezone } = useBookerTime();
   const [setTimezone] = useTimePreferences((state) => [state.setTimezone]);
@@ -166,30 +162,33 @@ export const EventMeta = ({
           layout
           transition={{ ...fadeInUp.transition, delay: 0.3 }}
           className={isMobile ? "" : ""}>
-          <div className="flex flex-col gap-6">
+          <div className="flex flex-col gap-4">
             <div className="flex flex-row items-center justify-start gap-6">
               <img
-                src={overrides?.clinicImage ?? "https://fertilitymapper.com/assets/logo_small.svg"}
-                className="h-8-5 h-8-5-max w-auto"
+                src={
+                  event.team?.logoUrl
+                    ? getImageUrl(event.team?.logoUrl)
+                    : "https://fertilitymapper.com/assets/logo_small.svg"
+                }
+                className="max-h-5-5 h-5-5 w-5-5 max-w-5-5"
                 alt="Clinic Logo"
               />
               <EventTitle
                 className={`${classNames?.eventMetaTitle} body-head-2 font-circular color-primary font-medium`}>
-                {overrides?.clinicTitle ?? "Expert Call"}
+                {event.title}
               </EventTitle>
             </div>
 
-            <EventMetaBlock contentClassName="body-normal font-normal-medium font-circular color-body-text">
-              <div
-                // eslint-disable-next-line react/no-danger
-                dangerouslySetInnerHTML={{
-                  __html: markdownToSafeHTMLClient(
-                    overrides?.clinicDescription ??
-                      "Share your questions, treatment priorities and availability with the Fertility Mapper team and we’ll arrange a free call with the most relevant clinic contact to help you progress."
-                  ),
-                }}
-              />
-            </EventMetaBlock>
+            {event.description && (
+              <EventMetaBlock contentClassName="body-normal font-normal-medium font-circular color-body-text">
+                <div
+                  // eslint-disable-next-line react/no-danger
+                  dangerouslySetInnerHTML={{
+                    __html: markdownToSafeHTMLClient(event.description),
+                  }}
+                />
+              </EventMetaBlock>
+            )}
 
             <div className="flex flex-row items-center justify-start gap-4">
               <EventMembers

@@ -25,8 +25,6 @@ import { DEFAULT_LIGHT_BRAND_COLOR, DEFAULT_DARK_BRAND_COLOR, WEBAPP_URL } from 
 import { useRouterQuery } from "@calcom/lib/hooks/useRouterQuery";
 import { BookerLayouts } from "@calcom/prisma/zod-utils";
 
-import { BookerOverrides } from "./BookerOverrides";
-
 type BookerWebWrapperAtomProps = BookerProps;
 
 export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
@@ -37,12 +35,7 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
     fromRedirectOfNonOrgLink: props.entity.fromRedirectOfNonOrgLink,
   });
   const bookerLayout = useBookerLayout(event.data);
-  const clinic = searchParams?.get("clinic") ?? null;
   const multiClinics = searchParams?.get("multiClinics") === "true";
-  let overrides = null;
-  if (bookerLayout.layout === BookerLayouts.BRANDED_VIEW || bookerLayout.layout === "mobile_branded") {
-    overrides = BookerOverrides({ clinic });
-  }
 
   const selectedDate = searchParams?.get("date");
   const isRedirect = searchParams?.get("redirected") === "true" || false;
@@ -159,7 +152,6 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
     bookingForm: bookerForm.bookingForm,
     metadata: metadata ?? {},
     teamMemberEmail: props.teamMemberEmail,
-    clinic: clinic,
     layout: bookerLayout.layout,
     multiClinics: multiClinics,
   });
@@ -249,7 +241,6 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
       areInstantMeetingParametersSet={areInstantMeetingParametersSet}
       userLocale={session?.user.locale}
       renderCaptcha
-      overrides={overrides}
       multiClinics={multiClinics}
     />
   );

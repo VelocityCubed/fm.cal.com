@@ -93,7 +93,6 @@ export interface BookerProps {
   areInstantMeetingParametersSet?: boolean | null;
   userLocale?: string | null;
   hasValidLicense?: boolean;
-  overrides?: Override | null;
   multiClinics?: boolean | null;
 }
 
@@ -164,10 +163,4 @@ export type CustomClassNames = {
     availableTimes?: string;
   };
   atomsWrapper?: string;
-};
-
-export type Override = {
-  clinicTitle: string | null;
-  clinicDescription: string | null;
-  clinicImage: string | null;
 };

@@ -36,7 +36,7 @@ import {
   formatToLocalizedTime,
   formatToLocalizedTimezone,
 } from "@calcom/lib/date-fns";
-import { getAvatarUrl } from "@calcom/lib/getAvatarUrl";
+import { getImageUrl } from "@calcom/lib/getAvatarUrl";
 import useGetBrandingColours from "@calcom/lib/getBrandColours";
 import { useCompatSearchParams } from "@calcom/lib/hooks/useCompatSearchParams";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
@@ -47,6 +47,7 @@ import { markdownToSafeHTML } from "@calcom/lib/markdownToSafeHTML";
 import { getEveryFreqFor } from "@calcom/lib/recurringStrings";
 import { getIs24hClockFromLocalStorage, isBrowserLocale24h } from "@calcom/lib/timeFormat";
 import { localStorage } from "@calcom/lib/webstorage";
+import type { Team } from "@calcom/prisma/client";
 import { BookingStatus, SchedulingType } from "@calcom/prisma/enums";
 import { bookingMetadataSchema, eventTypeMetaDataSchemaWithTypedApps } from "@calcom/prisma/zod-utils";
 import { trpc } from "@calcom/trpc/react";
@@ -66,7 +67,6 @@ import CancelBooking from "@calcom/web/components/booking/CancelBooking";
 import EventReservationSchema from "@calcom/web/components/schemas/EventReservationSchema";
 import { timeZone } from "@calcom/web/lib/clock";
 
-import { BookerOverrides } from "../lib/BookerOverrides";
 import type { PageProps } from "./bookings-single-view.getServerSideProps";
 
 const stringToBoolean = z
@@ -389,11 +389,14 @@ export default function Success(props: PageProps) {
   const isPastBooking = isBookingInPast;
   const isRerouting = searchParams?.get("cal.rerouting") === "true";
   const isRescheduled = bookingInfo?.rescheduled;
-  const clinic = searchParams?.get("clinic");
-  let overrides = null;
-  if (layout === "mobile_branded" || layout === "branded_view") {
-    overrides = BookerOverrides({ clinic });
-  }
+
+  let team: (Team & { logoUrl?: string }) | null = null;
+  props.profile?.teams?.forEach((t: any) => {
+    const found = t.team?.eventTypes?.find((ev: any) => ev.slug === bookingInfo.eventType?.slug);
+    if (found) {
+      team = t.team;
+    }
+  });
 
   const successPageHeadline = (() => {
     if (needsConfirmationAndReschedulable) {
@@ -1019,7 +1022,10 @@ export default function Success(props: PageProps) {
                     <div
                       className={classNames(
                         "text-center",
-                        layout === "mobile_branded" && isEmbed && "py-t-6 branded-mobile-border"
+                        layout === "mobile_branded" &&
+                          isEmbed &&
+                          multiClinics &&
+                          "py-t-6 branded-mobile-border"
                       )}>
                       {!isEmbed && (
                         <div className="mb-10 flex flex-col items-center justify-center gap-6">
@@ -1084,16 +1090,14 @@ export default function Success(props: PageProps) {
                             layout={layout}
                           />
                         </div>
-                        <div className="mt-4 flex flex-row items-center justify-start gap-4">
+                        <div className="mt-4 flex flex-row items-center justify-start gap-6">
                           <img
-                            src={
-                              overrides?.clinicImage ?? "https://fertilitymapper.com/assets/logo_small.svg"
-                            }
-                            className="h-8-5 h-8-5-max w-auto"
+                            src={getImageUrl(team?.logoUrl ?? "")}
+                            className="max-h-5-5 h-5-5 w-5-5 max-w-5-5"
                             alt="Clinic Logo"
                           />
                           <h3 className="body-head-sm font-circular color-primary font-medium">
-                            {overrides?.clinicTitle ?? "Expert Call"}
+                            {props?.eventType?.title ?? ""}
                           </h3>
                         </div>
 
@@ -1101,7 +1105,7 @@ export default function Success(props: PageProps) {
                           <Avatar
                             alt={props.profile.name ?? ""}
                             size="custom"
-                            imageSrc={getAvatarUrl(props.profile.image)}
+                            imageSrc={getImageUrl(props.profile.image)}
                           />
                           <div className="flex flex-col gap-1">
                             <p className="color-text-dark font-circular font-normal-medium body-head-4">

@@ -19,7 +19,6 @@ import { bookingMetadataSchema } from "@calcom/prisma/zod-utils";
 import { trpc } from "@calcom/trpc";
 import { showToast } from "@calcom/ui";
 
-import { UseBookerOverrides } from "./useBookerOverrides";
 import type { UseBookingFormReturnType } from "./useBookingForm";
 
 export interface IUseBookings {
@@ -50,7 +49,6 @@ export interface IUseBookings {
   bookingForm: UseBookingFormReturnType["bookingForm"];
   metadata: Record<string, string>;
   teamMemberEmail?: string | null;
-  clinic?: string | null;
   layout?: string | null;
   multiClinics?: boolean;
 }
@@ -64,7 +62,6 @@ const getBookingSuccessfulEventPayload = (booking: {
   paymentRequired: boolean;
   uid?: string;
   isRecurring: boolean;
-  overrides?: any;
 }) => {
   return {
     uid: booking.uid,
@@ -75,7 +72,6 @@ const getBookingSuccessfulEventPayload = (booking: {
     status: booking.status,
     paymentRequired: booking.paymentRequired,
     isRecurring: booking.isRecurring,
-    overrides: booking.overrides,
   };
 };
 
@@ -113,7 +109,6 @@ export const useBookings = ({
   bookingForm,
   metadata,
   teamMemberEmail,
-  clinic,
   layout,
   multiClinics = false,
 }: IUseBookings) => {
@@ -233,10 +228,6 @@ export const useBookings = ({
           })
         );
       } else {
-        let overrides = null;
-        if (layout === "branded_view" || layout === "mobile_branded") {
-          overrides = UseBookerOverrides({ clinic });
-        }
         sdkActionManager?.fire("bookingSuccessful", {
           booking: booking,
           eventType: event.data,
@@ -248,7 +239,6 @@ export const useBookings = ({
             timeZone: booking.user?.timeZone || "Europe/London",
           },
           confirmed: !(booking.status === BookingStatus.PENDING && event.data?.requiresConfirmation),
-          overrides: overrides,
         });
 
         sdkActionManager?.fire(
@@ -256,7 +246,6 @@ export const useBookings = ({
           getBookingSuccessfulEventPayload({
             ...booking,
             isRecurring: false,
-            overrides: overrides,
           })
         );
       }
@@ -283,7 +272,6 @@ export const useBookings = ({
         isSuccessBookingPage: true,
         email: bookingForm.getValues("responses.email"),
         layout: layout,
-        clinic: clinic,
         multiClinics: multiClinics,
         eventTypeSlug: eventSlug,
         seatReferenceUid: "seatReferenceUid" in booking ? booking.seatReferenceUid : null,

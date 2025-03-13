@@ -78,7 +78,6 @@ const BookerComponent = ({
   hasValidLicense,
   isBookingDryRun: isBookingDryRunProp,
   renderCaptcha,
-  overrides = null,
   multiClinics = false,
 }: BookerProps & WrappedBookerProps) => {
   const searchParams = useCompatSearchParams();
@@ -435,7 +434,6 @@ const BookerComponent = ({
                     isPlatform={isPlatform}
                     isBranded={true}
                     isMobile={isMobile}
-                    overrides={overrides}
                     locale={userLocale}
                   />
                   {!isMobile && <div className="branded-divider" />}

@@ -58,6 +58,27 @@ export const bookEventTypeSelect = Prisma.validator<Prisma.EventTypeSelect>()({
       bio: true,
       avatarUrl: true,
       theme: true,
+      teams: {
+        select: {
+          team: {
+            select: {
+              id: true,
+              name: true,
+              logoUrl: true,
+              hideBranding: true,
+              slug: true,
+              eventTypes: {
+                select: {
+                  id: true,
+                  title: true,
+                  slug: true,
+                  eventName: true,
+                },
+              },
+            },
+          },
+        },
+      },
     },
   },
   successRedirectUrl: true,
@@ -116,6 +137,27 @@ export const availiblityPageEventTypeSelect = Prisma.validator<Prisma.EventTypeS
       username: true,
       hideBranding: true,
       timeZone: true,
+      teams: {
+        select: {
+          team: {
+            select: {
+              id: true,
+              name: true,
+              logoUrl: true,
+              hideBranding: true,
+              slug: true,
+              eventTypes: {
+                select: {
+                  id: true,
+                  title: true,
+                  slug: true,
+                  eventName: true,
+                },
+              },
+            },
+          },
+        },
+      },
     },
   },
   team: {

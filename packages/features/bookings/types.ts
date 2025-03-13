@@ -57,7 +57,7 @@ export type BookerEvent = Pick<
 > & {
   subsetOfUsers: BookerEventUser[];
   showInstantEventConnectNowModal: boolean;
-} & { profile: BookerEventProfile } & { team: Team };
+} & { profile: BookerEventProfile } & { team?: Team };
 
 export type ValidationErrors<T extends object> = { key: FieldPath<T>; error: ErrorOption }[];
 

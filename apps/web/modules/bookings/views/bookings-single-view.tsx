@@ -47,7 +47,6 @@ import { markdownToSafeHTML } from "@calcom/lib/markdownToSafeHTML";
 import { getEveryFreqFor } from "@calcom/lib/recurringStrings";
 import { getIs24hClockFromLocalStorage, isBrowserLocale24h } from "@calcom/lib/timeFormat";
 import { localStorage } from "@calcom/lib/webstorage";
-import type { Team } from "@calcom/prisma/client";
 import { BookingStatus, SchedulingType } from "@calcom/prisma/enums";
 import { bookingMetadataSchema, eventTypeMetaDataSchemaWithTypedApps } from "@calcom/prisma/zod-utils";
 import { trpc } from "@calcom/trpc/react";
@@ -390,11 +389,10 @@ export default function Success(props: PageProps) {
   const isRerouting = searchParams?.get("cal.rerouting") === "true";
   const isRescheduled = bookingInfo?.rescheduled;
 
-  let team: (Team & { logoUrl?: string }) | null = null;
-  props.profile?.teams?.forEach((t: any) => {
+  const team = props.profile?.teams?.forEach((t: any) => {
     const found = t.team?.eventTypes?.find((ev: any) => ev.slug === bookingInfo.eventType?.slug);
     if (found) {
-      team = t.team;
+      return t.team;
     }
   });
 

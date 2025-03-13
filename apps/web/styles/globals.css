@@ -593,6 +593,9 @@ select:focus {
 
 .font-circular {
   font-family: var(--font-body) !important;
+  p,code,kbd,pre,samp {
+    font-family: var(--font-body) !important;
+  }
 }
 
 .font-mackinac {
@@ -627,6 +630,10 @@ select:focus {
 .body-normal {
   font-size: 16px;
   line-height: 24px;
+  p,code,kbd,pre,samp {
+    font-size: 16px !important;
+  line-height: 24px !important;
+  }
 }
 
 .body-head-sm {

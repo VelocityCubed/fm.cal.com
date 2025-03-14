@@ -31,6 +31,7 @@ export type EventDataMap = {
     status: string | undefined;
     paymentRequired: boolean;
     isRecurring: boolean;
+    logoUrl?: string | null | undefined;
     /**
      * This is only used for recurring bookings
      */
@@ -52,6 +53,7 @@ export type EventDataMap = {
       timeZone: string;
     };
     confirmed: boolean;
+    logoUrl?: string | null | undefined;
   };
   rescheduleBookingSuccessfulV2: {
     uid: string | undefined;

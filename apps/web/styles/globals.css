@@ -1053,8 +1053,4 @@ select:focus {
   padding: 40px 40px 0px 24px;
 }
 
-.mobile-embed-doc-size {
-  max-height: 100vh;
-  overflow: auto;
-}
 @import "./raqb.css";

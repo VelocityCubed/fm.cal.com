@@ -370,6 +370,7 @@ export default function Success(props: PageProps) {
   const rescheduleProviderName = guessEventLocationType(rescheduleLocation)?.label;
   const isBookingInPast = new Date(bookingInfo.endTime) < new Date();
   const isReschedulable = !isCancelled;
+  const logoUrl = searchParams?.get("logoUrl");
 
   const bookingCancelledEventProps = {
     booking: bookingInfo,
@@ -1088,7 +1089,7 @@ export default function Success(props: PageProps) {
                         </div>
                         <div className="mt-4 flex flex-row items-center justify-start gap-6">
                           <img
-                            src="https://fertilitymapper.com/assets/logo_small.svg"
+                            src={getImageUrl(logoUrl)}
                             className="max-h-5-5 h-5-5 w-5-5 max-w-5-5"
                             alt="Clinic Logo"
                           />

@@ -35,6 +35,7 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
     fromRedirectOfNonOrgLink: props.entity.fromRedirectOfNonOrgLink,
   });
   const bookerLayout = useBookerLayout(event.data);
+  const logoUrl = searchParams?.get("logoUrl");
   const multiClinics = searchParams?.get("multiClinics") === "true";
 
   const selectedDate = searchParams?.get("date");
@@ -152,6 +153,7 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
     bookingForm: bookerForm.bookingForm,
     metadata: metadata ?? {},
     teamMemberEmail: props.teamMemberEmail,
+    logoUrl: logoUrl,
     layout: bookerLayout.layout,
     multiClinics: multiClinics,
   });
@@ -241,6 +243,7 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
       areInstantMeetingParametersSet={areInstantMeetingParametersSet}
       userLocale={session?.user.locale}
       renderCaptcha
+      logoUrl={logoUrl}
       multiClinics={multiClinics}
     />
   );

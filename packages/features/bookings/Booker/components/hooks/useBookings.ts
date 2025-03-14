@@ -51,6 +51,7 @@ export interface IUseBookings {
   teamMemberEmail?: string | null;
   layout?: string | null;
   multiClinics?: boolean;
+  logoUrl?: string | null | undefined;
 }
 
 const getBookingSuccessfulEventPayload = (booking: {
@@ -62,6 +63,7 @@ const getBookingSuccessfulEventPayload = (booking: {
   paymentRequired: boolean;
   uid?: string;
   isRecurring: boolean;
+  logoUrl?: string | null | undefined;
 }) => {
   return {
     uid: booking.uid,
@@ -72,6 +74,7 @@ const getBookingSuccessfulEventPayload = (booking: {
     status: booking.status,
     paymentRequired: booking.paymentRequired,
     isRecurring: booking.isRecurring,
+    logoUrl: booking.logoUrl,
   };
 };
 
@@ -111,6 +114,7 @@ export const useBookings = ({
   teamMemberEmail,
   layout,
   multiClinics = false,
+  logoUrl,
 }: IUseBookings) => {
   const router = useRouter();
   const eventSlug = useBookerStore((state) => state.eventSlug);
@@ -239,6 +243,7 @@ export const useBookings = ({
             timeZone: booking.user?.timeZone || "Europe/London",
           },
           confirmed: !(booking.status === BookingStatus.PENDING && event.data?.requiresConfirmation),
+          logoUrl: logoUrl,
         });
 
         sdkActionManager?.fire(
@@ -246,6 +251,7 @@ export const useBookings = ({
           getBookingSuccessfulEventPayload({
             ...booking,
             isRecurring: false,
+            logoUrl: logoUrl,
           })
         );
       }
@@ -273,6 +279,7 @@ export const useBookings = ({
         email: bookingForm.getValues("responses.email"),
         layout: layout,
         multiClinics: multiClinics,
+        logoUrl: logoUrl,
         eventTypeSlug: eventSlug,
         seatReferenceUid: "seatReferenceUid" in booking ? booking.seatReferenceUid : null,
         formerTime:
@@ -360,6 +367,7 @@ export const useBookings = ({
           ...getBookingSuccessfulEventPayload({
             ...booking,
             isRecurring: true,
+            logoUrl: logoUrl,
           }),
           allBookings: bookings.map((booking) => ({
             startTime: booking.startTime,

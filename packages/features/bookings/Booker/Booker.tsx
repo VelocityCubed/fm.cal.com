@@ -78,6 +78,7 @@ const BookerComponent = ({
   hasValidLicense,
   isBookingDryRun: isBookingDryRunProp,
   renderCaptcha,
+  logoUrl = "",
   multiClinics = false,
 }: BookerProps & WrappedBookerProps) => {
   const searchParams = useCompatSearchParams();
@@ -325,7 +326,7 @@ const BookerComponent = ({
             layout !== BookerLayouts.BRANDED_VIEW && "bg-default",
             layout === BookerLayouts.BRANDED_VIEW && "bg-branded rounded-branded border-subtle",
             isEmbed && layout === BookerLayouts.BRANDED_VIEW && "rounded-branded-embed",
-            isEmbed && layout === "mobile_branded" && "bg-branded mobile-embed-doc-size",
+            isEmbed && layout === "mobile_branded" && "bg-branded",
             (layout === BookerLayouts.MONTH_VIEW ||
               (isEmbed && layout !== BookerLayouts.BRANDED_VIEW && layout !== "mobile_branded")) &&
               "border-subtle rounded-md",
@@ -434,6 +435,7 @@ const BookerComponent = ({
                     isPlatform={isPlatform}
                     isBranded={true}
                     isMobile={isMobile}
+                    logoUrl={logoUrl}
                     locale={userLocale}
                   />
                   {!isMobile && <div className="branded-divider" />}

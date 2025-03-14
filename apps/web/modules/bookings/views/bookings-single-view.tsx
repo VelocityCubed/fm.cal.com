@@ -450,11 +450,16 @@ export default function Success(props: PageProps) {
         eventType={{ ...eventType, metadata: eventTypeMetaDataSchemaWithTypedApps.parse(eventType.metadata) }}
       />
       <main className={classNames(shouldAlignCentrally ? "mx-auto" : "", isEmbed ? "" : "max-w-3xl")}>
-        <div className={classNames("overflow-y-auto", isEmbed ? "" : "z-50 ")}>
+        <div
+          className={classNames(
+            isEmbed && !multiClinics && layout === "branded_view" && "overflow-y-auto",
+            isEmbed ? "" : "z-50 "
+          )}>
           <div
             className={classNames(
               shouldAlignCentrally ? "text-center" : "",
               layout !== "mobile_branded" &&
+                isEmbed &&
                 !multiClinics &&
                 "flex items-end justify-center px-4 pb-20 pt-4 sm:flex sm:p-0",
               layout !== "mobile_branded" && isEmbed && multiClinics && "flex items-end justify-end p-0",

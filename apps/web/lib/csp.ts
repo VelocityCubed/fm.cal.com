@@ -18,7 +18,7 @@ function getCspPolicy(nonce: string) {
   // We add WEBAPP_URL to img-src because of booking pages, which end up loading images from app.cal.com on cal.com
   // FIXME: Write a layer to extract out EventType Analytics tracking endpoints and add them to img-src or connect-src as needed. e.g. fathom, Google Analytics and others
   return `
-	  default-src 'self' ${IS_PRODUCTION ? "atlassian-companion:" : "data:"};
+	  default-src ${IS_PRODUCTION ? "" : "data:"};
 	  script-src ${
       IS_PRODUCTION
         ? // 'self' 'unsafe-inline' https: added for Browsers not supporting strict-dynamic not supporting strict-dynamic

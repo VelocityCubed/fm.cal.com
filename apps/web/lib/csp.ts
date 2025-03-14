@@ -2,7 +2,6 @@ import type { IncomingMessage, OutgoingMessage } from "http";
 import type { NextRequest, NextResponse } from "next/server";
 
 import { IS_PRODUCTION } from "@calcom/lib/constants";
-import { WEBAPP_URL } from "@calcom/lib/constants";
 
 import { buildNonce } from "./buildNonce";
 
@@ -17,25 +16,28 @@ function getCspPolicy(nonce: string) {
 
   // We add WEBAPP_URL to img-src because of booking pages, which end up loading images from app.cal.com on cal.com
   // FIXME: Write a layer to extract out EventType Analytics tracking endpoints and add them to img-src or connect-src as needed. e.g. fathom, Google Analytics and others
+  // return `
+  //   default-src * ${IS_PRODUCTION ? "" : "data:"};
+  //   script-src ${
+  //     IS_PRODUCTION
+  //       ? // 'self' 'unsafe-inline' https: added for Browsers not supporting strict-dynamic not supporting strict-dynamic
+  //         `'nonce-${nonce}' 'strict-dynamic' 'self' 'unsafe-inline' https:`
+  //       : // Note: We could use 'strict-dynamic' with 'nonce-..' instead of unsafe-inline but there are some streaming related scripts that get blocked(because they don't have nonce on them). It causes a really frustrating full page error model by Next.js to show up sometimes
+  //         "'unsafe-inline' 'unsafe-eval' https: http:"
+  //   };
+  //   object-src 'none';
+  //   base-uri 'none';
+  //   child-src app.cal.com;
+  //   style-src 'self' ${
+  //     IS_PRODUCTION ? (useNonStrictPolicy ? "'unsafe-inline'" : "") : "'unsafe-inline'"
+  //   } app.cal.com;
+  //   font-src 'self';
+  //   img-src 'self' ${WEBAPP_URL} https://img.youtube.com https://eu.ui-avatars.com/api/ data:;
+  //   connect-src 'self'
+  // `;
   return `
-	  default-src * ${IS_PRODUCTION ? "" : "data:"};
-	  script-src ${
-      IS_PRODUCTION
-        ? // 'self' 'unsafe-inline' https: added for Browsers not supporting strict-dynamic not supporting strict-dynamic
-          `'nonce-${nonce}' 'strict-dynamic' 'self' 'unsafe-inline' https:`
-        : // Note: We could use 'strict-dynamic' with 'nonce-..' instead of unsafe-inline but there are some streaming related scripts that get blocked(because they don't have nonce on them). It causes a really frustrating full page error model by Next.js to show up sometimes
-          "'unsafe-inline' 'unsafe-eval' https: http:"
-    };
-    object-src 'none';
-    base-uri 'none';
-	  child-src app.cal.com;
-	  style-src 'self' ${
-      IS_PRODUCTION ? (useNonStrictPolicy ? "'unsafe-inline'" : "") : "'unsafe-inline'"
-    } app.cal.com;
-	  font-src 'self';
-	  img-src 'self' ${WEBAPP_URL} https://img.youtube.com https://eu.ui-avatars.com/api/ data:;
-    connect-src 'self'
-	`;
+    default-src * ${IS_PRODUCTION ? "" : "data:"};
+  `;
 }
 
 // Taken from @next-safe/middleware

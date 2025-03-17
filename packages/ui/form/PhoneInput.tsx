@@ -1,12 +1,10 @@
 "use client";
 
-import { isSupportedCountry } from "libphonenumber-js";
 import { useState, useEffect } from "react";
 import PhoneInput from "react-phone-input-2";
 import "react-phone-input-2/lib/style.css";
 
 import { classNames } from "@calcom/lib";
-import { trpc } from "@calcom/trpc/react";
 
 export type PhoneInputProps = {
   value?: string;
@@ -53,34 +51,31 @@ function BasePhoneInput({ name, className = "", onChange, value, ...rest }: Phon
         height: "28px",
         marginLeft: "-4px",
       }}
+      country={useDefaultCountry()}
       dropdownStyle={{ width: "max-content" }}
     />
   );
 }
 
 const useDefaultCountry = () => {
-  const [defaultCountry, setDefaultCountry] = useState("us");
-  const query = trpc.viewer.public.countryCode.useQuery(undefined, {
-    refetchOnWindowFocus: false,
-    refetchOnReconnect: false,
-    retry: false,
-  });
+  const [defaultCountry, setDefaultCountry] = useState("gb");
 
-  useEffect(
-    function refactorMeWithoutEffect() {
-      const data = query.data;
-      if (!data?.countryCode) {
-        return;
-      }
-
-      isSupportedCountry(data?.countryCode)
-        ? setDefaultCountry(data.countryCode.toLowerCase())
-        : setDefaultCountry(navigator.language.split("-")[1]?.toLowerCase() || "us");
-    },
-    [query.data]
-  );
+  useEffect(() => {
+    getCountryFromIP().then(setDefaultCountry);
+  }, []);
 
   return defaultCountry;
+};
+
+const getCountryFromIP = async () => {
+  try {
+    const response = await fetch("https://ipapi.co/json/");
+    const data = await response.json();
+    return data.country_code?.toLowerCase() || "gb";
+  } catch (error) {
+    console.error("Error fetching IP location:", error);
+    return "gb";
+  }
 };
 
 export default BasePhoneInput;

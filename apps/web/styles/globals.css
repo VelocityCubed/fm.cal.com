@@ -1053,4 +1053,8 @@ select:focus {
   padding: 40px 40px 0px 24px;
 }
 
+.\!inline-block {
+  display: inline-block !important;
+}
+
 @import "./raqb.css";

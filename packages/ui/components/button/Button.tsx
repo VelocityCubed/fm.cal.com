@@ -274,7 +274,7 @@ export const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonPr
                 name={StartIcon}
                 className={classNames(
                   variant === "icon" && "h-4 w-4",
-                  variant === "icon_branded" && "h-6 w-6",
+                  variant === "icon_branded" && "!visible !inline-block h-6 w-6",
                   variant === "button" && "h-4 w-4 stroke-[1.5px] ltr:-ml-1 ltr:mr-2 rtl:-mr-1 rtl:ml-2"
                 )}
               />
@@ -314,7 +314,7 @@ export const Button = forwardRef<HTMLAnchorElement | HTMLButtonElement, ButtonPr
               className={classNames(
                 "inline-flex",
                 variant === "icon" && "h-4 w-4",
-                variant === "icon_branded" && "h-6 w-6",
+                variant === "icon_branded" && "!visible !inline-block h-6 w-6",
                 variant === "button" && "h-4 w-4 stroke-[1.5px] ltr:-mr-1 ltr:ml-2 rtl:-ml-1 rtl:mr-2"
               )}
             />

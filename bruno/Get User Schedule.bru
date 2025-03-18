@@ -1,0 +1,20 @@
+meta {
+  name: Get User Schedule
+  type: http
+  seq: 5
+}
+
+get {
+  url: https://api.calendly.com/user_availability_schedules?user=https://api.calendly.com/users/b59679be-cc9c-4a49-9b14-7037b6c35ded
+  body: none
+  auth: none
+}
+
+params:query {
+  user: https://api.calendly.com/users/b59679be-cc9c-4a49-9b14-7037b6c35ded
+}
+
+headers {
+  Authorization: Bearer eyJraWQiOiIxY2UxZTEzNjE3ZGNmNzY2YjNjZWJjY2Y4ZGM1YmFmYThhNjVlNjg0MDIzZjdjMzJiZTgzNDliMjM4MDEzNWI0IiwidHlwIjoiUEFUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJodHRwczovL2F1dGguY2FsZW5kbHkuY29tIiwiaWF0IjoxNzQxNzc0ODIxLCJqdGkiOiI1OGNkZmExNC0wNTY4LTQyMDUtYmYyZS1iMmE2NjA4ZGU1ZTEiLCJ1c2VyX3V1aWQiOiJiNTk2NzliZS1jYzljLTRhNDktOWIxNC03MDM3YjZjMzVkZWQifQ.7znfxlsbecJTwUH44yN-uqI8QZVJxeN0obfrIXIn3Cl16ZVzBtBzByuWFQBYHFkkX74dCZUYzk1A5NZNZXTBuw
+  Content-Type: application/json
+}

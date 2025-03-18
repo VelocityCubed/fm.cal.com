@@ -1,4 +1,5 @@
 import getAppKeysFromSlug from "@calcom/app-store/_utils/getAppKeysFromSlug";
+import moment from 'moment';
 import type {
   Calendar,
   CalendarEvent,
@@ -10,6 +11,8 @@ import type {
 
 import config from "../config.json";
 import { appKeysSchema as calandlyKeysSchema } from "../zod";
+import { CredentialPayload } from "@calcom/types/Credential";
+import { symmetricDecrypt } from "@calcom/lib/crypto";
 
 // This implementation assumes that you have an API key for Calendly and that
 // Calendly endpoints follow these REST conventions.
@@ -22,7 +25,7 @@ export default class CalandlyCalendarService implements Calendar {
   // A simple in-memory cache for availability results.
   private availabilityCache: { [key: string]: EventBusyDate[] } = {};
 
-  constructor() {
+  constructor(private credential: CredentialPayload) {
     console.log("constructor");
     this.apiKey =
       "eyJraWQiOiIxY2UxZTEzNjE3ZGNmNzY2YjNjZWJjY2Y4ZGM1YmFmYThhNjVlNjg0MDIzZjdjMzJiZTgzNDliMjM4MDEzNWI0IiwidHlwIjoiUEFUIiwiYWxnIjoiRVMyNTYifQ.eyJpc3MiOiJodHRwczovL2F1dGguY2FsZW5kbHkuY29tIiwiaWF0IjoxNzMzNzQyOTk2LCJqdGkiOiJkOTdhZjFmMS01NmMxLTQxNjEtOTFiZC02ODhhZWFiNGEyYTQiLCJ1c2VyX3V1aWQiOiJlYzU3NGRjOS04ODZhLTRmMjItOGU0ZS01NWM0Y2ZlMjE3OTEifQ.3IV2ZBvihAlFez1q2-HN8No-3KVe9DJMsFi-FL6jTZPT0edGJprWyf9H9G8oVjUWD8DWcHQHp8F6IwwcpILV3Q";
@@ -109,50 +112,66 @@ export default class CalandlyCalendarService implements Calendar {
     shouldServeCache = false
   ): Promise<EventBusyDate[]> {
     console.log("getAvailablility");
-    debugger;
-    // Build a cache key based on the dates and the selected calendar IDs.
-    // const calendarIds = selectedCalendars.map((cal) => cal.id).join(",");
-    // const cacheKey = `${dateFrom}-${dateTo}-${calendarIds}`;
+    const val = this.credential.key;
+    const val2 = val as string;
+    const creds = JSON.parse(symmetricDecrypt(val2,process.env.CALENDSO_ENCRYPTION_KEY || ""));
+/**
+ *{
+              event,
+              password,
+              eventUri,
+              userUri,
+              userOrganisationUri,
+            }
+ */
+      let startDate = moment().add(10,'minutes')
+      let endDate = moment(startDate).add(6, 'days').endOf('day');
+      const endOfMonth = moment().endOf('month');
 
-    // if (shouldServeCache && this.availabilityCache[cacheKey]) {
-    //   return this.availabilityCache[cacheKey];
-    // }
+      const availableSlots: any[] = [];
 
-    // Assume Calendly exposes an availability endpoint that accepts these query parameters.
-    const queryParams = new URLSearchParams({
-      date_from: dateFrom,
-      date_to: dateTo,
-      calendar_ids: calendarIds,
-    });
-    try {
-      // const response = await fetch(`${this.baseUrl}/availability?${queryParams.toString()}`, {
-      //   headers: await this.getHeaders(),
-      // });
+      while (startDate.isBefore(endOfMonth)) {
+        const availabilityParams = new URLSearchParams({
+          user: creds.userUri,
+          start_time: startDate.toISOString(),
+          end_time: endDate.toISOString(),
+        });
 
-      const userUri = "https://api.calendly.com/users/AAAAAAAAAAAAAAAA";
-      // Format dates for Calendly API
-      const minStartTime = dayjs(dateFrom).format("YYYY-MM-DDTHH:mm:ss[Z]");
-      const maxStartTime = dayjs(dateTo).format("YYYY-MM-DDTHH:mm:ss[Z]");
+        const url = 'https://api.calendly.com/user_busy_times?'+ availabilityParams.toString();
+        const options = {
+          method: 'GET',
+          headers: {
+            Authorization: `Bearer ${creds.password}`,
+            'Content-Type': 'application/json'
+          }
+        };
 
-      // Fetch scheduled events within the time range
-      const response = await this.fetcher(
-        `/scheduled_events?user=${userUri}&min_start_time=${minStartTime}&max_start_time=${maxStartTime}&status=active`,
-        {
-          method: "GET",
+        try {
+          const response = await fetch(url, options);
+          const data = await response.json();
+          if(data.collection && data.collection.length > 0) {
+            availableSlots.push(...data.collection);
+          }
+        } catch (error) {
+          console.error(error);
         }
-      );
 
-      const responseData = await handleErrorsJson<{ collection: any[] }>(response);
+        startDate = endDate.add(1, 'day').startOf('day');
+        endDate = moment(startDate).add(6, 'days').endOf('day');
+      }
 
-      // Convert Calendly events to busy times
-      const busyTimes: EventBusyDate[] = responseData.collection.map((event) => ({
-        start: event.start_time,
-        end: event.end_time,
+    try {
+
+      const slots =  availableSlots.map((item, index) => ({
+      start: item.start_time,
+
+      end: item.end_time,
+      source:item.event?.uri??''
       }));
 
-      return busyTimes;
+      return slots;
+
     } catch (error) {
-      this.log.error(error);
       return [];
     }
   }
@@ -165,12 +184,16 @@ export default class CalandlyCalendarService implements Calendar {
     console.log("getAvailTimezone");
     // Call the basic availability method and then map each result to include timeZone.
     const busyDates = await this.getAvailability(dateFrom, dateTo, selectedCalendars);
-    // Here we assume each busy date may include a timeZone property.
-    return busyDates.map((busy) => ({
-      start: busy.start,
-      end: busy.end,
-      timeZone: busy.timeZone || "UTC",
-    }));
+    // Use moment to derive timezone from start date
+    return busyDates.map((busy) => {
+      const startMoment = moment(busy.start);
+      const timeZone = startMoment.tz() || moment.tz.guess() || "UTC";
+      return {
+        start: busy.start,
+        end: busy.end,
+        timeZone: timeZone,
+      };
+    });
   }
 
   async fetchAvailabilityAndSetCache(selectedCalendars: IntegrationCalendar[]): Promise<unknown> {
@@ -187,22 +210,24 @@ export default class CalandlyCalendarService implements Calendar {
   async listCalendars(event?: CalendarEvent): Promise<IntegrationCalendar[]> {
     console.log("listCal");
     // Assuming Calendly provides a user endpoint that returns calendars.
-    const response = await fetch(`${this.baseUrl}/users/me/calendars`, {
-      headers: await this.getHeaders(),
-    });
-    if (!response.ok) {
-      throw new Error(`Error listing calendars: ${response.statusText}`);
-    }
+    // const response = await fetch(`${this.baseUrl}/users/me/calendars`, {
+    //   headers: await this.getHeaders(),
+    // });
+    // if (!response.ok) {
+    //   throw new Error(`Error listing calendars: ${response.statusText}`);
+    // }
+
+
 
     const calendar: IntegrationCalendar = {
-      externalId: cal.id ?? "No Id",
-      integration: this.integrationName,
-      name: cal.name ?? "No calendar name",
-      primary: cal.isDefaultCalendar ?? false,
-      readOnly: !cal.canEdit && true,
-      email: email ?? "",
+      externalId: "No Id",
+      integration: "vel",
+      name: "No calendar name",
+      primary: true,
+      readOnly: false,
+      email: "einad5@gmail.com",
     };
-    return calendar;
+    return [calendar];
 
     const data = await response.json();
     // Assume the calendars are in the `data` array.

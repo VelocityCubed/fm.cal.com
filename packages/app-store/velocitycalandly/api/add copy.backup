@@ -1,0 +1,54 @@
+import type { NextApiRequest, NextApiResponse } from "next";
+import { stringify } from "querystring";
+
+import { WEBAPP_URL_FOR_OAUTH } from "@calcom/lib/constants";
+
+import getAppKeysFromSlug from "../../_utils/getAppKeysFromSlug";
+import { encodeOAuthState } from "../../_utils/oauth/encodeOAuthState";
+import config from "../config.json";
+
+// const handler: AppDeclarativeHandler = {
+//   appType: appConfig.type,
+//   variant: appConfig.variant,
+//   slug: appConfig.slug,
+//   supportsMultipleInstalls: false,
+//   handlerType: "add",
+
+//   createCredential: ({ appType, user, slug, teamId }) =>{
+//     debugger;
+//     alert("staaap");
+//     return createDefaultInstallation({ appType, user: user, slug, key: {}, teamId }),
+//   }
+
+// };
+
+// export default handler;
+
+const scopes = ["read_webhooks", "write_webhooks", "read_events", "write_events", "read_organizations"];
+
+export default async function handler(req: NextApiRequest, res: NextApiResponse) {
+  let client_id = "";
+  if (req.method === "GET") {
+    const appKeys = await getAppKeysFromSlug(config.slug);
+    if (typeof appKeys.client_id === "string") client_id = appKeys.client_id;
+    if (!client_id) return res.status(400).json({ message: "Calendly client_id missing." });
+    const state = encodeOAuthState(req);
+
+    // Create Calendly OAuth URL parameters
+    const params = {
+      response_type: "code",
+      client_id,
+      redirect_uri: `${WEBAPP_URL_FOR_OAUTH}/api/integrations/calendly/callback`,
+      state,
+    };
+
+    const query = stringify(params);
+    // Use Calendly's OAuth authorization endpoint
+    const url = `https://auth.calendly.com/oauth/authorize?${query}`;
+    res.status(200).json({ url });
+  }
+}
+
+// export default defaultHandler({
+//   GET: Promise.resolve({ default: defaultResponder(getHandler) }),
+// });

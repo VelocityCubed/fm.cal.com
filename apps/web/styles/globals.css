@@ -593,7 +593,11 @@ select:focus {
 
 .font-circular {
   font-family: var(--font-body) !important;
-  p,code,kbd,pre,samp {
+  p,
+  code,
+  kbd,
+  pre,
+  samp {
     font-family: var(--font-body) !important;
   }
 }
@@ -630,9 +634,13 @@ select:focus {
 .body-normal {
   font-size: 16px;
   line-height: 24px;
-  p,code,kbd,pre,samp {
+  p,
+  code,
+  kbd,
+  pre,
+  samp {
     font-size: 16px !important;
-  line-height: 24px !important;
+    line-height: 24px !important;
   }
 }
 
@@ -742,6 +750,10 @@ select:focus {
 }
 .bg-branded {
   background-color: #fafafa;
+}
+
+.bg-branded-subtle {
+  background-color: #F2F1F1;
 }
 
 .\[--booker-main-width\:511px\] {

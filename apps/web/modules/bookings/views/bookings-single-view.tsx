@@ -1090,7 +1090,7 @@ export default function Success(props: PageProps) {
                         <div className="mt-4 flex flex-row items-center justify-start gap-6">
                           <img
                             src={getImageUrl(logoUrl)}
-                            className="max-h-5-5 h-5-5 w-5-5 max-w-5-5"
+                            className="max-h-5-5 h-5-5 w-5-5 max-w-5-5 bg-branded-subtle rounded-full"
                             alt="Clinic Logo"
                           />
                           <h3 className="body-head-sm font-circular color-primary font-medium">

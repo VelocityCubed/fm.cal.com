@@ -11,12 +11,11 @@ export const InstallAppButtonMap = {
   vital: dynamic(() => import("./vital/components/InstallAppButton")),
 };
 export const AppSettingsComponentsMap = {
-  "general-app-settings": dynamic(
-    () => import("./templates/general-app-settings/components/AppSettingsInterface")
+  "general-app-settings": dynamic(() =>
+    import("./templates/general-app-settings/components/AppSettingsInterface")
   ),
-  velocitycalandly: dynamic(() => import("./velocitycalandly/components/AppSettingsInterface")),
-  weather_in_your_calendar: dynamic(
-    () => import("./weather_in_your_calendar/components/AppSettingsInterface")
+  weather_in_your_calendar: dynamic(() =>
+    import("./weather_in_your_calendar/components/AppSettingsInterface")
   ),
   zapier: dynamic(() => import("./zapier/components/AppSettingsInterface")),
 };
@@ -41,15 +40,14 @@ export const EventTypeAddonMap = {
   qr_code: dynamic(() => import("./qr_code/components/EventTypeAppCardInterface")),
   salesforce: dynamic(() => import("./salesforce/components/EventTypeAppCardInterface")),
   stripepayment: dynamic(() => import("./stripepayment/components/EventTypeAppCardInterface")),
-  "booking-pages-tag": dynamic(
-    () => import("./templates/booking-pages-tag/components/EventTypeAppCardInterface")
+  "booking-pages-tag": dynamic(() =>
+    import("./templates/booking-pages-tag/components/EventTypeAppCardInterface")
   ),
-  "event-type-app-card": dynamic(
-    () => import("./templates/event-type-app-card/components/EventTypeAppCardInterface")
+  "event-type-app-card": dynamic(() =>
+    import("./templates/event-type-app-card/components/EventTypeAppCardInterface")
   ),
   twipla: dynamic(() => import("./twipla/components/EventTypeAppCardInterface")),
   umami: dynamic(() => import("./umami/components/EventTypeAppCardInterface")),
-  velocitycalandly: dynamic(() => import("./velocitycalandly/components/EventTypeAppCardInterface")),
   "zoho-bigin": dynamic(() => import("./zoho-bigin/components/EventTypeAppCardInterface")),
   zohocrm: dynamic(() => import("./zohocrm/components/EventTypeAppCardInterface")),
 };
@@ -66,5 +64,4 @@ export const EventTypeSettingsMap = {
   plausible: dynamic(() => import("./plausible/components/EventTypeAppSettingsInterface")),
   qr_code: dynamic(() => import("./qr_code/components/EventTypeAppSettingsInterface")),
   stripepayment: dynamic(() => import("./stripepayment/components/EventTypeAppSettingsInterface")),
-  velocitycalandly: dynamic(() => import("./velocitycalandly/components/EventTypeAppSettingsInterface")),
 };

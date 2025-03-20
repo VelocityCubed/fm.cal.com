@@ -4996,6 +4996,7 @@ __metadata:
   resolution: "@calcom/velocitycalandly@workspace:packages/app-store/velocitycalandly"
   dependencies:
     "@calcom/lib": "npm:*"
+    "@calcom/prisma": "npm:*"
     "@calcom/types": "npm:*"
   languageName: unknown
   linkType: soft

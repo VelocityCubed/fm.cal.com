@@ -6,12 +6,8 @@ import type {
   EventBusyDate,
   IntegrationCalendar,
   NewCalendarEventType,
-  SelectedCalendarEventTypeIds,
 } from "@calcom/types/Calendar";
-import { sendScheduledEmailsAndSMS } from "@calcom/emails";
 
-import config from "../config.json";
-import { appKeysSchema as calandlyKeysSchema } from "../zod";
 import { CredentialPayload } from "@calcom/types/Credential";
 import { symmetricDecrypt } from "@calcom/lib/crypto";
 import { EventNameObjectType, EventTypeMetadata } from "../types";
@@ -75,7 +71,7 @@ export default class CalandlyCalendarService implements Calendar {
 
   }
 
-  async deleteEvent(uid: string, event: CalendarEvent, externalCalendarId?: string | null): Promise<unknown> {
+  async deleteEvent(uid: string, event: CalendarEvent, externalCalendarId?: string | null): Promise<void> {
     //we dont need to do anything?
   }
 
@@ -88,15 +84,7 @@ export default class CalandlyCalendarService implements Calendar {
     const val = this.credential.key;
     const val2 = val as string;
     const creds = JSON.parse(symmetricDecrypt(val2,process.env.CALENDSO_ENCRYPTION_KEY || ""));
-/**
- *{
-              event,
-              password,
-              eventUri,
-              userUri,
-              userOrganisationUri,
-            }
- */
+
       let startDate = moment().add(10,'minutes')
       let endDate = moment(startDate).add(6, 'days').endOf('day');
       const endOfMonth = moment().endOf('month');

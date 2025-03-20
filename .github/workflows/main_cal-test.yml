@@ -25,30 +25,6 @@ jobs:
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-      # - name: 'Set Environment Variables on Azure Web App'
-      #   run: |
-      #     az webapp config appsettings set --resource-group fertility-mapper-we \
-      #       --name cal-test \
-      #       --settings \
-      #         NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }} \
-      #         CALENDSO_ENCRYPTION_KEY=${{ secrets.CALENDSO_ENCRYPTION_KEY }} \
-      #         NEXT_PUBLIC_DEBUG=1 \
-      #         NEXT_PUBLIC_WEBAPP_URL=http://localhost:3000 \
-      #         NEXT_PUBLIC_WEBSITE_URL=http://localhost:3000 \
-      #         NEXT_PUBLIC_CONSOLE_URL=http://localhost:3004 \
-      #         NEXT_PUBLIC_EMBED_LIB_URL=http://localhost:3000/embed/embed.js \
-      #         NEXT_PUBLIC_API_V2_URL=http://localhost:5555/api/v2 \
-      #         NEXTAUTH_URL=http://localhost:3000 \
-      #         CRON_API_KEY=0cc0e6c35519bba620c9360cfe3e68d0 \
-      #         DATABASE_URL=${{ secrets.DATABASE_URL }} \
-      #         DATABASE_DIRECT_URL=${{ secrets.DATABASE_URL }} \
-      #         EMAIL_FROM=notifications@yourselfhostedcal.com \
-      #         EMAIL_FROM_NAME=Cal.com \
-      #         NEXT_PUBLIC_APP_NAME=Cal.com \
-      #         NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS=help@cal.com \
-      #         NEXT_PUBLIC_COMPANY_NAME="Cal.com, Inc." \
-      #         NEXTAUTH_COOKIE_DOMAIN=""
-
       - name: Set up Node.js version
         uses: actions/setup-node@v3
         with:
@@ -82,32 +58,6 @@ jobs:
           yarn install
           yarn build
 
-      # - name: Zip artifact for deployment
-      #   run: |
-      #     cd ./apps/web
-      #     zip -r ../../release.zip .
-      #     cd ../..
-
-      # - name: Zip artifact for deployment
-      #   run: |
-      #     zip -r release.zip package.json yarn.lock .yarnrc.yml playwright.config.ts turbo.json git-init.sh git-setup.sh i18n.json .yarn apps/web apps/api/v2 packages tests  startup.sh .git -x ".git/objects/pack/*"  -x "node_modules/*" -x "apps/web/.next/cache" -x "apps/api/node_modules" -x "apps/web/node_modules" -x "example-apps" -x "packages/platform/examples"
-
-      # - name: Upload artifact for deployment job
-      #   uses: actions/upload-artifact@v4
-      #   with:
-      #     name: node-app
-      #     path: release.zip
-
-      # - name: 'Deploy to Azure Web App'
-      #   id: deploy-to-webapp
-      #   uses: azure/webapps-deploy@v2
-      #   with:
-      #     app-name: 'cal-test'
-      #     slot-name: 'Production'
-      #     publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B388C95AC0F747D7BBECAAA0B767FD55 }}
-      #     package: release.zip
-
-
   deploy:
     runs-on: ubuntu-latest
     needs: build
@@ -116,68 +66,28 @@ jobs:
       url: ${{ steps.deploy-to-webapp.outputs.webapp-url }}
 
     steps:
-      # - name: Download artifact from build job
-      #   uses: actions/download-artifact@v4
-      #   with:
-      #     name: node-app
-
-      # - name: Unzip artifact for deployment
-      #   run: unzip release.zip
-
-
       - name: Login to Azure
         uses: azure/login@v2
         with:
           creds: ${{ secrets.AZURE_CREDENTIALS }}
 
-
-
-
-      # - name: 'Deploy to Azure Web App'
-      #   id: deploy-to-webapp
-      #   uses: azure/webapps-deploy@v2
-      #   with:
-      #     app-name: 'cal-test'
-      #     slot-name: 'Production'
-      #     publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_B388C95AC0F747D7BBECAAA0B767FD55 }}
-      #     package: .
-      
-      # - name: 'Set Environment Variables on Azure Web App'
-      #   run: |
-      #     az webapp config appsettings set --resource-group fertility-mapper-we \
-      #       --name cal-test \
-      #       --settings \
-      #         NEXTAUTH_SECRET=${{ secrets.NEXTAUTH_SECRET }} \
-      #         CALENDSO_ENCRYPTION_KEY=${{ secrets.CALENDSO_ENCRYPTION_KEY }} \
-      #         NEXT_PUBLIC_DEBUG=1 \
-      #         NEXT_PUBLIC_WEBAPP_URL=http://localhost:3000 \
-      #         NEXT_PUBLIC_WEBSITE_URL=http://localhost:3000 \
-      #         NEXT_PUBLIC_CONSOLE_URL=http://localhost:3004 \
-      #         NEXT_PUBLIC_EMBED_LIB_URL=http://localhost:3000/embed/embed.js \
-      #         NEXT_PUBLIC_API_V2_URL=http://localhost:5555/api/v2 \
-      #         NEXTAUTH_URL=http://localhost:3000 \
-      #         CRON_API_KEY=0cc0e6c35519bba620c9360cfe3e68d0 \
-      #         DATABASE_URL=${{ secrets.DATABASE_URL }} \
-      #         DATABASE_DIRECT_URL=${{ secrets.DATABASE_URL }} \
-      #         EMAIL_FROM=notifications@yourselfhostedcal.com \
-      #         EMAIL_FROM_NAME=Cal.com \
-      #         NEXT_PUBLIC_APP_NAME=Cal.com \
-      #         NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS=help@cal.com \
-      #         NEXT_PUBLIC_COMPANY_NAME="Cal.com, Inc." \
-      #         NEXTAUTH_COOKIE_DOMAIN=""
-
-      # - name: Enable Corepack
-      #   run: |
-      #     az webapp ssh --name cal-test --resource-group fertility-mapper-we --command "corepack enable"
-
-      # - name: Set yarn version
-      #   run: |
-      #     az webapp ssh --name cal-test --resource-group fertility-mapper-we --command "yarn set version stable"
-
-      # - name: Yarn Install
-      #   run: |
-      #     az webapp ssh --name cal-test --resource-group fertility-mapper-we --command "yarn install"
-
-      # - name: Yarn Start
-      #   run: |
-      #     az webapp ssh --name cal-test --resource-group fertility-mapper-we --command "yarn start --verbosity silly"
+      # To set up WORKFLOW_PAT:
+      # 1. Create a Personal Access Token (PAT) in GitHub:
+      #    - Go to GitHub → Settings → Developer settings → Personal access tokens → Tokens (classic) → Generate new token
+      #    - Grant these permissions: repo (all), workflow
+      #    - Copy the generated token
+      # 2. Add the token as a repository secret:
+      #    - Go to your repository → Settings → Secrets and variables → Actions → New repository secret
+      #    - Name: WORKFLOW_PAT
+      #    - Value: <paste the token you created>
+      #    - Click "Add secret"
+      # 3. This token needs access to the VelocityCubed/cal.com-docker repository
+      #    - Either use a PAT from an account with access to that repository
+      #    - Or make sure the repository is public and the workflow is triggerable via API
+      - name: Trigger build-and-push workflow in VelocityCubed/cal.com-docker
+        run: |
+          curl -X POST \
+            -H "Authorization: token ${{ secrets.WORKFLOW_PAT }}" \
+            -H "Accept: application/vnd.github.v3+json" \
+            https://api.github.com/repos/VelocityCubed/cal.com-docker/actions/workflows/build-and-push.yml/dispatches \
+            -d '{"ref":"main"}'

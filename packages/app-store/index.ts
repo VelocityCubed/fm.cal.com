@@ -44,6 +44,7 @@ const appStore = {
   telegramvideo: () => import("./telegram"),
   shimmervideo: () => import("./shimmervideo"),
   hitpay: () => import("./hitpay"),
+  velocitycalandlycalendar: () => import("./velocitycalandly"),
 };
 
 const exportedAppStore: typeof appStore & {

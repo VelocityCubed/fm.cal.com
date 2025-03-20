@@ -35,12 +35,10 @@ export const getCalendar = async (credential: CredentialPayload | null): Promise
   }
 
   const calendarAppImportFn = appStore[calendarType.split("_").join("") as keyof typeof appStore];
-
   if (!calendarAppImportFn) {
     log.warn(`calendar of type ${calendarType} is not implemented`);
     return null;
   }
-
   const calendarApp = await calendarAppImportFn();
 
   if (!isCalendarService(calendarApp)) {

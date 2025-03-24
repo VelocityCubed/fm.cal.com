@@ -1,4 +1,4 @@
-const html = `<div id="wrapper" style="top:50%; left:50%;transform:translate(-50%,-50%)" class="absolute z-highest loader-container">
+const html = `<div id="wrapper" style="top:50%; left:50%;transform:translate(-50%,-50%)" class="absolute z-highest">
 <div class="loader spinner">
 	<div class="circle"></div>
   <div class="circle"></div>

@@ -45,7 +45,7 @@ const html = `<style>
 </div>
 <div class="modal-box">
   <div class="body">
-    <div id="wrapper" class="z-[999999999999] absolute flex w-full items-center loader-container">
+    <div id="wrapper" class="z-[999999999999] absolute flex w-full items-center">
        <div class="loader spinner">
           <div class="circle"></div>
           <div class="circle"></div>

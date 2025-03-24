@@ -630,13 +630,6 @@ select:focus {
   }
 }
 
-.loader-container {
-  display: flex;
-	align-items: center;
-	justify-content: center;
-	padding: 24px 0px;
-}
-
 /**
  * Makes sure h-screen works on mobile Safari. By default h-screen
  * does not take into account the height of the address bar, causing

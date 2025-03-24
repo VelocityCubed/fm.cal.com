@@ -1,6 +1,13 @@
-const html = `<div id="wrapper" style="top:50%; left:50%;transform:translate(-50%,-50%)" class="absolute z-highest">
-<div class="loader border-brand-default dark:border-darkmodebrand">
-	<span class="loader-inner bg-brand dark:bg-darkmodebrand"></span>
+const html = `<div id="wrapper" style="top:50%; left:50%;transform:translate(-50%,-50%)" class="absolute z-highest loader-container">
+<div class="loader spinner">
+	<div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
+  <div class="circle"></div>
 </div>
 <div id="error" style="transform:translate(-50%,-50%)" class="hidden">
 Something went wrong.

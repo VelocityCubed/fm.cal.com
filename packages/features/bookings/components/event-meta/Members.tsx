@@ -66,11 +66,6 @@ export const EventMembers = ({
         items={[
           ...orgOrTeamAvatarItem,
           ...shownUsers.map((user) => ({
-            href: isPlatform
-              ? null
-              : `${getBookerBaseUrlSync(user.profile?.organization?.slug ?? null)}/${
-                  user.profile?.username
-                }?redirect=false`,
             alt: user.name || "",
             title: user.name || "",
             image: getUserAvatarUrl(user),

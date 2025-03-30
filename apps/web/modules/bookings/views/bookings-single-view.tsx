@@ -1065,6 +1065,8 @@ export default function Success(props: PageProps) {
                           like to read our guide on{" "}
                           <a
                             className="branded-link"
+                            target="_blank"
+                            rel="noopener"
                             href="https://fertilitymapper.com/fertility/path/questions-at-your-first-clinic-consultation/">
                             {" "}
                             what to ask the clinic

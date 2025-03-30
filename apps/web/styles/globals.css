@@ -741,6 +741,10 @@ select:focus {
   max-height: 480px;
 }
 
+.min-h-380 {
+  min-height: 420px;
+}
+
 .w-\[352px\] {
   max-width: 352px !important;
 }
@@ -753,7 +757,7 @@ select:focus {
 }
 
 .bg-branded-subtle {
-  background-color: #F2F1F1;
+  background-color: #f2f1f1;
 }
 
 .\[--booker-main-width\:511px\] {
@@ -796,8 +800,28 @@ select:focus {
 .w-max-266 {
   max-width: 266px;
 }
+
+.w-max-220 {
+  max-width: 220px;
+}
+
+.w-\[50\] {
+  width: 50%;
+}
 .rounded-40 {
   border-radius: 40px;
+}
+
+.minus-margin {
+  margin-top: -0.6rem;;
+}
+
+.rounded-left-40 {
+  border-radius: 40px 0 0 40px;
+}
+
+.rounded-right-40 {
+  border-radius: 0 40px 40px 0;
 }
 
 .max-w-\[26px\] {
@@ -812,6 +836,10 @@ select:focus {
 
 .branded-border {
   border: 1px solid #0b4736;
+}
+
+.branded-border-secondary {
+  border: 1px solid #e95d2b;
 }
 
 .hover\:branded-border:hover {
@@ -836,6 +864,10 @@ select:focus {
 
 .bg-secondary {
   background-color: #e95d2b;
+}
+
+.color-text-secondary {
+  color: #e95d2b;
 }
 
 .bg-selected-primary {

@@ -82,19 +82,21 @@ export const AvailableTimeSlots = ({
     seatsPerTimeSlot?: number | null,
     bookingUid?: string
   ) => {
-    setSelectedTimeslot(time);
-    if (seatsPerTimeSlot) {
-      setSeatedEventData({
-        seatsPerTimeSlot,
-        attendees,
-        bookingUid,
-        showAvailableSeatsCount,
-      });
-    }
-    if (skipConfirmStep) {
-      onSubmit(time);
-    }
-    return;
+    setTimeout(() => {
+      setSelectedTimeslot(time);
+      if (seatsPerTimeSlot) {
+        setSeatedEventData({
+          seatsPerTimeSlot,
+          attendees,
+          bookingUid,
+          showAvailableSeatsCount,
+        });
+      }
+      if (skipConfirmStep) {
+        onSubmit(time);
+      }
+      return;
+    }, 250);
   };
 
   const nonEmptyScheduleDays = useNonEmptyScheduleDays(schedule?.slots);
@@ -145,61 +147,70 @@ export const AvailableTimeSlots = ({
           )}
         </div>
       )}
-      <div
-        ref={containerRef}
-        className={classNames(
-          limitHeight &&
-            layout !== BookerLayouts.BRANDED_VIEW &&
-            "scroll-bar flex-grow overflow-auto md:h-[400px]",
-          limitHeight &&
-            layout === BookerLayouts.BRANDED_VIEW &&
-            "scroll-bar h-[388px] flex-grow overflow-auto",
-          !limitHeight && layout !== "mobile_branded" && "flex h-full w-full flex-row gap-4",
-          !limitHeight && layout === "mobile_branded" && "flex h-full w-full flex-col gap-6",
-          `${customClassNames?.availableTimeSlotsContainer}`
-        )}>
-        {isLoading && // Shows exact amount of days as skeleton.
-          Array.from({ length: 1 + (extraDays ?? 0) }).map((_, i) => <AvailableTimesSkeleton key={i} />)}
-        {layout !== BookerLayouts.BRANDED_VIEW &&
-          layout !== "mobile_branded" &&
-          !isLoading &&
-          slotsPerDay.length > 0 &&
-          slotsPerDay.map((slots) => (
-            <div key={slots.date} className="scroll-bar mb-6 h-full w-full overflow-y-auto overflow-x-hidden">
-              <AvailableTimes
-                className={customClassNames?.availableTimeSlotsContainer}
-                customClassNames={customClassNames?.availableTimes}
-                showTimeFormatToggle={!isColumnView}
-                onTimeSelect={onTimeSelect}
-                slots={slots.slots}
-                showAvailableSeatsCount={showAvailableSeatsCount}
-                skipConfirmStep={skipConfirmStep}
-                date={dayjs(slots.date)}
-                isBranded={false}
-                {...props}
-              />
-            </div>
-          ))}
-        {(layout === BookerLayouts.BRANDED_VIEW || layout === "mobile_branded") &&
-          !isLoading &&
-          filteredSlots.length > 0 &&
-          filteredSlots.map((slots) => (
-            <div key={slots.date} className={classNames(layout !== "mobile_branded" ? "mb-6" : "")}>
-              <AvailableTimes
-                className={customClassNames?.availableTimeSlotsContainer}
-                customClassNames={customClassNames?.availableTimes}
-                showTimeFormatToggle={!isColumnView}
-                onTimeSelect={onTimeSelect}
-                slots={slots.slots}
-                showAvailableSeatsCount={showAvailableSeatsCount}
-                skipConfirmStep={skipConfirmStep}
-                date={dayjs(slots.date)}
-                isBranded={true}
-                {...props}
-              />
-            </div>
-          ))}
-      </div>
+      {filteredSlots.length === 0 && !isLoading && (
+        <div className="body-head-4 font-normal-medium font-circular color-primary min-h-380 pb-4 ">
+          There are no available slots for this week
+        </div>
+      )}
+      {filteredSlots.length > 0 && (
+        <div
+          ref={containerRef}
+          className={classNames(
+            limitHeight &&
+              layout !== BookerLayouts.BRANDED_VIEW &&
+              "scroll-bar flex-grow overflow-auto md:h-[400px]",
+            limitHeight &&
+              layout === BookerLayouts.BRANDED_VIEW &&
+              "scroll-bar h-[388px] flex-grow overflow-auto",
+            !limitHeight && layout !== "mobile_branded" && "flex h-full w-full flex-row gap-4",
+            !limitHeight && layout === "mobile_branded" && "flex h-full w-full flex-col gap-6",
+            `${customClassNames?.availableTimeSlotsContainer}`
+          )}>
+          {isLoading && // Shows exact amount of days as skeleton.
+            Array.from({ length: 1 + (extraDays ?? 0) }).map((_, i) => <AvailableTimesSkeleton key={i} />)}
+          {layout !== BookerLayouts.BRANDED_VIEW &&
+            layout !== "mobile_branded" &&
+            !isLoading &&
+            slotsPerDay.length > 0 &&
+            slotsPerDay.map((slots) => (
+              <div
+                key={slots.date}
+                className="scroll-bar mb-6 h-full w-full overflow-y-auto overflow-x-hidden">
+                <AvailableTimes
+                  className={customClassNames?.availableTimeSlotsContainer}
+                  customClassNames={customClassNames?.availableTimes}
+                  showTimeFormatToggle={!isColumnView}
+                  onTimeSelect={onTimeSelect}
+                  slots={slots.slots}
+                  showAvailableSeatsCount={showAvailableSeatsCount}
+                  skipConfirmStep={skipConfirmStep}
+                  date={dayjs(slots.date)}
+                  isBranded={false}
+                  {...props}
+                />
+              </div>
+            ))}
+          {(layout === BookerLayouts.BRANDED_VIEW || layout === "mobile_branded") &&
+            !isLoading &&
+            filteredSlots.length > 0 &&
+            filteredSlots.map((slots) => (
+              <div key={slots.date} className={classNames(layout !== "mobile_branded" ? "mb-6" : "")}>
+                <AvailableTimes
+                  className={customClassNames?.availableTimeSlotsContainer}
+                  customClassNames={customClassNames?.availableTimes}
+                  showTimeFormatToggle={!isColumnView}
+                  onTimeSelect={onTimeSelect}
+                  slots={slots.slots}
+                  showAvailableSeatsCount={showAvailableSeatsCount}
+                  skipConfirmStep={skipConfirmStep}
+                  date={dayjs(slots.date)}
+                  isBranded={true}
+                  {...props}
+                />
+              </div>
+            ))}
+        </div>
+      )}
     </>
   );
 };

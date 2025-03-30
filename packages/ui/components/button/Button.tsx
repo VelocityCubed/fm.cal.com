@@ -118,7 +118,7 @@ export const buttonClasses = cva(
           "focus-visible:outline-none",
           "focus-visible:ring-0",
           "focus-visible:shadow-button-solid-brand-focused",
-          "border-0 rounded-40",
+          "border-0 rounded-right-40",
           "disabled:color-light",
           "shadow-button-solid-brand-default",
           "enabled:active:shadow-button-solid-brand-active",

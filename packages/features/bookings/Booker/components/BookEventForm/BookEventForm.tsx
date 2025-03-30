@@ -197,8 +197,19 @@ export const BookEventForm = ({
             </Button>
           ) : (
             <>
-              {!!onCancel && !isBranded && (
-                <Button color="minimal" type="button" onClick={onCancel} data-testid="back">
+              {!!onCancel && (
+                <Button
+                  color="minimal"
+                  className={
+                    isBranded
+                      ? isMobile
+                        ? "body-head-sm  font-normal-medium color-text-secondary font-circular rounded-left-40 branded-border-secondary w-max-220 body-btn flex flex h-12 w-[50] w-auto flex-grow flex-col items-center justify-center gap-2 py-2"
+                        : "font-normal-medium color-text-secondary font-circular rounded-left-40 branded-border-secondary w-max-220 body-btn flex flex h-12 w-auto flex-grow flex-col items-center justify-center gap-2 py-2"
+                      : ""
+                  }
+                  type="button"
+                  onClick={onCancel}
+                  data-testid="back">
                   {t("back")}
                 </Button>
               )}
@@ -226,7 +237,14 @@ export const BookEventForm = ({
                   isPaidEvent ? (
                     t("pay_and_book")
                   ) : isBranded ? (
-                    <div className="font-normal-medium flex items-center gap-2">Schedule Appointment</div>
+                    <div
+                      className={
+                        isMobile
+                          ? "font-normal-medium body-head-sm flex items-center gap-2"
+                          : "font-normal-medium flex items-center gap-2 "
+                      }>
+                      Schedule Appointment
+                    </div>
                   ) : (
                     t("confirm")
                   )

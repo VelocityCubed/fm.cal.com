@@ -117,10 +117,20 @@ const SlotItem = ({
   const [showConfirm, setShowConfirm] = useState(false);
 
   const onButtonClick = useCallback(() => {
+    const buttons = document.querySelectorAll(`[data-testid="time"]`);
+    buttons.forEach((btn) => {
+      btn.classList.remove("bg-selected-primary", "light-text");
+    });
+
+    const button = document.querySelector(`[data-time="${slot.time}"]`);
+    if (button) {
+      button.classList.add("bg-selected-primary", "light-text");
+    }
     if (!showConfirm && ((overlayCalendarToggled && isOverlapping) || skipConfirmStep)) {
       setShowConfirm(true);
       return;
     }
+
     onTimeSelect(slot.time, slot?.attendees || 0, seatsPerTimeSlot, slot.bookingUid);
   }, [
     overlayCalendarToggled,
@@ -155,7 +165,9 @@ const SlotItem = ({
           className={classNames(
             `hover:border-brand-default  flex flex-grow flex-col justify-center py-2`,
             isBranded ? "w-min-100 body-btn h-12 w-auto" : "min-h-9 mb-2 h-auto w-full",
-            selectedSlots?.includes(slot.time) && "border-brand-default",
+            selectedSlots?.includes(slot.time) && "bg-selected-primary light-text border-brand-default",
+            selectedTimeslot === slot.time && "bg-selected-primary light-text border-brand-default",
+            showConfirm && "bg-selected-primary light-text border-brand-default",
             `${customClassNames}`
           )}
           color={isBranded ? "branded" : "secondary"}>
@@ -195,6 +207,9 @@ const SlotItem = ({
                     onClick={() =>
                       onTimeSelect(slot.time, slot?.attendees || 0, seatsPerTimeSlot, slot.bookingUid)
                     }
+                    className={classNames(
+                      isBranded ? "h-min-48 bg-secondary light-text rounded-40 body-btn font-circular" : ""
+                    )}
                     data-testid="skip-confirm-book-button"
                     disabled={
                       (!!shouldRenderCaptcha && !watchedCfToken) ||
@@ -220,6 +235,9 @@ const SlotItem = ({
                   <Button
                     variant={layout === "column_view" ? "icon" : "button"}
                     StartIcon={layout === "column_view" ? "chevron-right" : undefined}
+                    className={classNames(
+                      isBranded ? "h-min-48 bg-secondary light-text rounded-40 body-btn font-circular" : ""
+                    )}
                     onClick={() =>
                       onTimeSelect(slot.time, slot?.attendees || 0, seatsPerTimeSlot, slot.bookingUid)
                     }>

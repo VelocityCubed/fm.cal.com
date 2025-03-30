@@ -51,20 +51,22 @@ function BasePhoneInput({ name, className = "", onChange, value, ...rest }: Phon
         height: "28px",
         marginLeft: "-4px",
       }}
-      country={useDefaultCountry()}
+      country={useDefaultCountry(value)}
       dropdownStyle={{ width: "max-content" }}
     />
   );
 }
 
-const useDefaultCountry = () => {
+const useDefaultCountry = (value?: string) => {
   const [defaultCountry, setDefaultCountry] = useState("gb");
 
   useEffect(() => {
     getCountryFromIP().then(setDefaultCountry);
   }, []);
-
-  return defaultCountry;
+  if (!value || value === undefined || value === "") {
+    return defaultCountry;
+  }
+  return undefined;
 };
 
 const getCountryFromIP = async () => {

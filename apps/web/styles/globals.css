@@ -831,11 +831,15 @@ select:focus {
 }
 
 .light-text {
-  color: #ffffff;
+  color: #ffffff !important;
 }
 
 .bg-secondary {
   background-color: #e95d2b;
+}
+
+.bg-selected-primary {
+  background-color: #0b4736;
 }
 
 .hover\:bg-branded-secondary:hover {

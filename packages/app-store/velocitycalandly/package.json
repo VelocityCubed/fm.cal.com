@@ -1,0 +1,15 @@
+{
+  "$schema": "https://json.schemastore.org/package.json",
+  "private": true,
+  "name": "@calcom/velocitycalandly",
+  "version": "0.0.0",
+  "main": "./index.ts",
+  "description": "Velocity calandly integration",
+  "dependencies": {
+    "@calcom/lib": "*",
+    "@calcom/prisma": "*"
+  },
+  "devDependencies": {
+    "@calcom/types": "*"
+  }
+}

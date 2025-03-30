@@ -90,6 +90,7 @@ export const apiHandlers = {
   twipla: import("./twipla/api"),
   typeform: import("./typeform/api"),
   umami: import("./umami/api"),
+  velocitycalandly: import("./velocitycalandly/api"),
   vimcal: import("./vimcal/api"),
   vital: import("./vital/api"),
   weather_in_your_calendar: import("./weather_in_your_calendar/api"),

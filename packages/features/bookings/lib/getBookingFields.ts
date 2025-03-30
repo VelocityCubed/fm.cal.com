@@ -184,6 +184,7 @@ export const ensureBookingInputsHaveSystemFields = ({
       name: "email",
       required: !isEmailFieldOptional,
       editable: isOrgTeamEvent ? "system-but-optional" : "system",
+      disableOnPrefill: true,
       sources: [
         {
           label: "Default",
@@ -456,6 +457,38 @@ export const ensureBookingInputsHaveSystemFields = ({
         {
           label: " Surrogacy",
           value: "Surrogacy",
+        },
+      ],
+      editable: "user",
+      sources: [
+        {
+          label: "user",
+          id: "user",
+          type: "user",
+        },
+      ],
+    },
+    {
+      label: "What stage are you at?",
+      type: "select",
+      name: "fertilityStage",
+      required: true,
+      options: [
+        {
+          label: "Just starting out",
+          value: "Just starting out",
+        },
+        {
+          label: "One round of previous treatment",
+          value: "One round of previous treatment",
+        },
+        {
+          label: "Multiple rounds of previous treatment",
+          value: "Multiple rounds of previous treatment",
+        },
+        {
+          label: "Receiving or in need of specialised support",
+          value: "Receiving or in need of specialised support",
         },
       ],
       editable: "user",

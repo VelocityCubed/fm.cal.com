@@ -75,6 +75,9 @@ export const FormBuilderField = ({
   ) {
     field.hidden = true;
   }
+  if (field.name === "fertilityStage" && formState.defaultValues?.responses?.fertilityStage?.length > 0) {
+    field.hidden = true;
+  }
   return (
     <div
       data-fob-field-name={field.name}
@@ -377,13 +380,6 @@ export const ComponentForField = ({
           placeholder={field.placeholder}
           setValue={setValue as (arg: typeof value) => void}
           options={field.options.map((o) => ({ ...o, title: o.label }))}
-          className={
-            isBranded
-              ? field.name === "notes"
-                ? "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark branded-form-border body-head-4 font-normal-medium font-circular h-min-115 rounded-lg px-4 py-2"
-                : "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark rounded-40 branded-form-border body-head-4 font-normal-medium font-circular h-min-48 px-4 py-2"
-              : ""
-          }
         />
       </WithLabel>
     );

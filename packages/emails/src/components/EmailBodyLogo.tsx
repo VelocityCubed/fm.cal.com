@@ -1,12 +1,10 @@
-import { WEBAPP_URL } from "@calcom/lib/constants";
-
 import RawHtml from "./RawHtml";
 import Row from "./Row";
 
 const CommentIE = ({ html = "" }) => <RawHtml html={`<!--[if mso | IE]>${html}<![endif]-->`} />;
 
 const EmailBodyLogo = () => {
-  const image = `${WEBAPP_URL}/emails/logo.png`;
+  const image = `https://fertilitymapper.com/assets/logo_small.svg`;
 
   return (
     <>
@@ -50,7 +48,7 @@ const EmailBodyLogo = () => {
                       <a href="https://fertilitymapper.com/" target="_blank" rel="noreferrer noopener">
                         <img
                           height="19"
-                          src="https://fertilitymapper.com/assets/logo_small.svg"
+                          src={image}
                           style={{
                             border: "0",
                             display: "block",

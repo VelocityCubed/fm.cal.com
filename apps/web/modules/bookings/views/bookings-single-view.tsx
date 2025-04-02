@@ -1060,19 +1060,26 @@ export default function Success(props: PageProps) {
                             You are scheduled!
                           </h4>
                         )}
-                        <p className="color-body-text body-normal font-normal-medium font-circular text-left">
-                          A calendar invite has been sent to your email address. Ahead of the call, you might
-                          like to read our guide on{" "}
-                          <a
-                            className="branded-link"
-                            target="_blank"
-                            rel="noopener"
-                            href="https://fertilitymapper.com/fertility/path/questions-at-your-first-clinic-consultation/">
-                            {" "}
-                            what to ask the clinic
-                          </a>
-                          , to help you feel prepared, confident and make the most of your conversation.
-                        </p>
+                        {multiClinics && (
+                          <p className="color-body-text body-normal font-normal-medium font-circular text-left">
+                            A calendar invite has been sent to your email address.
+                          </p>
+                        )}
+                        {!multiClinics && (
+                          <p className="color-body-text body-normal font-normal-medium font-circular text-left">
+                            A calendar invite has been sent to your email address. Ahead of the call, you
+                            might like to read our guide on{" "}
+                            <a
+                              className="branded-link"
+                              target="_blank"
+                              rel="noopener"
+                              href="https://fertilitymapper.com/fertility/path/questions-at-your-first-clinic-consultation/">
+                              {" "}
+                              what to ask the clinic
+                            </a>
+                            , to help you feel prepared, confident and make the most of your conversation.
+                          </p>
+                        )}
                       </div>
 
                       <div className="text-default mt-6 text-left rtl:text-right">

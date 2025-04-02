@@ -1,52 +1,66 @@
-@keyframes loader {
-  0% {
-    transform: rotate(0deg);
-  }
-
-  25% {
-    transform: rotate(180deg);
-  }
-
-  50% {
-    transform: rotate(180deg);
-  }
-
-  75% {
-    transform: rotate(360deg);
-  }
-
-  100% {
-    transform: rotate(360deg);
-  }
-}
-
 @keyframes loader-inner {
-  0% {
-    height: 0%;
-  }
-
-  25% {
-    height: 0%;
-  }
-
-  50% {
-    height: 100%;
-  }
-
-  75% {
-    height: 100%;
-  }
-
-  100% {
-    height: 0%;
-  }
+  0%,
+	50% {
+		background: #0b4736;
+	}
+	20% {
+		background: #f5a25d;
+	}
 }
 
 .loader-inner {
-  vertical-align: top;
-  display: inline-block;
-  width: 100%;
+  position: absolute;
+  border-radius: 50%;
+  background: #0b4736;
   animation: loader-inner 2s infinite ease-in;
+}
+.loader-inner:nth-child(1) {
+  top: 0%;
+  left: 50%;
+  transform: translate(-50%, 0%);
+  animation-delay: -1.75s;
+}
+.loader-inner:nth-child(2) {
+  top: 18%;
+			left: 82%;
+			transform: translate(-50%, -18%);
+			animation-delay: -1.5s;
+}
+.loader-inner:nth-child(3) {
+  top: 50%;
+			left: 100%;
+			transform: translate(-100%, -50%);
+			animation-delay: -1.25s;
+}
+.loader-inner:nth-child(4) {
+  top: 82%;
+  left: 82%;
+  transform: translate(-50%, -82%);
+  animation-delay: -1s;
+}
+.loader-inner:nth-child(5) {
+  top: 100%;
+			left: 50%;
+			transform: translate(-50%, -100%);
+			animation-delay: -0.75s;
+}
+.loader-inner:nth-child(6) {
+  top: 82%;
+			left: 20%;
+			transform: translate(-50%, -82%);
+			animation-delay: -0.5s;
+}
+.loader-inner:nth-child(7) {
+  top: 50%;
+			left: 0%;
+			transform: translate(0%, -50%);
+			animation-delay: -0.25s;
+}
+.loader-inner:nth-child(8) {
+  top: 18%;
+			left: 20%;
+			transform: translate(-50%, -18%);
+			animation-delay: 0s;
 }
 
 .loader {
@@ -54,12 +68,17 @@
   width: 30px;
   height: 30px;
   position: relative;
-  border-width: 4px;
-  border-style: solid;
-  -webkit-animation: loader 2s infinite ease;
-  animation: loader 2s infinite ease;
 }
 
 .loader.modal-loader {
   margin: 60px auto;
+}
+
+.custom-loader {
+  width: 60px;
+  height: 60px;
+  .loader-inner {
+    width: 10px;
+			height: 10px;
+  }
 }

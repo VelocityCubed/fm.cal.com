@@ -45,21 +45,22 @@ const EmailBodyLogo = () => {
                     wordBreak: "break-word",
                   }}>
                   <Row border="0" style={{ borderCollapse: "collapse", borderSpacing: "0px" }}>
-                    <td style={{ width: "89px" }}>
-                      <a href={WEBAPP_URL} target="_blank" rel="noreferrer">
+                    <td>
+                      <span className="font-circular body-head-3 color-primary mx-r-1">Sent securely by</span>
+                      <a href="https://fertilitymapper.com/" target="_blank" rel="noreferrer noopener">
                         <img
                           height="19"
-                          src={image}
+                          src="https://fertilitymapper.com/assets/logo_small.svg"
                           style={{
                             border: "0",
                             display: "block",
                             outline: "none",
                             textDecoration: "none",
-                            height: "19px",
-                            width: "100%",
+                            height: "34px",
+                            width: "90px",
                             fontSize: "13px",
                           }}
-                          width="89"
+                          width="90"
                           alt=""
                         />
                       </a>

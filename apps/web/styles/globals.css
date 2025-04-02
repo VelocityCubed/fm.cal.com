@@ -1105,4 +1105,8 @@ select:focus {
   display: inline-block !important;
 }
 
+.mx-r-1 {
+  margin-right: .25rem
+}
+
 @import "./raqb.css";

@@ -44,24 +44,44 @@ const EmailBodyLogo = () => {
                   }}>
                   <Row border="0" style={{ borderCollapse: "collapse", borderSpacing: "0px" }}>
                     <td>
-                      <span className="font-circular body-head-3 color-primary mx-r-1">Sent securely by</span>
-                      <a href="https://fertilitymapper.com/" target="_blank" rel="noreferrer noopener">
-                        <img
-                          height="19"
-                          src={image}
+                      <div
+                        style={{
+                          display: "flex",
+                          alignItems: "center",
+                          justifyContent: "center",
+                        }}>
+                        <span
                           style={{
-                            border: "0",
-                            display: "block",
-                            outline: "none",
-                            textDecoration: "none",
-                            height: "34px",
-                            width: "90px",
+                            color: "#0b4736",
                             fontSize: "13px",
-                          }}
-                          width="90"
-                          alt=""
-                        />
-                      </a>
+                            lineHeight: "18.2px",
+                            fontWeight: "500",
+                            marginRight: ".25rem",
+                          }}>
+                          Sent securely by
+                        </span>
+                        <a
+                          href="https://fertilitymapper.com/"
+                          target="_blank"
+                          rel="noreferrer noopener"
+                          style={{ display: "inline-block" }}>
+                          <img
+                            height="19"
+                            src={image}
+                            style={{
+                              border: "0",
+                              display: "block",
+                              outline: "none",
+                              textDecoration: "none",
+                              height: "34px",
+                              width: "90px",
+                              fontSize: "13px",
+                            }}
+                            width="90"
+                            alt=""
+                          />
+                        </a>
+                      </div>
                     </td>
                   </Row>
                 </td>

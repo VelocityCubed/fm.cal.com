@@ -1232,7 +1232,7 @@ export default function Success(props: PageProps) {
                     </>
                   ))}
               </div>
-              {isGmail && !isFeedbackMode && (
+              {isGmail && !isFeedbackMode && layout !== "branded_view" && layout !== "mobile_branded" && (
                 <Alert
                   className={classNames(
                     "main inline-block ltr:text-left rtl:text-right sm:mb-4 sm:w-full sm:max-w-xl sm:align-middle",

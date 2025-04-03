@@ -17,7 +17,6 @@ import { localStorage } from "@calcom/lib/webstorage";
 import { BookingStatus } from "@calcom/prisma/enums";
 import { bookingMetadataSchema } from "@calcom/prisma/zod-utils";
 import { trpc } from "@calcom/trpc";
-import { showToast } from "@calcom/ui";
 
 import type { UseBookingFormReturnType } from "./useBookingForm";
 
@@ -182,10 +181,10 @@ export const useBookings = ({
         if (locationVideoCallUrl) {
           setInstantVideoMeetingUrl(locationVideoCallUrl);
         } else {
-          showToast(t("something_went_wrong_on_our_end"), "error");
+          console.error(t("something_went_wrong_on_our_end"));
         }
       } catch (err) {
-        showToast(t("something_went_wrong_on_our_end"), "error");
+        console.error(t("something_went_wrong_on_our_end"));
       }
     },
     [_instantBooking.data]

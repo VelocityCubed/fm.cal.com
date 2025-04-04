@@ -580,6 +580,21 @@ export const ensureBookingInputsHaveSystemFields = ({
         },
       ],
     },
+    {
+      label: "Source",
+      type: "text",
+      name: "source",
+      editable: "user",
+      required: false,
+      hidden: true,
+      sources: [
+        {
+          label: "user",
+          id: "user",
+          type: "user",
+        },
+      ],
+    },
   ];
 
   const missingSystemBeforeFields = [];

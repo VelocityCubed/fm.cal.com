@@ -95,7 +95,7 @@ export interface BookerProps {
   hasValidLicense?: boolean;
   multiClinics?: boolean | null;
   logoUrl?: string | null | undefined;
-  customHooks?: (eventType: string) => void;
+  customHooks?: (eventType: string) => void | null;
 }
 
 export type WrappedBookerPropsMain = {

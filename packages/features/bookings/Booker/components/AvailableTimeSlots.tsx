@@ -28,7 +28,7 @@ type AvailableTimeSlotsProps = {
   event: {
     data?: Pick<BookerEvent, "length" | "bookingFields" | "price" | "currency" | "metadata"> | null;
   };
-  customHooks?: (eventType: string) => void;
+  customHooks?: (eventType: string) => void | null;
   customClassNames?: {
     availableTimeSlotsContainer?: string;
     availableTimeSlotsTitle?: string;

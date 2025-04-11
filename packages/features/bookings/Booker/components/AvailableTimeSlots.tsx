@@ -28,6 +28,7 @@ type AvailableTimeSlotsProps = {
   event: {
     data?: Pick<BookerEvent, "length" | "bookingFields" | "price" | "currency" | "metadata"> | null;
   };
+  customHooks: (eventType: string) => void;
   customClassNames?: {
     availableTimeSlotsContainer?: string;
     availableTimeSlotsTitle?: string;
@@ -61,6 +62,7 @@ export const AvailableTimeSlots = ({
   customClassNames,
   skipConfirmStep,
   onSubmit,
+  customHooks,
   ...props
 }: AvailableTimeSlotsProps) => {
   const selectedDate = useBookerStore((state) => state.selectedDate);
@@ -84,6 +86,7 @@ export const AvailableTimeSlots = ({
   ) => {
     setTimeout(() => {
       setSelectedTimeslot(time);
+      customHooks("Time Selected");
       if (seatsPerTimeSlot) {
         setSeatedEventData({
           seatsPerTimeSlot,

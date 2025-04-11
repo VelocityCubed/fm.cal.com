@@ -36,6 +36,10 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
   });
   const bookerLayout = useBookerLayout(event.data);
   const logoUrl = searchParams?.get("logoUrl");
+  const bookingId = searchParams?.get("bookingId");
+  const userId = searchParams?.get("userId");
+  const uid = searchParams?.get("uid") ?? "";
+  const source = searchParams?.get("source") ?? "Standalone";
   const multiClinics = searchParams?.get("multiClinics") === "true";
 
   const selectedDate = searchParams?.get("date");
@@ -54,6 +58,12 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
     // This event isn't processed by BookingPageTagManager because BookingPageTagManager hasn't loaded when it is fired. I think we should have a queue in fire method to handle this.
     sdkActionManager?.fire("navigatedToBooker", {});
   }, []);
+
+  useEffect(() => {
+    if (event?.data?.id) {
+      customHooks("page_viewed");
+    }
+  }, [event?.data?.id]);
 
   useInitializeBookerStore({
     ...props,
@@ -129,6 +139,22 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
       dayjs(date).add(bookerLayout.columnViewExtraDays.current, "day").month()
       ? 2
       : undefined;
+
+  const customHooks = (eventType: string) => {
+    const { isEmbed } = bookerLayout;
+    const url = `https://fertilitymapper.com/api/bookings/calendar/hooks?type=${source} ${eventType}&source=${
+      isEmbed ? "embed" : "url"
+    }&eventTypeId=${event.data?.slug}&uid=${uid ?? lastBookingResponse.email}&userId=${
+      userId ?? lastBookingResponse.email
+    }&bookingId=${bookingId ?? event.data?.id}`;
+    fetch(url, {
+      method: "GET",
+      headers: { "Content-Type": "application/json" },
+    })
+      .then((res) => res.json())
+      .then(console.log)
+      .catch(console.error);
+  };
   /**
    * Prioritize dateSchedule load
    * Component will render but use data already fetched from here, and no duplicate requests will be made
@@ -245,6 +271,7 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
       renderCaptcha
       logoUrl={logoUrl}
       multiClinics={multiClinics}
+      customHooks={customHooks}
     />
   );
 };

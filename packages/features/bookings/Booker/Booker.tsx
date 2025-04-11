@@ -80,6 +80,7 @@ const BookerComponent = ({
   renderCaptcha,
   logoUrl = "",
   multiClinics = false,
+  customHooks,
 }: BookerProps & WrappedBookerProps) => {
   const searchParams = useCompatSearchParams();
   const isPlatformBookerEmbed = useIsPlatformBookerEmbed();
@@ -197,11 +198,15 @@ const BookerComponent = ({
         shouldRenderCaptcha={shouldRenderCaptcha}
         onCancel={() => {
           setSelectedTimeslot(null);
+          customHooks("Back to Time Selection");
           if (seatedEventData.bookingUid) {
             setSeatedEventData({ ...seatedEventData, bookingUid: undefined, attendees: undefined });
           }
         }}
-        onSubmit={() => (renderConfirmNotVerifyEmailButtonCond ? handleBookEvent() : handleVerifyEmail())}
+        onSubmit={() => {
+          customHooks("Schedule Booking Button");
+          renderConfirmNotVerifyEmailButtonCond ? handleBookEvent() : handleVerifyEmail();
+        }}
         errorRef={bookerFormErrorRef}
         errors={{ ...formErrors, ...errors }}
         loadingStates={loadingStates}
@@ -539,6 +544,7 @@ const BookerComponent = ({
                 skipConfirmStep={skipConfirmStep}
                 shouldRenderCaptcha={shouldRenderCaptcha}
                 watchedCfToken={watchedCfToken}
+                customHooks={customHooks}
               />
             </BookerSection>
             {/* {!isInstantMeeting && layout === BookerLayouts.BRANDED_VIEW && (

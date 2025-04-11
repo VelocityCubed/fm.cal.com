@@ -198,13 +198,13 @@ const BookerComponent = ({
         shouldRenderCaptcha={shouldRenderCaptcha}
         onCancel={() => {
           setSelectedTimeslot(null);
-          customHooks("Back to Time Selection");
+          customHooks?.("Back to Time Selection");
           if (seatedEventData.bookingUid) {
             setSeatedEventData({ ...seatedEventData, bookingUid: undefined, attendees: undefined });
           }
         }}
         onSubmit={() => {
-          customHooks("Schedule Booking Button");
+          customHooks?.("Schedule Booking Button");
           renderConfirmNotVerifyEmailButtonCond ? handleBookEvent() : handleVerifyEmail();
         }}
         errorRef={bookerFormErrorRef}

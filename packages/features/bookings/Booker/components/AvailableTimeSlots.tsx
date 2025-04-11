@@ -28,7 +28,7 @@ type AvailableTimeSlotsProps = {
   event: {
     data?: Pick<BookerEvent, "length" | "bookingFields" | "price" | "currency" | "metadata"> | null;
   };
-  customHooks: (eventType: string) => void;
+  customHooks?: (eventType: string) => void;
   customClassNames?: {
     availableTimeSlotsContainer?: string;
     availableTimeSlotsTitle?: string;
@@ -86,7 +86,7 @@ export const AvailableTimeSlots = ({
   ) => {
     setTimeout(() => {
       setSelectedTimeslot(time);
-      customHooks("Time Selected");
+      customHooks?.("Time Selected");
       if (seatsPerTimeSlot) {
         setSeatedEventData({
           seatsPerTimeSlot,

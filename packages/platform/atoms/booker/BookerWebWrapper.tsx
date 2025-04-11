@@ -143,7 +143,7 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
   const customHooks = (eventType: string) => {
     const { isEmbed } = bookerLayout;
 
-    const logicAppUrl = `https://prod-14.westeurope.logic.azure.com:443/workflows/54af65374bce4e1da083f4f496d69da7/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=wSdflUy19VUSbq0vEbDj2RgsNcdrZbCh9FFdy0bGfAw`; // Replace with your Logic App URL
+    const logicAppUrl = `https://prod-14.westeurope.logic.azure.com:443/workflows/54af65374bce4e1da083f4f496d69da7/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=wSdflUy19VUSbq0vEbDj2RgsNcdrZbCh9FFdy0bGfAw`;
 
     const payload = {
       type: `${source} ${eventType}`,

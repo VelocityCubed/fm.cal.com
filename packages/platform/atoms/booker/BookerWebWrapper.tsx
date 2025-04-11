@@ -142,18 +142,35 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
 
   const customHooks = (eventType: string) => {
     const { isEmbed } = bookerLayout;
-    const url = `https://fertilitymapper.com/api/bookings/calendar/hooks?type=${source} ${eventType}&source=${
-      isEmbed ? "embed" : "url"
-    }&eventTypeId=${event.data?.slug}&uid=${uid ?? lastBookingResponse.email}&userId=${
-      userId ?? lastBookingResponse.email
-    }&bookingId=${bookingId ?? event.data?.id}`;
-    fetch(url, {
-      method: "GET",
+
+    const logicAppUrl = `https://prod-14.westeurope.logic.azure.com:443/workflows/54af65374bce4e1da083f4f496d69da7/triggers/When_a_HTTP_request_is_received/paths/invoke?api-version=2016-10-01&sp=%2Ftriggers%2FWhen_a_HTTP_request_is_received%2Frun&sv=1.0&sig=wSdflUy19VUSbq0vEbDj2RgsNcdrZbCh9FFdy0bGfAw`; // Replace with your Logic App URL
+
+    const payload = {
+      type: `${source} ${eventType}`,
+      source: isEmbed ? "embed" : "url",
+      eventTypeId: event.data?.slug,
+      uid: uid ?? lastBookingResponse.email,
+      userId: userId ?? lastBookingResponse.email,
+      bookingId: bookingId ?? event.data?.id,
+    };
+
+    fetch(logicAppUrl, {
+      method: "POST",
       headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
     })
-      .then((res) => res.json())
-      .then(console.log)
-      .catch(console.error);
+      .then((res) => {
+        if (!res.ok) {
+          console.error(`Logic App trigger failed with status ${res.status}`);
+        }
+        return res.json();
+      })
+      .then((response) => {
+        console.log("Logic App triggered successfully:", response);
+      })
+      .catch((error) => {
+        console.error("Error triggering Logic App:", error);
+      });
   };
   /**
    * Prioritize dateSchedule load

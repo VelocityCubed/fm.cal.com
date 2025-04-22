@@ -32,7 +32,20 @@ export default class AttendeeScheduledEmail extends BaseEmail {
 
   protected async getNodeMailerPayload(): Promise<Record<string, unknown>> {
     const clonedCalEvent = cloneDeep(this.calEvent);
-
+    const test = await getEmailHtml("Patient", "Confirmed", this.getFormattedDate(), clonedCalEvent);
+    // return {
+    //   icalEvent: generateIcsFile({
+    //     calEvent: this.calEvent,
+    //     role: GenerateIcsRole.ATTENDEE,
+    //     status: "CONFIRMED",
+    //   }),
+    //   to: `${this.attendee.name} <${this.attendee.email}>`,
+    //   from: `${this.calEvent.organizer.name} <${this.getMailerOptions().from}>`,
+    //   replyTo: [...this.calEvent.attendees.map(({ email }) => email), this.calEvent.organizer.email],
+    //   subject: `${this.calEvent.title}`,
+    //   html: await getEmailHtml("Patient", "Confirmed", this.getFormattedDate(), clonedCalEvent),
+    //   text: this.getTextBody(),
+    // };
     return {
       icalEvent: generateIcsFile({
         calEvent: this.calEvent,
@@ -43,7 +56,7 @@ export default class AttendeeScheduledEmail extends BaseEmail {
       from: `${this.calEvent.organizer.name} <${this.getMailerOptions().from}>`,
       replyTo: [...this.calEvent.attendees.map(({ email }) => email), this.calEvent.organizer.email],
       subject: `${this.calEvent.title}`,
-      html: await getEmailHtml("Patient", "Confirmed", this.getFormattedDate(), clonedCalEvent),
+      html: await this.getHtml(clonedCalEvent, this.attendee),
       text: this.getTextBody(),
     };
   }

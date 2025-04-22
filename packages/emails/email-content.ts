@@ -35,6 +35,7 @@ export const getEmailHtml = async (recipient: string, type: string, date: string
       if (!res.ok) {
         console.error(`Email html fetch failed with status ${res.status}`);
       }
+      console.log("Email html fetched successfully:", res);
       return res.json();
     })
     .then((response) => {

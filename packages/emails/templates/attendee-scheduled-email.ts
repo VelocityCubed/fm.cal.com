@@ -7,6 +7,7 @@ import { TimeFormat } from "@calcom/lib/timeFormat";
 import type { CalendarEvent, Person } from "@calcom/types/Calendar";
 
 import { renderEmail } from "../";
+import { getEmailHtml } from "../email-content";
 import generateIcsFile, { GenerateIcsRole } from "../lib/generateIcsFile";
 import BaseEmail from "./_base-email";
 
@@ -42,7 +43,7 @@ export default class AttendeeScheduledEmail extends BaseEmail {
       from: `${this.calEvent.organizer.name} <${this.getMailerOptions().from}>`,
       replyTo: [...this.calEvent.attendees.map(({ email }) => email), this.calEvent.organizer.email],
       subject: `${this.calEvent.title}`,
-      html: await this.getHtml(clonedCalEvent, this.attendee),
+      html: await getEmailHtml("Patient", "Confirmed", this.getFormattedDate(), clonedCalEvent),
       text: this.getTextBody(),
     };
   }

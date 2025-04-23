@@ -275,7 +275,7 @@ export default class GoogleCalendarService implements Calendar {
 
     const payload: calendar_v3.Schema$Event = {
       summary: formattedCalEvent.title,
-      description: getRichDescription(formattedCalEvent, undefined, undefined, true),
+      description: getRichDescription(formattedCalEvent),
       start: {
         dateTime: formattedCalEvent.startTime,
         timeZone: formattedCalEvent.organizer.timeZone,
@@ -358,14 +358,9 @@ export default class GoogleCalendarService implements Calendar {
             eventId: event.id || "",
             requestBody: {
               location: getLocation(formattedCalEvent),
-              description: getRichDescription(
-                {
-                  ...formattedCalEvent,
-                },
-                undefined,
-                undefined,
-                true
-              ),
+              description: getRichDescription({
+                ...formattedCalEvent,
+              }),
             },
           });
         }
@@ -391,15 +386,10 @@ export default class GoogleCalendarService implements Calendar {
           calendarId: selectedCalendar,
           eventId: event.id || "",
           requestBody: {
-            description: getRichDescription(
-              {
-                ...formattedCalEvent,
-                additionalInformation: { hangoutLink: event.hangoutLink },
-              },
-              undefined,
-              undefined,
-              true
-            ),
+            description: getRichDescription({
+              ...formattedCalEvent,
+              additionalInformation: { hangoutLink: event.hangoutLink },
+            }),
           },
         });
       }
@@ -452,7 +442,7 @@ export default class GoogleCalendarService implements Calendar {
 
     const payload: calendar_v3.Schema$Event = {
       summary: formattedCalEvent.title,
-      description: getRichDescription(formattedCalEvent, undefined, undefined, true),
+      description: getRichDescription(formattedCalEvent),
       start: {
         dateTime: formattedCalEvent.startTime,
         timeZone: formattedCalEvent.organizer.timeZone,
@@ -507,15 +497,10 @@ export default class GoogleCalendarService implements Calendar {
           calendarId: selectedCalendar,
           eventId: evt.data.id || "",
           requestBody: {
-            description: getRichDescription(
-              {
-                ...formattedCalEvent,
-                additionalInformation: { hangoutLink: evt.data.hangoutLink },
-              },
-              undefined,
-              undefined,
-              true
-            ),
+            description: getRichDescription({
+              ...formattedCalEvent,
+              additionalInformation: { hangoutLink: evt.data.hangoutLink },
+            }),
           },
         });
         return {

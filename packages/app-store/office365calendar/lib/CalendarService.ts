@@ -269,7 +269,7 @@ export default class Office365CalendarService implements Calendar {
     const office365Event: Event = {
       subject: event.title,
       body: {
-        contentType: "text",
+        contentType: "html",
         content: getRichDescription(event),
       },
       start: {

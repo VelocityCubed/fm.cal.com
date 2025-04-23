@@ -14,7 +14,7 @@ const translator = short();
 
 export const getWhat = (calEvent: Pick<CalendarEvent, "title">, t: TFunction) => {
   return `
-<b>${t("what")}:</b>
+<b>${t("what")}:</b><br/>
 ${calEvent.title}
   `;
 };
@@ -29,11 +29,11 @@ export const getWhen = (
 
   return calEvent.seatsPerTimeSlot
     ? `
-<b>${t("organizer_timezone")}:</b>
+<b>${t("organizer_timezone")}:</b><br/>
 ${organizerTimezone}
   `
     : `
-<b>${t("invitee_timezone")}:</b>
+<b>${t("invitee_timezone")}:</b><br/>
 ${attendeeTimezone}
   `;
 };
@@ -73,7 +73,7 @@ ${member.email}
     : [];
 
   return `
-<b>${t("who")}:</b>
+<b>${t("who")}:</b><br/>
 ${organizer + attendees + teamMembers.join("")}
   `;
 };
@@ -83,7 +83,7 @@ export const getAdditionalNotes = (calEvent: Pick<CalendarEvent, "additionalNote
     return "";
   }
   return `
-${t("additional_notes")}:
+${t("additional_notes")}:<br/>
 ${calEvent.additionalNotes}
   `;
 };
@@ -99,7 +99,7 @@ export const getUserFieldsResponses = (calEvent: Parameters<typeof getLabelValue
       if (!labelValueMap) return "";
       if (labelValueMap[key] !== "") {
         return `
-${key}:
+${key}:<br/>
 ${labelValueMap[key]}
   `;
       }
@@ -113,7 +113,7 @@ export const getAppsStatus = (calEvent: Pick<CalendarEvent, "appsStatus">, t: TF
   if (!calEvent.appsStatus) {
     return "";
   }
-  return `\n${t("apps_status")}
+  return `\n${t("apps_status")}<br/>
       ${calEvent.appsStatus.map((app) => {
         return `\n- ${app.appName} ${
           app.success >= 1 ? `✅ ${app.success > 1 ? `(x${app.success})` : ""}` : ""
@@ -131,7 +131,7 @@ export const getDescription = (calEvent: Pick<CalendarEvent, "description">, t: 
     return "";
   }
   const plainText = calEvent.description.replace(/<\/?[^>]+(>|$)/g, "").replace(/_/g, " ");
-  return `\n${t("description")}
+  return `\n${t("description")}<br/>
     ${plainText}
     `;
 };
@@ -337,26 +337,26 @@ export const getRichDescription = (
   const t = t_ ?? calEvent.organizer.language.translate;
 
   return `
-${getCancellationReason(calEvent, t)}
-${getWhat(calEvent, t)}
-${getWhen(calEvent, t)}
-${getWho(calEvent, t)}
-<b>${t("where")}</b>
-${getLocation(calEvent)}
-${getDescription(calEvent, t)}
-${getAdditionalNotes(calEvent, t)}
-${getUserFieldsResponses(calEvent)}
-${includeAppStatus ? getAppsStatus(calEvent, t) : ""}
+${getCancellationReason(calEvent, t)}<br/><br/>
+${getWhat(calEvent, t)}<br/><br/>
+${getWhen(calEvent, t)}<br/><br/>
+${getWho(calEvent, t)}<br/><br/>
+<b>${t("where")}</b><br/>
+${getLocation(calEvent)}<br/><br/>
+${getDescription(calEvent, t)}<br/><br/>
+${getAdditionalNotes(calEvent, t)}<br/><br/>
+${getUserFieldsResponses(calEvent)}<br/><br/>
+${includeAppStatus ? `${getAppsStatus(calEvent, t)}<br/><br/>` : ""}
 ${
   // TODO: Only the original attendee can make changes to the event
   // Guests cannot
-  calEvent.seatsPerTimeSlot ? "" : getManageLink(calEvent, t)
+  calEvent.seatsPerTimeSlot ? "" : `${getManageLink(calEvent, t)}<br/><br/>`
 }
 ${
   calEvent.paymentInfo
     ? `
-${t("pay_now")}:
-${calEvent.paymentInfo.link}
+${t("pay_now")}:<br/>
+${calEvent.paymentInfo.link}<br/><br/>
 `
     : ""
 }
@@ -366,7 +366,7 @@ ${calEvent.paymentInfo.link}
 export const getCancellationReason = (calEvent: Pick<CalendarEvent, "cancellationReason">, t: TFunction) => {
   if (!calEvent.cancellationReason) return "";
   return `
-${t("cancellation_reason")}:
+<b>${t("cancellation_reason")}:</b><br/>
 ${calEvent.cancellationReason}
  `;
 };

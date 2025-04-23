@@ -26,22 +26,19 @@ export const getEmailHtml = async (recipient: string, type: string, date: string
     },
   };
 
-  fetch("http://localhost:7071/api/add-email-content", {
-    method: "POST",
-    headers: { "Content-Type": "application/json" },
-    body: JSON.stringify(payload),
-  })
-    .then((res) => {
-      if (!res.ok) {
-        console.error(`Email html fetch failed with status ${res.status}`);
-      }
-      console.log("Email html fetched successfully:", res);
-      return res.json();
-    })
-    .then((response) => {
-      console.log("Email html fetched successfully:", response);
-    })
-    .catch((error) => {
-      console.error("Error fetching Email html:", error);
+  try {
+    const res = await fetch("https://fertilitymapper-functions.azurewebsites.net/api/add-email-content", {
+      method: "POST",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify(payload),
     });
+
+    if (!res.ok) {
+      throw new Error(`Failed to fetch email HTML: ${res.statusText}`);
+    }
+    const responseText = await res.text();
+    return responseText;
+  } catch (error) {
+    throw error;
+  }
 };

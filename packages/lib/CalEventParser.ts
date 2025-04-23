@@ -12,46 +12,28 @@ const translator = short();
 
 // The odd indentation in this file is necessary because otherwise the leading tabs will be applied into the event description.
 
-export const getWhat = (calEvent: Pick<CalendarEvent, "title">, t: TFunction, isGoogleCalendar = false) => {
-  if (isGoogleCalendar) {
-    return `
-<b>${t("what")}:</b>
-${calEvent.title}
-  `;
-  }
+export const getWhat = (calEvent: Pick<CalendarEvent, "title">, t: TFunction) => {
   return `
-*${t("what")}:*
+<b>${t("what")}:</b>
 ${calEvent.title}
   `;
 };
 
 export const getWhen = (
   calEvent: Pick<CalendarEvent, "organizer" | "attendees" | "seatsPerTimeSlot">,
-  t: TFunction,
-  isGoogleCalendar = false
+  t: TFunction
 ) => {
   const organizerTimezone = calEvent.organizer?.timeZone ?? "UTC";
   const defaultTimezone = organizerTimezone;
   const attendeeTimezone = calEvent.attendees?.[0]?.timeZone ?? defaultTimezone;
 
-  if (isGoogleCalendar) {
-    return calEvent.seatsPerTimeSlot
-      ? `
+  return calEvent.seatsPerTimeSlot
+    ? `
 <b>${t("organizer_timezone")}:</b>
 ${organizerTimezone}
   `
-      : `
-<b>${t("invitee_timezone")}:</b>
-${attendeeTimezone}
-  `;
-  }
-  return calEvent.seatsPerTimeSlot
-    ? `
-*${t("organizer_timezone")}:*
-${organizerTimezone}
-  `
     : `
-*${t("invitee_timezone")}:*
+<b>${t("invitee_timezone")}:</b>
 ${attendeeTimezone}
   `;
 };
@@ -61,8 +43,7 @@ export const getWho = (
     CalendarEvent,
     "attendees" | "seatsPerTimeSlot" | "seatsShowAttendees" | "organizer" | "team"
   >,
-  t: TFunction,
-  isGoogleCalendar = false
+  t: TFunction
 ) => {
   let attendeesFromCalEvent = [...calEvent.attendees];
   if (calEvent.seatsPerTimeSlot && !calEvent.seatsShowAttendees) {
@@ -90,15 +71,9 @@ ${member.email}
     `;
       })
     : [];
-  if (isGoogleCalendar) {
-    return `
-<b>${t("who")}:</b>
-${organizer + attendees + teamMembers.join("")}
-  `;
-  }
 
   return `
-*${t("who")}:*
+<b>${t("who")}:</b>
 ${organizer + attendees + teamMembers.join("")}
   `;
 };
@@ -357,17 +332,16 @@ type RichDescriptionCalEvent = Parameters<typeof getCancellationReason>[0] &
 export const getRichDescription = (
   calEvent: RichDescriptionCalEvent,
   t_?: TFunction /*, attendee?: Person*/,
-  includeAppStatus = false,
-  isGoogleCalendar = false
+  includeAppStatus = false
 ) => {
   const t = t_ ?? calEvent.organizer.language.translate;
 
   return `
 ${getCancellationReason(calEvent, t)}
-${getWhat(calEvent, t, isGoogleCalendar)}
-${getWhen(calEvent, t, isGoogleCalendar)}
-${getWho(calEvent, t, isGoogleCalendar)}
-${isGoogleCalendar ? `<b>${t("where")}</b>` : `*${t("where")}*`}
+${getWhat(calEvent, t)}
+${getWhen(calEvent, t)}
+${getWho(calEvent, t)}
+<b>${t("where")}</b>
 ${getLocation(calEvent)}
 ${getDescription(calEvent, t)}
 ${getAdditionalNotes(calEvent, t)}

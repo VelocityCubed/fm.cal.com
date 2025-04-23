@@ -370,7 +370,6 @@ export default class GoogleCalendarService implements Calendar {
           requestBody: payload,
           conferenceDataVersion: 1,
           sendUpdates: "none",
-          sendNotifications: false,
         });
         event = eventResponse.data;
         if (event.recurrence) {
@@ -481,7 +480,7 @@ export default class GoogleCalendarService implements Calendar {
       const evt = await calendar.events.update({
         calendarId: selectedCalendar,
         eventId: uid,
-        sendNotifications: false,
+        sendNotifications: true,
         sendUpdates: "none",
         requestBody: payload,
         conferenceDataVersion: 1,

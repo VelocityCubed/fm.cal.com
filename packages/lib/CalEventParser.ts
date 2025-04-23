@@ -14,7 +14,7 @@ const translator = short();
 
 export const getWhat = (calEvent: Pick<CalendarEvent, "title">, t: TFunction) => {
   return `
-${t("what")}:
+<b>${t("what")}:</b>
 ${calEvent.title}
   `;
 };
@@ -29,11 +29,11 @@ export const getWhen = (
 
   return calEvent.seatsPerTimeSlot
     ? `
-${t("organizer_timezone")}:
+<b>${t("organizer_timezone")}:</b>
 ${organizerTimezone}
   `
     : `
-${t("invitee_timezone")}:
+<b>${t("invitee_timezone")}:</b>
 ${attendeeTimezone}
   `;
 };
@@ -73,7 +73,7 @@ ${member.email}
     : [];
 
   return `
-${t("who")}:
+<b>${t("who")}:</b>
 ${organizer + attendees + teamMembers.join("")}
   `;
 };

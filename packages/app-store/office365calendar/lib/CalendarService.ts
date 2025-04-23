@@ -110,8 +110,8 @@ export default class Office365CalendarService implements Calendar {
       : undefined;
     try {
       const eventsUrl = mainHostDestinationCalendar?.externalId
-        ? `/me/calendars/${mainHostDestinationCalendar?.externalId}/events?sendNotifications=false`
-        : "/me/calendar/events?sendNotifications=false";
+        ? `/me/calendars/${mainHostDestinationCalendar?.externalId}/events`
+        : "/me/calendar/events";
 
       const response = await this.fetcher(eventsUrl, {
         method: "POST",
@@ -130,7 +130,7 @@ export default class Office365CalendarService implements Calendar {
 
   async updateEvent(uid: string, event: CalendarEvent): Promise<NewCalendarEventType> {
     try {
-      const response = await this.fetcher(`/me/calendar/events/${uid}?sendNotifications=false`, {
+      const response = await this.fetcher(`/me/calendar/events/${uid}`, {
         method: "PATCH",
         body: JSON.stringify(this.translateEvent(event)),
       });
@@ -147,7 +147,7 @@ export default class Office365CalendarService implements Calendar {
 
   async deleteEvent(uid: string): Promise<void> {
     try {
-      const response = await this.fetcher(`/me/calendar/events/${uid}?sendNotifications=false`, {
+      const response = await this.fetcher(`/me/calendar/events/${uid}`, {
         method: "DELETE",
       });
 

@@ -7,15 +7,11 @@ export const getEmailHtml = async (
   type: string,
   date: string,
   event: CalendarEvent,
-  attendee: Person
+  person: Person
 ) => {
-  const location = event.location;
-  let meetingUrl = location?.search(/^https?:/) !== -1 ? location : undefined;
-  if (event) {
-    meetingUrl = getVideoCallUrlFromCalEvent(event) || meetingUrl;
-  }
-  const cancelLink = getCancelLink(event, attendee);
-  const rescheduleLink = getRescheduleLink({ calEvent: event, attendee: attendee });
+  const meetingUrl = getLocation(event);
+  const cancelLink = getCancelLink(event, person);
+  const rescheduleLink = getRescheduleLink({ calEvent: event, attendee: person });
   const payload = {
     Recipient: recipient,
     Type: type,
@@ -56,4 +52,32 @@ export const getEmailHtml = async (
   } catch (error) {
     throw error;
   }
+};
+
+export const getLocation = (
+  calEvent: Parameters<typeof getVideoCallUrlFromCalEvent>[0] & Parameters<typeof getProviderName>[0]
+) => {
+  const meetingUrl = getVideoCallUrlFromCalEvent(calEvent);
+  if (meetingUrl) {
+    return meetingUrl;
+  }
+  const providerName = getProviderName(calEvent);
+  return providerName || calEvent.location || "";
+};
+
+export const getProviderName = (calEvent: Pick<CalendarEvent, "location">): string => {
+  if (calEvent.location && calEvent.location.includes("integrations:")) {
+    let location = calEvent.location.split(":")[1];
+    if (location === "daily") {
+      location = "Cal Video";
+    }
+    return location[0].toUpperCase() + location.slice(1);
+  }
+  if (calEvent.location && /^https?:\/\//.test(calEvent.location)) {
+    return calEvent.location;
+  }
+  if (calEvent.location && calEvent.location.startsWith("tel:")) {
+    return calEvent.location;
+  }
+  return "";
 };

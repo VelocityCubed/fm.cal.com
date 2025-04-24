@@ -8,6 +8,7 @@ import { TimeFormat } from "@calcom/lib/timeFormat";
 import type { CalendarEvent, Person } from "@calcom/types/Calendar";
 
 import { renderEmail } from "../";
+import { getEmailHtml } from "../email-content";
 import generateIcsFile from "../lib/generateIcsFile";
 import { GenerateIcsRole } from "../lib/generateIcsFile";
 import BaseEmail from "./_base-email";
@@ -49,15 +50,17 @@ export default class OrganizerScheduledEmail extends BaseEmail {
       to: toAddresses.join(","),
       replyTo: [this.calEvent.organizer.email, ...this.calEvent.attendees.map(({ email }) => email)],
       subject: `${this.newSeat ? `${this.t("new_attendee")}: ` : ""}${this.calEvent.title}`,
-      html: await this.getHtml(
+      html: await getEmailHtml(
+        "Organizer",
+        "Confirmed",
+        this.getHtmlFormattedDate(),
         clonedCalEvent,
-        this.calEvent.organizer,
-        this.teamMember,
-        this.newSeat,
-        this.reassigned
+        this.calEvent.organizer
       ),
       text: this.getTextBody(),
     };
+    // To revert to cal.com default email, use below html
+    // html: await this.getHtml(clonedCalEvent, this.calEvent.organizer, this.teamMember, this.newSeat, this.reassigned),
   }
 
   async getHtml(
@@ -126,5 +129,17 @@ ${callToAction}
     )}, ${this.t(this.getOrganizerStart("dddd").toLowerCase())}, ${this.t(
       this.getOrganizerStart("MMMM").toLowerCase()
     )} ${this.getOrganizerStart("D, YYYY")}`;
+  }
+
+  public getHtmlFormattedDate() {
+    const organizerTimeFormat = this.calEvent.organizer.timeFormat || TimeFormat.TWELVE_HOUR;
+
+    return `${this.t(this.getOrganizerStart("dddd").toLowerCase())}, ${this.t(
+      this.getOrganizerStart("MMMM").toLowerCase()
+    )} ${this.getOrganizerStart(
+      "D, YYYY"
+    )} | this.getOrganizerStart(organizerTimeFormat)} - ${this.getOrganizerEnd(
+      organizerTimeFormat
+    )} <i style="color: #7b7b7b">(${this.getTimezone()})</i>`;
   }
 }

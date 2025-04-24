@@ -224,7 +224,7 @@ export const getManageLink = (
 
   return `${t("need_to_reschedule_or_cancel")} ${calEvent.bookerUrl ?? WEBAPP_URL}/booking/${getUid(
     calEvent
-  )}?changes=true`;
+  )}?changes=true&theme=light`;
 };
 
 export const getPlatformCancelLink = (
@@ -261,6 +261,7 @@ export const getCancelLink = (
 
   const cancelLink = new URL(`${calEvent.bookerUrl ?? WEBAPP_URL}/booking/${Uid}`);
   cancelLink.searchParams.append("cancel", "true");
+  cancelLink.searchParams.append("theme", "light");
   cancelLink.searchParams.append("allRemainingBookings", String(!!calEvent.recurringEvent));
   if (attendee?.email) {
     cancelLink.searchParams.append("cancelledBy", attendee.email);

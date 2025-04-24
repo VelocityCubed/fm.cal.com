@@ -9,12 +9,10 @@ import {
   FAVICON_16,
   FAVICON_32,
   IS_SELF_HOSTED,
-  LOGO,
-  LOGO_ICON,
   MSTILE_ICON,
   WEBAPP_URL,
   BRANDED_LOGO,
-  BRANDED_ICON
+  BRANDED_ICON,
 } from "@calcom/lib/constants";
 import logger from "@calcom/lib/logger";
 
@@ -66,19 +64,19 @@ const logoDefinitions: Record<LogoType, LogoTypeDefinition> = {
     source: "appIconLogo",
   },
   "favicon-16": {
-    fallback: `${WEBAPP_URL}${FAVICON_16}`,
+    fallback: `${FAVICON_16}`,
     w: 16,
     h: 16,
     source: "appIconLogo",
   },
   "favicon-32": {
-    fallback: `${WEBAPP_URL}${FAVICON_32}`,
+    fallback: `${FAVICON_32}`,
     w: 32,
     h: 32,
     source: "appIconLogo",
   },
   "apple-touch-icon": {
-    fallback: `${WEBAPP_URL}${APPLE_TOUCH_ICON}`,
+    fallback: `${APPLE_TOUCH_ICON}`,
     w: 180,
     h: 180,
     source: "appLogo",

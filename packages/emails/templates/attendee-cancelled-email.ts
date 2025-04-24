@@ -1,6 +1,7 @@
 import type { CalendarEvent, Person } from "@calcom/types/Calendar";
 
 import { renderEmail } from "../";
+import { getEmailHtml } from "../email-content";
 import generateIcsFile, { GenerateIcsRole } from "../lib/generateIcsFile";
 import AttendeeScheduledEmail from "./attendee-scheduled-email";
 
@@ -19,9 +20,17 @@ export default class AttendeeCancelledEmail extends AttendeeScheduledEmail {
         title: this.calEvent.title,
         date: this.getFormattedDate(),
       })}`,
-      html: await this.getHtml(this.calEvent, this.attendee),
+      html: await getEmailHtml(
+        "Patient",
+        "Cancelled",
+        this.getHtmlFormattedDate(),
+        this.calEvent,
+        this.attendee
+      ),
       text: this.getTextBody("event_request_cancelled", "emailed_you_and_any_other_attendees"),
     };
+    // To revert to cal.com default email, use below html
+    // html: await this.getHtml(this.calEvent, this.attendee),
   }
 
   async getHtml(calEvent: CalendarEvent, attendee: Person) {

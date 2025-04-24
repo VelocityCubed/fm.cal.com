@@ -116,6 +116,6 @@ ${getRichDescription(this.calEvent, this.t)}
       this.getInviteeStart("MMMM").toLowerCase()
     )} ${this.getInviteeStart("D, YYYY")} | ${this.getInviteeStart(inviteeTimeFormat)} - ${this.getInviteeEnd(
       inviteeTimeFormat
-    )} ${this.getTimezone()}`;
+    )} <i style="color: #7b7b7b">(${this.getTimezone()})</i>`;
   }
 }

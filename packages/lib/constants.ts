@@ -26,7 +26,8 @@ export const WEBAPP_URL_FOR_OAUTH = IS_PRODUCTION || IS_DEV ? WEBAPP_URL : "http
 export const BASE_URL = WEBAPP_URL;
 export const WEBSITE_URL = process.env.NEXT_PUBLIC_WEBSITE_URL || "https://bookings.fertilitymapper.com";
 export const APP_NAME = process.env.NEXT_PUBLIC_APP_NAME || "Fertility Mapper";
-export const SUPPORT_MAIL_ADDRESS = process.env.NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS || "hello@fertilitymapper.com";
+export const SUPPORT_MAIL_ADDRESS =
+  process.env.NEXT_PUBLIC_SUPPORT_MAIL_ADDRESS || "hello@fertilitymapper.com";
 export const COMPANY_NAME = process.env.NEXT_PUBLIC_COMPANY_NAME || "Fertility Mapper";
 export const SENDER_ID = process.env.NEXT_PUBLIC_SENDER_ID || "Cal";
 export const SENDER_NAME = process.env.NEXT_PUBLIC_SENDGRID_SENDER_NAME || "Fertility Mapper";
@@ -72,9 +73,12 @@ export const NEXT_PUBLIC_BASE_URL = process.env.NEXT_PUBLIC_WEBAPP_URL || `https
 export const LOGO = "/calcom-logo-white-word.svg";
 export const LOGO_ICON = "/cal-com-icon-white.svg";
 export const AVATAR_FALLBACK = "/avatar.svg";
-export const FAVICON_16 = "/favicon-16x16.png";
-export const FAVICON_32 = "/favicon-32x32.png";
-export const APPLE_TOUCH_ICON = "/apple-touch-icon.png";
+export const FAVICON_16 =
+  "https://fertilitymapper.com/wp-content/uploads/2023/06/cropped-Mobile-Logo-32x32.png";
+export const FAVICON_32 =
+  "https://fertilitymapper.com/wp-content/uploads/2023/06/cropped-Mobile-Logo-32x32.png";
+export const APPLE_TOUCH_ICON =
+  "https://fertilitymapper.com/wp-content/uploads/2023/06/cropped-Mobile-Logo-32x32.png";
 export const MSTILE_ICON = "/mstile-150x150.png";
 export const ANDROID_CHROME_ICON_192 = "/android-chrome-192x192.png";
 export const ANDROID_CHROME_ICON_256 = "/android-chrome-256x256.png";
@@ -86,8 +90,8 @@ export const DOCS_URL = "https://cal.com/docs";
 export const DEVELOPER_DOCS = "https://developer.cal.com";
 export const SEO_IMG_DEFAULT = `${CAL_URL}/og-image.png`;
 export const BRANDED_URL = "https://fertilitymapper.com";
-export const BRANDED_LOGO = "https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/logo_small.svg"
-export const BRANDED_ICON = "https://fertilitymapper.com/wp-content/uploads/2023/05/Mobile-Logo.svg"
+export const BRANDED_LOGO = "https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/logo_small.svg";
+export const BRANDED_ICON = "https://fertilitymapper.com/wp-content/uploads/2023/05/Mobile-Logo.svg";
 // The Dynamic OG Image is passed through Next's Image API to further optimize it.
 // This results in a 80% smaller image 🤯. It is however important that for the query
 // parameters you pass to the /api/social/og/image endpoint, you wrap them in encodeURIComponent

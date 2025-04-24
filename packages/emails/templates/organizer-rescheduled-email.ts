@@ -2,6 +2,7 @@ import { EMAIL_FROM_NAME } from "@calcom/lib/constants";
 import type { CalendarEvent, Person } from "@calcom/types/Calendar";
 
 import { renderEmail } from "../";
+import { getEmailHtml } from "../email-content";
 import generateIcsFile, { GenerateIcsRole } from "../lib/generateIcsFile";
 import OrganizerScheduledEmail from "./organizer-scheduled-email";
 
@@ -22,13 +23,17 @@ export default class OrganizerRescheduledEmail extends OrganizerScheduledEmail {
         title: this.calEvent.title,
         date: this.getFormattedDate(),
       })}`,
-      html: await this.getHtml(
+      html: await getEmailHtml(
+        "Organizer",
+        "Rescheduled",
+        this.getHtmlFormattedDate(),
         { ...this.calEvent, attendeeSeatId: undefined },
-        this.calEvent.organizer,
-        this.teamMember
+        this.calEvent.organizer
       ),
       text: this.getTextBody("event_has_been_rescheduled"),
     };
+    // To revert to cal.com default email, use below html
+    //  html: await this.getHtml({ ...this.calEvent, attendeeSeatId: undefined },  this.calEvent.organizer, this.teamMember),
   }
 
   async getHtml(calEvent: CalendarEvent, attendee: Person, teamMember?: Person) {

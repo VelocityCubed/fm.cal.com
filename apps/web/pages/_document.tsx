@@ -103,11 +103,29 @@ class MyDocument extends Document<Props> {
             `,
             }}
           />
-          <link rel="apple-touch-icon" sizes="180x180" href="/api/logo?type=apple-touch-icon" />
-          <link rel="icon" type="image/png" sizes="32x32" href="/api/logo?type=favicon-32" />
-          <link rel="icon" type="image/png" sizes="16x16" href="/api/logo?type=favicon-16" />
+          <link
+            rel="apple-touch-icon"
+            sizes="180x180"
+            href="https://fertilitymapper.com/wp-content/uploads/2023/06/cropped-Mobile-Logo-32x32.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="32x32"
+            href="https://fertilitymapper.com/wp-content/uploads/2023/06/cropped-Mobile-Logo-32x32.png"
+          />
+          <link
+            rel="icon"
+            type="image/png"
+            sizes="16x16"
+            href="https://fertilitymapper.com/wp-content/uploads/2023/06/cropped-Mobile-Logo-32x32.png"
+          />
           <link rel="manifest" href="/site.webmanifest" />
-          <link rel="mask-icon" href="/safari-pinned-tab.svg" color="#000000" />
+          <link
+            rel="mask-icon"
+            href="https://fertilitymapper.com/wp-content/uploads/2023/06/cropped-Mobile-Logo-32x32.png"
+            color="#000000"
+          />
           <meta name="msapplication-TileColor" content="#ff0000" />
           <meta name="theme-color" media="(prefers-color-scheme: light)" content="#F9FAFC" />
           <meta name="theme-color" media="(prefers-color-scheme: dark)" content="#1F1F1F" />

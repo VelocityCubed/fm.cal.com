@@ -1,14 +1,29 @@
-import type { CalendarEvent } from "@calcom/types/Calendar";
+import { getVideoCallUrlFromCalEvent } from "@calcom/lib/CalEventParser";
+import { getCancelLink, getRescheduleLink } from "@calcom/lib/CalEventParser";
+import type { CalendarEvent, Person } from "@calcom/types/Calendar";
 
-export const getEmailHtml = async (recipient: string, type: string, date: string, event: CalendarEvent) => {
+export const getEmailHtml = async (
+  recipient: string,
+  type: string,
+  date: string,
+  event: CalendarEvent,
+  attendee: Person
+) => {
+  const location = event.location;
+  let meetingUrl = location?.search(/^https?:/) !== -1 ? location : undefined;
+  if (event) {
+    meetingUrl = getVideoCallUrlFromCalEvent(event) || meetingUrl;
+  }
+  const cancelLink = getCancelLink(event, attendee);
+  const rescheduleLink = getRescheduleLink({ calEvent: event, attendee: attendee });
   const payload = {
     Recipient: recipient,
     Type: type,
     MeetingDetails: {
-      Link: event.bookerUrl,
+      Link: meetingUrl,
       Date: date,
-      RecheduleLink: event.platformRescheduleUrl,
-      CancelLink: event.platformCancelUrl,
+      RecheduleLink: rescheduleLink,
+      CancelLink: cancelLink,
       Organizer: event.organizer.name,
     },
     Questions: {

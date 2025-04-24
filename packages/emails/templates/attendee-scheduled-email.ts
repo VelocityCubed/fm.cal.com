@@ -42,22 +42,17 @@ export default class AttendeeScheduledEmail extends BaseEmail {
       from: `${this.calEvent.organizer.name} <${this.getMailerOptions().from}>`,
       replyTo: [...this.calEvent.attendees.map(({ email }) => email), this.calEvent.organizer.email],
       subject: `${this.calEvent.title}`,
-      html: await getEmailHtml("Patient", "Confirmed", this.getFormattedDate(), clonedCalEvent),
+      html: await getEmailHtml(
+        "Patient",
+        "Confirmed",
+        this.getHtmlFormattedDate(),
+        clonedCalEvent,
+        this.attendee
+      ),
       text: this.getTextBody(),
     };
-    // return {
-    //   icalEvent: generateIcsFile({
-    //     calEvent: this.calEvent,
-    //     role: GenerateIcsRole.ATTENDEE,
-    //     status: "CONFIRMED",
-    //   }),
-    //   to: `${this.attendee.name} <${this.attendee.email}>`,
-    //   from: `${this.calEvent.organizer.name} <${this.getMailerOptions().from}>`,
-    //   replyTo: [...this.calEvent.attendees.map(({ email }) => email), this.calEvent.organizer.email],
-    //   subject: `${this.calEvent.title}`,
+    // To revert to cal.com default email, use below html
     //   html: await this.getHtml(clonedCalEvent, this.attendee),
-    //   text: this.getTextBody(),
-    // };
   }
 
   async getHtml(calEvent: CalendarEvent, attendee: Person) {
@@ -112,5 +107,15 @@ ${getRichDescription(this.calEvent, this.t)}
     return `${this.getInviteeStart(inviteeTimeFormat)} - ${this.getInviteeEnd(inviteeTimeFormat)}, ${this.t(
       this.getInviteeStart("dddd").toLowerCase()
     )}, ${this.t(this.getInviteeStart("MMMM").toLowerCase())} ${this.getInviteeStart("D, YYYY")}`;
+  }
+
+  public getHtmlFormattedDate() {
+    const inviteeTimeFormat = this.calEvent.organizer.timeFormat || TimeFormat.TWELVE_HOUR;
+
+    return `${this.t(this.getInviteeStart("dddd").toLowerCase())}, ${this.t(
+      this.getInviteeStart("MMMM").toLowerCase()
+    )} ${this.getInviteeStart("D, YYYY")} | ${this.getInviteeStart(inviteeTimeFormat)} - ${this.getInviteeEnd(
+      inviteeTimeFormat
+    )} ${this.getTimezone()}`;
   }
 }

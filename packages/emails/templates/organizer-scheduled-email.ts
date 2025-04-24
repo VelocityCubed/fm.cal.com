@@ -136,10 +136,8 @@ ${callToAction}
 
     return `${this.t(this.getOrganizerStart("dddd").toLowerCase())}, ${this.t(
       this.getOrganizerStart("MMMM").toLowerCase()
-    )} ${this.getOrganizerStart(
-      "D, YYYY"
-    )} | this.getOrganizerStart(organizerTimeFormat)} - ${this.getOrganizerEnd(
+    )} ${this.getOrganizerStart("D, YYYY")} | ${this.getOrganizerStart(
       organizerTimeFormat
-    )} <i style="color: #7b7b7b">(${this.getTimezone()})</i>`;
+    )} - ${this.getOrganizerEnd(organizerTimeFormat)} <i style="color: #7b7b7b">(${this.getTimezone()})</i>`;
   }
 }

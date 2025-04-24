@@ -23,6 +23,7 @@ export const getEmailHtml = async (
       Organizer: event.organizer.name,
     },
     Questions: {
+      name: person.name,
       firstName: (event.responses?.name?.value as any).firstName,
       lastName: (event.responses?.name?.value as any).lastName,
       attendeePhoneNumber: event.responses?.attendeePhoneNumber?.value,

@@ -152,7 +152,7 @@ export const AvailableTimeSlots = ({
       )}
       {filteredSlots.length === 0 && !isLoading && (
         <div className="body-head-4 font-normal-medium font-circular color-primary min-h-380 pb-4 ">
-          There are no available slots for this week
+          There are no available slots for this week, please select another week
         </div>
       )}
       {filteredSlots.length > 0 && (

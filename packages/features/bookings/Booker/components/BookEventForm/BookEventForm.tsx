@@ -243,7 +243,7 @@ export const BookEventForm = ({
                           ? "font-normal-medium body-head-sm flex items-center gap-2"
                           : "font-normal-medium flex items-center gap-2 "
                       }>
-                      Schedule Appointment
+                      Schedule appointment
                     </div>
                   ) : (
                     t("confirm")

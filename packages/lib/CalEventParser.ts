@@ -99,7 +99,7 @@ export const getUserFieldsResponses = (calEvent: Parameters<typeof getLabelValue
       if (!labelValueMap) return "";
       if (labelValueMap[key] !== "") {
         return `
-          <br/><br/>${key}:<br/>
+          <br/><br/><b>${key}:</b><br/>
           ${labelValueMap[key]}
         `;
       }

@@ -61,7 +61,9 @@ const useDefaultCountry = (value?: string) => {
   const [defaultCountry, setDefaultCountry] = useState("gb");
 
   useEffect(() => {
-    getCountryFromIP().then(setDefaultCountry);
+    getCountryFromIP()
+      .then(setDefaultCountry)
+      .catch(() => setDefaultCountry("gb"));
   }, []);
   if (!value || value === undefined || value === "") {
     return defaultCountry;
@@ -72,8 +74,8 @@ const useDefaultCountry = (value?: string) => {
 const getCountryFromIP = async () => {
   try {
     const response = await fetch("https://ipapi.co/json/");
-    const data = await response.json();
-    return data.country_code?.toLowerCase() || "gb";
+    const data = await response?.json();
+    return data?.country_code?.toLowerCase() || "gb";
   } catch (error) {
     console.error("Error fetching IP location:", error);
     return "gb";

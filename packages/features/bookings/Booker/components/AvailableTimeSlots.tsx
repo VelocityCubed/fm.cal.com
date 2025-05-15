@@ -99,7 +99,7 @@ export const AvailableTimeSlots = ({
         onSubmit(time);
       }
       return;
-    }, 250);
+    }, 500);
   };
 
   const nonEmptyScheduleDays = useNonEmptyScheduleDays(schedule?.slots);

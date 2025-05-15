@@ -13,10 +13,11 @@ const useSkipConfirmStep = (
 
   const [canSkip, setCanSkip] = useState(false);
   const rescheduleUid = useBookerStore((state) => state.rescheduleUid);
+  const layout = useBookerStore((state) => state.layout);
 
   useEffect(() => {
     const checkSkipStep = async () => {
-      if (!bookingFields) {
+      if (!bookingFields || layout === "branded_view" || layout === "mobile_branded") {
         setCanSkip(false);
         return;
       }

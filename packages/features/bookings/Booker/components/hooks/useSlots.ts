@@ -27,7 +27,7 @@ export const useSlots = (event: { data?: Pick<BookerEvent, "id" | "length"> | nu
       setSlotReservationId(data.uid);
     },
     onError: (err) => {
-      onError?.(err as ApiErrorResponse);
+      return;
     },
   });
   const removeSelectedSlot = trpc.viewer.public.slots.removeSelectedSlotMark.useMutation({

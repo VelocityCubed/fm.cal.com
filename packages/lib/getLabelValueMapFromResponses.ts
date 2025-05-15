@@ -20,6 +20,9 @@ export default function getLabelValueMapFromResponses(
     if (!!responses?.[SMS_REMINDER_NUMBER_FIELD] && !isDynamicEvent) {
       userFieldsResponses[SMS_REMINDER_NUMBER_FIELD] = responses[SMS_REMINDER_NUMBER_FIELD];
     }
+    if (responses?.attendeePhoneNumber) {
+      userFieldsResponses.attendeePhoneNumber = responses.attendeePhoneNumber;
+    }
 
     for (const [, value] of Object.entries(userFieldsResponses)) {
       if (!value.label || (!isOrganizer && value.isHidden)) {

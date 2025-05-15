@@ -36,9 +36,14 @@ export class SlotsService {
     if (eventType && shouldReserveSlot) {
       await Promise.all(
         eventType.users.map((user) =>
-          this.slotsRepo.upsertSelectedSlot(user.id, input, uid, eventType.seatsPerTimeSlot !== null)
+          this.withTimeout(
+            this.slotsRepo.upsertSelectedSlot(user.id, input, uid, eventType.seatsPerTimeSlot !== null),
+            5000
+          )
         )
-      );
+      ).catch((err) => {
+        throw new BadRequestException("Error reserving slot", err);
+      });
     }
 
     return uid;
@@ -55,5 +60,10 @@ export class SlotsService {
 
     const event = await this.eventTypeRepo.getEventTypeById(eventTypeId);
     return !!event?.teamId;
+  }
+
+  withTimeout(promise: any, ms: any) {
+    const timeout = new Promise((_, reject) => setTimeout(() => reject(new Error("Timeout")), ms));
+    return Promise.race([promise, timeout]);
   }
 }

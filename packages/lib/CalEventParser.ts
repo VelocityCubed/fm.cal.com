@@ -99,9 +99,9 @@ export const getUserFieldsResponses = (calEvent: Parameters<typeof getLabelValue
       if (!labelValueMap) return "";
       if (labelValueMap[key] !== "") {
         return `
-${key}:<br/>
-${labelValueMap[key]}
-  `;
+          <br/><br/>${key}:<br/>
+          ${labelValueMap[key]}
+        `;
       }
     })
     .join("");

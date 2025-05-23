@@ -42,7 +42,7 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
   const source = searchParams?.get("source") ?? "Standalone";
   const multiClinics = searchParams?.get("multiClinics") === "true";
 
-  const selectedDate = searchParams?.get("date");
+  const selectedDate = searchParams?.get("date") || dayjs().format("YYYY-MM-DD");
   const isRedirect = searchParams?.get("redirected") === "true" || false;
   const fromUserNameRedirected = searchParams?.get("username") || "";
   const rescheduleUid =
@@ -127,9 +127,10 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
     (bookerLayout.layout === BookerLayouts.WEEK_VIEW &&
       !!bookerLayout.extraDays &&
       dayjs(date).month() !== dayjs(date).add(bookerLayout.extraDays, "day").month()) ||
-    ((bookerLayout.layout === BookerLayouts.COLUMN_VIEW ||
-      bookerLayout.layout === BookerLayouts.BRANDED_VIEW) &&
-      dayjs(date).month() !== dayjs(date).add(bookerLayout.columnViewExtraDays.current, "day").month());
+    (bookerLayout.layout === BookerLayouts.COLUMN_VIEW &&
+      dayjs(date).month() !== dayjs(date).add(bookerLayout.columnViewExtraDays.current, "day").month()) ||
+    ((bookerLayout.layout === BookerLayouts.BRANDED_VIEW || bookerLayout.layout === "mobile_branded") &&
+      dayjs(date).month() !== dayjs(date).add(bookerLayout.extraDays, "day").month());
 
   const monthCount =
     ((bookerLayout.layout !== BookerLayouts.WEEK_VIEW && bookerState === "selecting_time") ||

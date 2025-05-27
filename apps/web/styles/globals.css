@@ -813,7 +813,7 @@ select:focus {
 }
 
 .minus-margin {
-  margin-top: -0.6rem;;
+  margin-top: -0.6rem;
 }
 
 .rounded-left-40 {
@@ -839,7 +839,12 @@ select:focus {
 }
 
 .branded-border-secondary {
-  border: 1px solid #e95d2b;
+  border: 1px solid #f5a25d;
+}
+
+.hover\:branded-secondary:hover {
+  border-color: #e95d2b !important;
+  color: #b64312 !important;
 }
 
 .hover\:branded-border:hover {
@@ -1106,7 +1111,7 @@ select:focus {
 }
 
 .mx-r-1 {
-  margin-right: .25rem
+  margin-right: 0.25rem;
 }
 
 @import "./raqb.css";

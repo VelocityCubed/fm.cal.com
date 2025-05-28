@@ -203,8 +203,8 @@ export const BookEventForm = ({
                   className={
                     isBranded
                       ? isMobile
-                        ? "hover:branded-secondary body-head-sm  font-normal-medium color-text-secondary font-circular rounded-left-40 branded-border-secondary w-max-220 body-btn flex flex h-12 w-[50] w-auto flex-grow flex-col items-center justify-center gap-2 py-2"
-                        : "hover:branded-secondary font-normal-medium color-text-secondary font-circular rounded-left-40 branded-border-secondary w-max-220 body-btn flex flex h-12 w-auto flex-grow flex-col items-center justify-center gap-2 py-2"
+                        ? "ease-trans hover:branded-secondary body-head-sm  font-normal-medium color-text-secondary font-circular rounded-left-40 branded-border-secondary w-max-220 body-btn flex flex h-12 w-[50] w-auto flex-grow flex-col items-center justify-center gap-2 py-2"
+                        : "ease-trans hover:branded-secondary font-normal-medium color-text-secondary font-circular rounded-left-40 branded-border-secondary w-max-220 body-btn flex flex h-12 w-auto flex-grow flex-col items-center justify-center gap-2 py-2"
                       : "hover:bg-subtle"
                   }
                   type="button"

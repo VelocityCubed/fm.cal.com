@@ -843,8 +843,9 @@ select:focus {
 }
 
 .hover\:branded-secondary:hover {
-  border-color: #e95d2b !important;
-  color: #b64312 !important;
+  border-color: #f5a25d !important;
+  background-color: #f5a25d !important;
+  color: #ffffff !important;
 }
 
 .hover\:branded-border:hover {

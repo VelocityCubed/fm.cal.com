@@ -24,17 +24,17 @@ export const getEmailHtml = async (
     },
     Questions: {
       name: person.name,
-      firstName: (event.responses?.name?.value as any).firstName,
-      lastName: (event.responses?.name?.value as any).lastName,
+      firstName: (event.responses?.name?.value as any)?.firstName,
+      lastName: (event.responses?.name?.value as any)?.lastName,
       attendeePhoneNumber: event.responses?.attendeePhoneNumber?.value,
       email: event.responses?.email?.value,
-      underlyingConditions: (event.responses?.underlyingConditions?.value as string[]).join(","),
-      treatmentType: (event.responses?.treatmentType?.value as string[]).join(","),
+      underlyingConditions: (event.responses?.underlyingConditions?.value as string[])?.join(","),
+      treatmentType: (event.responses?.treatmentType?.value as string[])?.join(","),
       fertilityStage: event.responses?.fertilityStage?.value,
       notes: event.additionalNotes,
-      personalDataConsent: (event.responses?.personalDataConsent?.value as string[]).join(","),
+      personalDataConsent: (event.responses?.personalDataConsent?.value as string[])?.join(","),
       dateOfBirth: event.responses?.dateOfBirth?.value,
-      guests: (event.responses?.guests?.value as string[]).join(","),
+      guests: (event.responses?.guests?.value as string[])?.join(","),
     },
   };
 

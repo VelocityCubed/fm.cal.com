@@ -130,7 +130,8 @@ export const EventMetaBlock = ({
 export const EventDetails = ({ event, blocks = defaultEventDetailsBlocks }: EventDetailsProps) => {
   const { t } = useLocale();
   const rescheduleUid = useBookerStore((state) => state.rescheduleUid);
-  const isInstantMeeting = useBookerStore((store) => store.isInstantMeeting);
+  // const isInstantMeeting = useBookerStore((store) => store.isInstantMeeting);
+  const isInstantMeeting = false;
 
   return (
     <>

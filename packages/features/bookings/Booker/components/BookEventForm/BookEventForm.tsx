@@ -64,7 +64,8 @@ export const BookEventForm = ({
   const bookingData = useBookerStore((state) => state.bookingData);
   const timeslot = useBookerStore((state) => state.selectedTimeslot);
   const username = useBookerStore((state) => state.username);
-  const isInstantMeeting = useBookerStore((state) => state.isInstantMeeting);
+  // const isInstantMeeting = useBookerStore((store) => store.isInstantMeeting);
+  const isInstantMeeting = false;
   const isPlatformBookerEmbed = useIsPlatformBookerEmbed();
 
   const [responseVercelIdHeader] = useState<string | null>(null);

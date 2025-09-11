@@ -275,7 +275,7 @@ export const useBookerStore = create<BookerStore>((set, get) => ({
     isTeamEvent,
     durationConfig,
     org,
-    isInstantMeeting,
+    isInstantMeeting = false,
     timezone = null,
     teamMemberEmail,
     crmOwnerRecordType,

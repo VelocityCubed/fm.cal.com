@@ -64,7 +64,8 @@ export const BookEventForm = ({
   const bookingData = useBookerStore((state) => state.bookingData);
   const timeslot = useBookerStore((state) => state.selectedTimeslot);
   const username = useBookerStore((state) => state.username);
-  const isInstantMeeting = useBookerStore((state) => state.isInstantMeeting);
+  // const isInstantMeeting = useBookerStore((state) => state.isInstantMeeting);
+  const isInstantMeeting = false; // Temporarily disable Cal Video instant meetings
   const isPlatformBookerEmbed = useIsPlatformBookerEmbed();
 
   const [responseVercelIdHeader] = useState<string | null>(null);

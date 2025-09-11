@@ -49,7 +49,8 @@ export const useHandleBookEvent = ({
   const recurringEventCount = useBookerStore((state) => state.recurringEventCount);
   const bookingData = useBookerStore((state) => state.bookingData);
   const seatedEventData = useBookerStore((state) => state.seatedEventData);
-  const isInstantMeeting = useBookerStore((state) => state.isInstantMeeting);
+  // const isInstantMeeting = useBookerStore((state) => state.isInstantMeeting);
+  const isInstantMeeting = false; // Temporarily disable Cal Video instant meetings
   const orgSlug = useBookerStore((state) => state.org);
   const teamMemberEmail = useBookerStore((state) => state.teamMemberEmail);
   const crmOwnerRecordType = useBookerStore((state) => state.crmOwnerRecordType);

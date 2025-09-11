@@ -118,7 +118,8 @@ export const useBookings = ({
   const router = useRouter();
   const eventSlug = useBookerStore((state) => state.eventSlug);
   const eventTypeId = useBookerStore((state) => state.eventId);
-  const isInstantMeeting = useBookerStore((state) => state.isInstantMeeting);
+  // const isInstantMeeting = useBookerStore((state) => state.isInstantMeeting);
+  const isInstantMeeting = false; // Temporarily disable Cal Video instant meetings
 
   const rescheduleUid = useBookerStore((state) => state.rescheduleUid);
   const rescheduledBy = useBookerStore((state) => state.rescheduledBy);

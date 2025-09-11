@@ -90,6 +90,7 @@ ${calEvent.additionalNotes}
 
 export const getUserFieldsResponses = (calEvent: Parameters<typeof getLabelValueMapFromResponses>[0]) => {
   const labelValueMap = getLabelValueMapFromResponses(calEvent);
+  // get fields from function app
 
   if (!labelValueMap) {
     return "";

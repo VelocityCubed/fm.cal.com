@@ -197,7 +197,7 @@ function TeamPage({ team, considerUnpublished, isValidOrgDomain }: PageProps) {
                 <Team members={team.members} teamName={team.name} />
               ))}
             {!showMembers.isOn && team.eventTypes && team.eventTypes.length > 0 && (
-              <div className="mx-auto max-w-3xl ">
+              <div className="mx-auto ">
                 <EventTypes eventTypes={team.eventTypes} />
 
                 {/* Hide "Book a team member button when team is private or hideBookATeamMember is true" */}

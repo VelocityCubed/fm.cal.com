@@ -91,7 +91,9 @@ export default function AIEventController({ eventType, isTeamEvent }: AIEventCon
 const ErrorMessage = ({ fieldName, message }: { fieldName: string; message: string }) => {
   const { t } = useLocale();
   return (
-    <div data-testid={`error-message-${fieldName}`} className="mt-2 flex items-center text-sm text-red-700 ">
+    <div
+      data-testid={`error-message-${fieldName}`}
+      className="custom-text-error font-saans mt-2 flex items-center text-sm">
       <Icon name="info" className="h-3 w-3 ltr:mr-2 rtl:ml-2" />
       <p>{t(message || "invalid_input")}</p>
     </div>

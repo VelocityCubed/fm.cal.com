@@ -151,7 +151,14 @@ export const AvailableTimeSlots = ({
         </div>
       )}
       {filteredSlots.length === 0 && !isLoading && (
-        <div className="body-head-4 font-normal-medium font-circular color-primary min-h-380 pb-4 ">
+        <div className="body-head-4 font-normal-medium font-saans color-primary min-h-380 py-t-6 pb-4 text-center">
+          <img
+            className="custom-time-icon"
+            height="24"
+            src="https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/icons/functional/icon-clock.svg"
+            width="24"
+            alt="time image icon"
+          />
           There are no available slots for this week, please select another week
         </div>
       )}

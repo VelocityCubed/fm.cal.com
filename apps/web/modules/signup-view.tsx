@@ -443,10 +443,10 @@ export default function Signup({
                   />
                   {errors.apiError && (
                     <Alert
-                      className="mb-3"
+                      className="custom-text-error mb-3"
                       severity="error"
                       message={errors.apiError?.message}
-                      data-testid="signup-error-message"
+                      data-testid="signup-error-message font-saans"
                     />
                   )}
                   {isSamlSignup ? (

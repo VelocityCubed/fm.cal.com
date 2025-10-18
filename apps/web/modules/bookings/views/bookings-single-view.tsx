@@ -488,7 +488,7 @@ export default function Success(props: PageProps) {
               <div
                 className={classNames(
                   "inline-block transform overflow-hidden rounded-lg",
-                  layout !== "mobile_branded" && !isEmbed && "border sm:my-8 sm:max-w-xl",
+                  layout !== "mobile_branded" && !isEmbed && "max-w-custom border sm:my-8",
                   !isBackgroundTransparent &&
                     layout !== "mobile_branded" &&
                     !isEmbed &&
@@ -496,14 +496,15 @@ export default function Success(props: PageProps) {
                   layout !== "branded_view" &&
                     layout !== "mobile_branded" &&
                     "pb-4 pt-5 sm:py-8 sm:align-middle",
-                  "px-8 text-left align-bottom transition-all sm:w-full",
+                  layout !== "mobile_branded" && "px-8",
+                  "text-left align-bottom transition-all sm:w-full",
                   layout === "branded_view" && isEmbed && "w-[352px] !px-0",
                   layout === "branded_view" &&
                     !isEmbed &&
-                    "border-subtle bg-branded rounded-branded py-t-10 py-b-10",
+                    "border-subtle bg-branded rounded-branded padd-min-48",
                   layout === "mobile_branded" && "bg-branded  h-full w-full",
                   layout === "mobile_branded" && isEmbed && "px-l-6 px-r-6 rounded-none",
-                  layout === "mobile_branded" && !isEmbed && "py-t-10 py-b-10 min-h-[calc(100dvh)]"
+                  layout === "mobile_branded" && !isEmbed && "min-h-[calc(100dvh)] px-4 py-6"
                 )}
                 role="dialog"
                 aria-modal="true"
@@ -1025,31 +1026,48 @@ export default function Success(props: PageProps) {
                           "py-t-6 branded-mobile-border"
                       )}>
                       {!isEmbed && (
-                        <div className="mb-10 flex flex-col items-center justify-center gap-6">
+                        <div className="mb2-custom flex flex-col items-center justify-center">
                           <div
                             className={classNames(
-                              "orange-bg flex items-center justify-center rounded-full",
-                              layout === "branded_view" && "max-w-14 h-14 max-h-14 w-14 ",
-                              layout === "mobile_branded" && "max-w-8 h-8 max-h-8 w-8"
+                              "flex items-center justify-center",
+                              layout === "branded_view" && "w-cal-icon",
+                              layout === "mobile_branded" && "w-cal-icon-mobile"
                             )}>
                             <img
-                              src="https://fertilitymapperprod.blob.core.windows.net/assets/images/check-icon.svg"
+                              src="https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/icons/brand/icon-calendar.svg"
                               className={classNames(
-                                layout === "branded_view" && "h-t1 max-h-t1 max-w-4 w-4",
-                                layout === "mobile_branded" && "h-t2 max-h-t2 max-w-t2 w-t2"
+                                layout === "branded_view" && "w-cal-img",
+                                layout === "mobile_branded" && "w-cal-img-mobile"
                               )}
                               alt="Check Icon"
                             />
                           </div>
                           <h3
-                            className="font-mackinac body-head-1 color-primary font-bold"
+                            className={classNames(
+                              layout === "branded_view" && "body-head-1 max-title",
+                              layout === "mobile_branded" && "body-head-1-mobile"
+                            )}
                             data-testid={isCancelled ? "cancelled-headline" : ""}
                             id="modal-headline">
-                            You’re booked in!
+                            Your call with {bookingInfo?.user?.name} is confirmed
                           </h3>
                         </div>
                       )}
                       <div>
+                        <div className="mb2-custom custom-confirmed-btn">
+                          <RecurringBookings
+                            eventType={eventType}
+                            duration={calculatedDuration}
+                            recurringBookings={props.recurringBookings}
+                            allRemainingBookings={allRemainingBookings}
+                            date={date}
+                            is24h={is24h}
+                            isCancelled={isCancelled}
+                            tz={tz}
+                            layout={layout}
+                          />
+                        </div>
+
                         {multiClinics && isEmbed && (
                           <h4
                             className={classNames(
@@ -1066,9 +1084,8 @@ export default function Success(props: PageProps) {
                           </p>
                         )}
                         {!multiClinics && (
-                          <p className="color-body-text body-done-normal font-normal-medium font-circular text-left">
-                            A calendar invite has been sent to your email address. Ahead of the call, you
-                            might like to read our guide on{" "}
+                          <p className="body-done-normal">
+                            We’ve sent a calendar invite to your email. Ahead of the call, check our guide on{" "}
                             <a
                               className="branded-link"
                               target="_blank"
@@ -1077,52 +1094,30 @@ export default function Success(props: PageProps) {
                               {" "}
                               what to ask the clinic
                             </a>
-                            , to help you feel prepared, confident and make the most of your conversation.
+                            to help you feel prepared and confident.
                           </p>
                         )}
                       </div>
 
-                      <div className="text-default mt-6 text-left rtl:text-right">
-                        <div className="branded-border-bottom pb-4 ">
-                          <RecurringBookings
-                            eventType={eventType}
-                            duration={calculatedDuration}
-                            recurringBookings={props.recurringBookings}
-                            allRemainingBookings={allRemainingBookings}
-                            date={date}
-                            is24h={is24h}
-                            isCancelled={isCancelled}
-                            tz={tz}
-                            layout={layout}
-                          />
-                        </div>
-                        <div className="mt-4 flex flex-row items-center justify-start gap-6">
-                          <img
-                            src={getImageUrl(logoUrl)}
-                            className="max-h-5-5 h-5-5 w-5-5 max-w-5-5 bg-branded-subtle rounded-full"
-                            alt="Clinic Logo"
-                          />
-                          <h3 className="body-head-sm font-circular color-primary font-medium">
-                            {props?.eventType?.title ?? ""}
-                          </h3>
-                        </div>
+                      <h3 className="confirmed-title-outer">{props?.eventType?.title ?? ""}</h3>
 
-                        <div className="mt-4 flex flex-row items-center justify-start gap-6 last:mb-0">
-                          <Avatar
-                            alt={props.profile.name ?? ""}
-                            size="custom"
-                            imageSrc={getImageUrl(props.profile.image)}
-                          />
-                          <div className="flex flex-col gap-1">
-                            <p className="color-text-dark font-circular font-normal-medium body-head-4">
-                              {props.profile.name ?? ""}
-                            </p>
-                            {props.profile.bio && (
-                              <p className="color-body-text font-circular body-sml font-normal-medium max-w-175 line-clamp-2 text-ellipsis">
-                                {props.profile.bio}
-                              </p>
-                            )}
-                          </div>
+                      <div className="custom-confirmed-card mt-4 text-left">
+                        <img
+                          src={getImageUrl(logoUrl)}
+                          className={classNames(
+                            layout === "branded_view" && "confirmed-custom-img",
+                            layout === "mobile_branded" && "confirmed-custom-img-mobile"
+                          )}
+                          alt="Clinic Logo"
+                        />
+
+                        <div
+                          className={classNames(
+                            layout === "branded_view" && "custom-confirmed-info",
+                            layout === "mobile_branded" && "custom-confirmed-info-mobile"
+                          )}>
+                          <p className="confirmed-title">{props.profile.name ?? ""}</p>
+                          {props.profile.bio && <p className="confirmed-title">{props.profile.bio}</p>}
                         </div>
                       </div>
                     </div>
@@ -1407,23 +1402,10 @@ function RecurringBookings({
     const formattedDate = formatToLocalizedDate(date, language, "full", tz);
     const dayOfWeek = formattedDate.split(",")[0];
     return (
-      <div className="mt-4 flex flex-row items-center justify-start gap-4 ">
-        <div className="max-h-5-5 h-5-5 w-5-5 max-w-5-5 pale-rey-bg flex items-center justify-center rounded-full">
-          <img
-            src="https://fertilitymapperprod.blob.core.windows.net/assets/images/calendar-icon.svg"
-            className="max-w-6 h-6 max-h-6 w-6"
-            alt="Calendar Icon"
-          />
-        </div>
-
-        <div
-          className={classNames(
-            isCancelled ? "line-through" : "",
-            "color-primary font-circular font-normal-medium body-head-4"
-          )}>
-          <span className="color-text-dark font-medium">{dayOfWeek}, </span>
-          <span>{formatToLocalizedDate(date, language, "long", tz)}</span>
-        </div>
+      <div className={classNames(isCancelled ? "line-through" : "", "custom-confirmed-date")}>
+        <span className="color-text-dark font-medium">{dayOfWeek}, </span>
+        <span>{formatToLocalizedDate(date, language, "long", tz)} - </span>
+        <span>{formatToLocalizedTime(date, language, undefined, !is24h, tz)}</span>
       </div>
     );
   }

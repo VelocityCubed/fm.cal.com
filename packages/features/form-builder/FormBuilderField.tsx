@@ -5,7 +5,7 @@ import type { z } from "zod";
 
 import { classNames } from "@calcom/lib";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
-import { Icon, InfoBadge, Label } from "@calcom/ui";
+import { Icon, Label } from "@calcom/ui";
 
 import { Components, isValidValueProp } from "./Components";
 import { fieldTypesConfigMap } from "./fieldTypes";
@@ -60,24 +60,29 @@ export const FormBuilderField = ({
   const { t } = useLocale();
   const { control, formState } = useFormContext();
 
-  const { hidden, placeholder, label, noLabel, translatedDefaultLabel } = getAndUpdateNormalizedValues(
-    field,
-    t
-  );
-
-  const shouldBeDisabled = useShouldBeDisabledDueToPrefill(field);
   if (field.name === "treatmentType" && formState.defaultValues?.responses?.treatmentType?.length > 0) {
     field.hidden = true;
+    field.placeholder = field.label;
   }
   if (
     field.name === "underlyingConditions" &&
     formState.defaultValues?.responses?.underlyingConditions?.length > 0
   ) {
     field.hidden = true;
+    field.placeholder = field.label;
   }
   if (field.name === "fertilityStage" && formState.defaultValues?.responses?.fertilityStage?.length > 0) {
     field.hidden = true;
+    field.placeholder = field.label;
   }
+
+  const { hidden, placeholder, label, noLabel, translatedDefaultLabel } = getAndUpdateNormalizedValues(
+    field,
+    t
+  );
+
+  const shouldBeDisabled = useShouldBeDisabledDueToPrefill(field);
+
   return (
     <div
       data-fob-field-name={field.name}
@@ -122,7 +127,7 @@ export const FormBuilderField = ({
                   return (
                     <div
                       data-testid={`error-message-${field.name}`}
-                      className="mt-2 flex items-center text-sm text-red-700 ">
+                      className="custom-text-error font-saans mt-2 flex items-center text-sm">
                       <Icon name="info" className="h-3 w-3 ltr:mr-2 rtl:ml-2" />
                       <p>{t(message || "invalid_input")}</p>
                     </div>
@@ -417,6 +422,7 @@ export const ComponentForField = ({
                 : ""
               : ""
           }
+          innerClassNames="custom-inner-multiselect"
         />
       </WithLabel>
     );

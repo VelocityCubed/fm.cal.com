@@ -60,7 +60,7 @@ export const Select = <
             innerClassNames?.option
           ),
         placeholder: (state) => cx("text-muted", state.isFocused && variant !== "checkbox" && "hidden"),
-        dropdownIndicator: () => "text-default",
+        dropdownIndicator: () => "branded-indicator",
         control: (state) =>
           cx(
             "hover:border-emphasis dark:focus:border-emphasis border-default bg-default placeholder:text-muted text-emphasis focus:ring-brand-default focus:border-subtle focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark rounded-40 branded-form-border body-head-4 font-circular h-min-48 disabled:bg-subtle disabled:hover:border-subtle mb-2 block flex h-9 w-full flex-row rounded-md border px-4 py-2 text-sm leading-4 transition focus:outline-none focus:ring-2 ",
@@ -82,11 +82,7 @@ export const Select = <
             "bg-subtle text-default rounded-md py-1.5 px-2 flex items-center text-sm leading-tight",
             innerClassNames?.multiValue
           ),
-        menu: () =>
-          cx(
-            "font-circular rounded-md bg-default text-sm leading-4 text-default mt-1 border border-subtle",
-            innerClassNames?.menu
-          ),
+        menu: () => cx("font-semimono  mt-1 custom-dropdown", innerClassNames?.menu),
         groupHeading: () => "leading-none text-xs uppercase text-default pl-2.5 pt-4 pb-2",
         menuList: () => cx("scroll-bar scrollbar-track-w-20 rounded-md", innerClassNames?.menuList),
         indicatorsContainer: (state) =>

@@ -160,11 +160,11 @@ html.todesktop-platform-darwin aside {
 }
 
 html.todesktop-platform-darwin.dark main.bg-default {
-  background: rgba(0, 0, 0, 0.6) !important;
+  background: #ffffff !important;
 }
 
 html.todesktop-platform-darwin.light main.bg-default {
-  background: rgba(255, 255, 255, 0.8) !important;
+  background: #ffffff !important;
 }
 
 html.todesktop.light {

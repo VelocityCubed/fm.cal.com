@@ -155,14 +155,14 @@ export const ensureBookingInputsHaveSystemFields = ({
                 name: "firstName",
                 type: "text",
                 label: "First name",
-                placeholder: "",
+                placeholder: "First name",
                 required: true,
               },
               {
                 name: "lastName",
                 type: "text",
                 label: "Last name",
-                placeholder: "",
+                placeholder: "Last name",
                 required: true,
               },
             ],
@@ -180,6 +180,7 @@ export const ensureBookingInputsHaveSystemFields = ({
     {
       label: "Email",
       defaultLabel: "email_address",
+      placeholder: "Email",
       type: "email",
       name: "email",
       required: !isEmailFieldOptional,
@@ -258,7 +259,7 @@ export const ensureBookingInputsHaveSystemFields = ({
       placeholder: "",
       defaultPlaceholder: "email",
       required: false,
-      hidden: disableGuests,
+      hidden: true,
       sources: [
         {
           label: "Default",
@@ -269,6 +270,7 @@ export const ensureBookingInputsHaveSystemFields = ({
     },
     {
       label: "Phone number",
+      placeholder: "Phone number",
       defaultLabel: "phone_number",
       type: "phone",
       name: "attendeePhoneNumber",
@@ -284,6 +286,7 @@ export const ensureBookingInputsHaveSystemFields = ({
     },
     {
       label: "Date of birth (dd/mm/yyyy)",
+      placeholder: "Date of birth (dd/mm/yyyy)",
       type: "text",
       name: "dateOfBirth",
       required: true,
@@ -301,6 +304,8 @@ export const ensureBookingInputsHaveSystemFields = ({
       type: "multiselect",
       name: "underlyingConditions",
       required: true,
+      placeholder: "Do you have any underlying conditions?",
+      defaultPlaceholder: "Do you have any underlying conditions?",
       options: [
         {
           label: "None",
@@ -394,6 +399,8 @@ export const ensureBookingInputsHaveSystemFields = ({
     },
     {
       label: "What type of treatment are you looking for?",
+      placeholder: "What type of treatment are you looking for?",
+      defaultPlaceholder: "What type of treatment are you looking for?",
       type: "multiselect",
       name: "treatmentType",
       required: true,
@@ -470,6 +477,8 @@ export const ensureBookingInputsHaveSystemFields = ({
     },
     {
       label: "What stage are you at?",
+      placeholder: "What stage are you at?",
+      defaultPlaceholder: "What stage are you at?",
       type: "select",
       name: "fertilityStage",
       required: true,

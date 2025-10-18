@@ -7244,7 +7244,7 @@ select {
 }
 
 .\!bg-default {
-  background-color: var(--cal-bg,#fff)!important
+  background-color: #ffffff !important
 }
 
 .\!bg-orange-100 {
@@ -7462,7 +7462,7 @@ select {
 }
 
 .bg-default {
-  background-color: var(--cal-bg,#fff)
+  background-color: #ffffff;
 }
 
 .bg-emerald-100 {
@@ -13371,11 +13371,11 @@ html.todesktop header a,html.todesktop header button {
 }
 
 html.todesktop-platform-darwin.dark main.bg-default {
-  background: rgba(0,0,0,.6)!important
+  background: #ffffff !important
 }
 
 html.todesktop-platform-darwin.light main.bg-default {
-  background: hsla(0,0%,100%,.8)!important
+  background: #ffffff !important
 }
 
 html.todesktop.light {

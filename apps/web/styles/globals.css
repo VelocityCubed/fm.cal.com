@@ -703,11 +703,11 @@ html.todesktop-platform-darwin aside {
 }
 
 html.todesktop-platform-darwin.dark main.bg-default {
-  background: rgba(0, 0, 0, 0.6) !important;
+  background: #ffffff !important;
 }
 
 html.todesktop-platform-darwin.light main.bg-default {
-  background: rgba(255, 255, 255, 0.8) !important;
+  background: #ffffff !important;
 }
 
 html.todesktop.light {
@@ -1047,12 +1047,20 @@ select:focus {
   font-family: var(--font-cta) !important;
 }
 
+.custom-inner-multiselect {
+  padding: 9.5px 0 9.5px 16px !important;
+}
+
 .font-saans {
   font-family: var(--font-body) !important;
 }
 
 .padding-16 {
   padding: 16px;
+}
+
+.max-w-custom {
+  max-width: 967px;
 }
 
 .branded-seen-free {
@@ -1081,12 +1089,14 @@ select:focus {
   line-height: 110%;
   font-weight: 570;
   font-family: var(--font-body) !important;
+  color: #1f282d;
 }
 
 .body-head-1-mobile {
   font-size: 36px;
   font-weight: 570;
-  line-height: 110%;
+  line-height: 110%;  font-family: var(--font-body) !important;
+  color: #1f282d;
 }
 
 .body-head-2 {
@@ -1139,9 +1149,27 @@ select:focus {
 .body-done-normal {
   font-family: var(--font-body) !important;
   color: #1f282d !important;
-    font-size: 24px;
+  font-size: 16px;
   line-height: 120%;
   font-weight: 570;
+  max-width: 409px;
+  margin: 0 auto;
+}
+
+.custom-confirmed-btn {
+  width: max-content;
+  padding: 16px;
+  border-radius: 100px;
+  background: #b6a7f9;
+  margin: 0 auto 2rem;
+}
+
+.custom-confirmed-date {
+  color: #1f282d;
+  font-size: 16px;
+  font-weight: 570 !important;
+  line-height: 110%;
+  font-family: var(--font-cta) !important;
 }
 
 .body-head-sm {
@@ -1345,18 +1373,41 @@ select:focus {
   opacity: 0.3;
 }
 
+.branded-indicator {
+  content: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/icons/functional/icon-chevron-down.svg");
+}
+
+.custom-text-error {
+  color: #ff937e !important;
+}
+
+.custom-dropdown {
+  color: #1f282d;
+  border-radius: 24px;
+  padding: 16px 0;
+  border: 1px solid #1f282d;
+  background-color: #ffffff;
+  font-size: 14px;
+  font-weight: 570;
+  line-height: 120%;
+}
+
 .h-\[397px\] {
   height: 100%;
-  max-height: 397px;
+  max-height: 354px;
 }
 
 .h-\[572px\] {
   height: 100%;
-  max-height: 572px;
+  max-height: 530px;
 }
 
 .min-h-380 {
-  min-height: 420px;
+  min-height: 354px;
+}
+
+.custom-time-icon {
+  margin: 0 auto 24px;
 }
 
 .w-\[352px\] {
@@ -1489,7 +1540,12 @@ select:focus {
   background-color: #1f282d1a !important;
 }
 
-.seen-logo {
+.padd-min-48 {
+  padding: 48px;
+}
+
+.mb2-custom {
+  margin-bottom: 2rem;
 }
 
 .branded-time-btn {
@@ -1665,6 +1721,102 @@ select:focus {
 
 .max-w-8 {
   max-width: 2rem;
+}
+
+.w-cal-icon {
+  width: 100px;
+  max-width: 100px;
+  height: 104px;
+  max-height: 104px;
+}
+
+
+.w-cal-icon-mobile {
+  width: 48px;
+  max-width: 48px;
+  height: 52px;
+  max-height: 52px;
+}
+
+.max-title {
+  max-width: 791px;
+}
+
+.confirmed-custom-img {
+  width: 200px;
+  max-width: 200px;
+  border-radius: 24px;
+  height: 109px;
+}
+
+.confirmed-custom-img-mobile {
+  width: 50%;
+  max-width: 200px;
+  border-radius: 24px;
+    height: 109px;
+}
+
+.custom-confirmed-card {
+  display: flex;
+  align-items: stretch;
+  justify-content: center;
+}
+
+.custom-confirmed-info {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  background: #efebeb;
+  border-radius: 24px;
+  padding: 16px;
+  min-height: 109px;
+  width: 210px;
+}
+
+.custom-confirmed-info-mobile {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  align-items: flex-start;
+  justify-content: flex-start;
+  background: #efebeb;
+  border-radius: 24px;
+  padding: 16px;
+  min-height: 109px;
+  width: 50%;
+}
+
+.confirmed-title {
+  color: #1f282d;
+  font-size: 14px;
+  font-weight: 570;
+  line-height: 120%;
+  font-family: var(--font-body) !important;
+}
+
+.confirmed-title-outer {
+  color: #1f282d;
+  font-size: 16px;
+  font-weight: 670;
+  line-height: 120%;
+  font-family: var(--font-body) !important;
+  margin-top: 32px;
+}
+
+.w-cal-img {
+  width: 79.417px;
+  max-width: 79.417px;
+  height: 78.235px;
+  max-height: 78.235px;
+}
+
+.w-cal-img-mobile {
+  width: 37.743px;
+  max-width: 37.743px;
+  height: 37.553px;
+  max-height: 37.553px;
 }
 
 .pale-rey-bg {

@@ -1,4 +1,3 @@
-import type { BookerEvent } from "bookings/types";
 import { useCallback, useMemo } from "react";
 import { shallow } from "zustand/shallow";
 
@@ -6,6 +5,7 @@ import { useIsPlatform } from "@calcom/atoms/monorepo";
 import dayjs from "@calcom/dayjs";
 import { useIsEmbed } from "@calcom/embed-core/embed-iframe";
 import { EventTitle } from "@calcom/features/bookings";
+import type { BookerEvent } from "@calcom/features/bookings/types";
 import { WEBAPP_URL } from "@calcom/lib/constants";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { BookerLayouts } from "@calcom/prisma/zod-utils";

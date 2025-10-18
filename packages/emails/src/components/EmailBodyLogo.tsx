@@ -4,7 +4,7 @@ import Row from "./Row";
 const CommentIE = ({ html = "" }) => <RawHtml html={`<!--[if mso | IE]>${html}<![endif]-->`} />;
 
 const EmailBodyLogo = () => {
-  const image = `https://fertilitymapper.com/assets/logo_small.svg`;
+  const image = `https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/brand/logo-type.svg`;
 
   return (
     <>
@@ -52,7 +52,7 @@ const EmailBodyLogo = () => {
                         }}>
                         <span
                           style={{
-                            color: "#0b4736",
+                            color: "#1F282D",
                             fontSize: "13px",
                             lineHeight: "18.2px",
                             fontWeight: "500",
@@ -61,7 +61,7 @@ const EmailBodyLogo = () => {
                           Sent securely by
                         </span>
                         <a
-                          href="https://fertilitymapper.com/"
+                          href="https://seenfertility.com/"
                           target="_blank"
                           rel="noreferrer noopener"
                           style={{ display: "inline-block" }}>

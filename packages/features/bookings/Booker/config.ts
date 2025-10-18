@@ -76,6 +76,7 @@ export const resizeAnimationConfig: ResizeAnimationConfig = {
       width: "100%",
       minHeight: "0px",
       gridTemplateAreas: `
+          "footer"
           "meta"
           "header"
           "main"
@@ -137,11 +138,12 @@ export const resizeAnimationConfig: ResizeAnimationConfig = {
   branded_view: {
     default: {
       width: "100%",
-      minHeight: "573px",
+      minHeight: "80dvh",
       height: "auto",
       gridTemplateAreas: `
       "meta header header"
       "meta main main"
+      "footer footer footer"
       `,
       gridTemplateColumns: "2fr 3fr",
       gridTemplateRows: "auto",
@@ -188,7 +190,7 @@ export const getBookerSizeClassNames = (
     layout === BookerLayouts.MONTH_VIEW &&
       bookerState !== "booking" &&
       `[--booker-main-width:480px] ${getBookerMetaClass("lg:[--booker-meta-width:280px]")}`,
-    layout === BookerLayouts.BRANDED_VIEW && "[--booker-main-width:511px] [--booker-meta-width:308px]",
+    layout === BookerLayouts.BRANDED_VIEW && "[--booker-main-width:629px] [--booker-meta-width:434px]",
     // Fullscreen view settings.
     layout !== BookerLayouts.MONTH_VIEW &&
       layout !== BookerLayouts.BRANDED_VIEW &&

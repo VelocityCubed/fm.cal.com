@@ -103,7 +103,7 @@ export const BookEventForm = ({
         isBranded
           ? isMobile
             ? "py-b-81 flex h-full flex-col"
-            : "py-b-81 flex h-[480px] flex-col"
+            : "py-b-113 flex h-[572px] flex-col"
           : "flex h-full flex-col"
       }>
       <Form
@@ -189,72 +189,86 @@ export const BookEventForm = ({
             isBranded
               ? isMobile
                 ? "footer-border branded-mobile-submit sticky bottom-0 z-10 flex items-center justify-center px-6 py-4"
-                : "footer-border branded-submit sticky bottom-0 z-10 flex items-center justify-center px-6 py-4"
+                : "seen-footer branded-submit"
               : "modalsticky mt-auto flex justify-end space-x-2 rtl:space-x-reverse"
           }>
-          {isInstantMeeting ? (
-            <Button type="submit" color="primary" loading={loadingStates.creatingInstantBooking}>
-              {isPaidEvent ? t("pay_and_book") : t("confirm")}
-            </Button>
-          ) : (
-            <>
-              {!!onCancel && (
+          {!isMobile && (
+            <img
+              className="-mt-px inline h-[43px] w-auto"
+              src="https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/brand/symbol.svg"
+              alt="Seen Fertility"
+            />
+          )}
+          <div className="submit-holder">
+            {isInstantMeeting ? (
+              <Button type="submit" color="primary" loading={loadingStates.creatingInstantBooking}>
+                {isPaidEvent ? t("pay_and_book") : t("confirm")}
+              </Button>
+            ) : (
+              <>
+                {!!onCancel && (
+                  <Button
+                    color="minimal"
+                    className={
+                      isBranded
+                        ? isMobile
+                          ? "ease-trans hover:branded-secondary body-head-sm  font-normal-medium color-text-secondary font-circular rounded-left-40 branded-border-secondary w-max-220 body-btn flex flex h-12 w-[50] w-auto flex-grow flex-col items-center justify-center gap-2 py-2"
+                          : "ease-trans hover:branded-secondary branded-border-secondary custom-btn body-btn h-12flex-grow flex flex flex-col items-center justify-center gap-2 py-2"
+                        : "hover:bg-subtle"
+                    }
+                    type="button"
+                    onClick={onCancel}
+                    data-testid="back">
+                    <img
+                      className="custom-arrow-back"
+                      src="https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/icons/functional/icon-arrow-left.svg"
+                      alt="Back Arrow Icon"
+                    />
+                    {t("back")}
+                  </Button>
+                )}
+
                 <Button
-                  color="minimal"
+                  type="submit"
+                  color={isBranded ? "branded_sumbit" : "primary"}
+                  disabled={!!shouldRenderCaptcha && !watchedCfToken}
+                  loading={
+                    loadingStates.creatingBooking ||
+                    loadingStates.creatingRecurringBooking ||
+                    isVerificationCodeSending
+                  }
                   className={
                     isBranded
-                      ? isMobile
-                        ? "ease-trans hover:branded-secondary body-head-sm  font-normal-medium color-text-secondary font-circular rounded-left-40 branded-border-secondary w-max-220 body-btn flex flex h-12 w-[50] w-auto flex-grow flex-col items-center justify-center gap-2 py-2"
-                        : "ease-trans hover:branded-secondary font-normal-medium color-text-secondary font-circular rounded-left-40 branded-border-secondary w-max-220 body-btn flex flex h-12 w-auto flex-grow flex-col items-center justify-center gap-2 py-2"
-                      : "hover:bg-subtle"
+                      ? "hover:bg-branded-secondary body-btn flex h-12 w-auto flex-grow flex-col justify-center py-2"
+                      : ""
                   }
-                  type="button"
-                  onClick={onCancel}
-                  data-testid="back">
-                  {t("back")}
-                </Button>
-              )}
-
-              <Button
-                type="submit"
-                color={isBranded ? "branded_sumbit" : "primary"}
-                disabled={!!shouldRenderCaptcha && !watchedCfToken}
-                loading={
-                  loadingStates.creatingBooking ||
-                  loadingStates.creatingRecurringBooking ||
-                  isVerificationCodeSending
-                }
-                className={
-                  isBranded
-                    ? "hover:bg-branded-secondary w-max-266 body-btn flex h-12 w-auto flex-grow flex-col justify-center py-2"
-                    : ""
-                }
-                data-testid={
-                  rescheduleUid && bookingData ? "confirm-reschedule-button" : "confirm-book-button"
-                }>
-                {rescheduleUid && bookingData ? (
-                  t("reschedule")
-                ) : renderConfirmNotVerifyEmailButtonCond ? (
-                  isPaidEvent ? (
-                    t("pay_and_book")
-                  ) : isBranded ? (
-                    <div
-                      className={
-                        isMobile
-                          ? "font-normal-medium body-head-sm flex items-center gap-2"
-                          : "font-normal-medium flex items-center gap-2 "
-                      }>
-                      Schedule appointment
-                    </div>
+                  data-testid={
+                    rescheduleUid && bookingData ? "confirm-reschedule-button" : "confirm-book-button"
+                  }>
+                  {rescheduleUid && bookingData ? (
+                    t("reschedule")
+                  ) : renderConfirmNotVerifyEmailButtonCond ? (
+                    isPaidEvent ? (
+                      t("pay_and_book")
+                    ) : isBranded ? (
+                      <div
+                        className={
+                          isMobile
+                            ? "font-normal-medium body-head-sm custom-btn flex items-center gap-2"
+                            : "font-normal-medium custom-btn flex items-center gap-2"
+                        }>
+                        Schedule appointment
+                      </div>
+                    ) : (
+                      t("confirm")
+                    )
                   ) : (
-                    t("confirm")
-                  )
-                ) : (
-                  t("verify_email_email_button")
-                )}
-              </Button>
-            </>
-          )}
+                    t("verify_email_email_button")
+                  )}
+                </Button>
+              </>
+            )}
+          </div>
         </div>
       </Form>
       {children}

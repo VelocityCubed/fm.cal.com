@@ -73,8 +73,8 @@ export const EventMembers = ({
         ]}
       />
       {isBranded && (
-        <div className="flex max-w-full flex-col gap-1">
-          <p className="color-text-dark font-circular font-normal-medium body-head-4">
+        <div className="profile-gap flex max-w-full flex-col">
+          <p className="profile-name">
             {showOnlyProfileName
               ? profile.name
               : shownUsers
@@ -82,11 +82,7 @@ export const EventMembers = ({
                   .filter((name) => name)
                   .join(", ")}
           </p>
-          {profile.bio && (
-            <p className="color-body-text font-circular body-sml font-normal-medium max-w-175 line-clamp-2 text-ellipsis">
-              {profile.bio}
-            </p>
-          )}
+          {profile.bio && <p className="profile-bio">{profile.bio}</p>}
         </div>
       )}
       {!isBranded && (

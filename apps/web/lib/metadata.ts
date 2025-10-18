@@ -11,21 +11,21 @@ export type PageMetadataRecipe = Readonly<{
 
 export const prepareRootMetadata = (): Metadata => ({
   icons: {
-    icon: "https://fertilitymapper.com/wp-content/uploads/2023/06/cropped-Mobile-Logo-32x32.png",
-    apple: "https://fertilitymapper.com/wp-content/uploads/2023/06/cropped-Mobile-Logo-32x32.png",
+    icon: "https://fertilitymapperprod.blob.core.windows.net/assets/icons/favicon.ico",
+    apple: "https://fertilitymapperprod.blob.core.windows.net/assets/icons/apple-touch-icon.png",
     other: [
       {
         rel: "icon-mask",
-        url: "https://fertilitymapper.com/wp-content/uploads/2023/06/cropped-Mobile-Logo-32x32.png",
+        url: "https://fertilitymapperprod.blob.core.windows.net/assets/icons/favicon-32x32.png",
         color: "#000000",
       },
       {
-        url: "https://fertilitymapper.com/wp-content/uploads/2023/06/cropped-Mobile-Logo-32x32.png",
+        url: "https://fertilitymapperprod.blob.core.windows.net/assets/icons/favicon-16x16.png",
         sizes: "16x16",
         type: "image/png",
       },
       {
-        url: "https://fertilitymapper.com/wp-content/uploads/2023/06/cropped-Mobile-Logo-32x32.png",
+        url: "https://fertilitymapperprod.blob.core.windows.net/assets/icons/favicon-32x32.png",
         sizes: "32x32",
         type: "image/png",
       },

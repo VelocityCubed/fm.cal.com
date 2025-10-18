@@ -139,7 +139,7 @@ export type WrappedBookerProps = WrappedBookerPropsForPlatform | WrappedBookerPr
 
 export type BookerState = "loading" | "selecting_date" | "selecting_time" | "booking";
 export type BookerLayout = BookerLayouts | "mobile" | "mobile_branded";
-export type BookerAreas = "calendar" | "timeslots" | "main" | "meta" | "header";
+export type BookerAreas = "calendar" | "timeslots" | "main" | "meta" | "header" | "footer";
 
 export type CustomClassNames = {
   bookerWrapper?: string;

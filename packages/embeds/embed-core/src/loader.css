@@ -1,66 +1,12 @@
 @keyframes loader-inner {
-  0%,
-	50% {
-		background: #0b4736;
-	}
-	20% {
-		background: #f5a25d;
-	}
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 .loader-inner {
   position: absolute;
-  border-radius: 50%;
-  background: #0b4736;
-  animation: loader-inner 2s infinite ease-in;
-}
-.loader-inner:nth-child(1) {
-  top: 0%;
-  left: 50%;
-  transform: translate(-50%, 0%);
-  animation-delay: -1.75s;
-}
-.loader-inner:nth-child(2) {
-  top: 18%;
-			left: 82%;
-			transform: translate(-50%, -18%);
-			animation-delay: -1.5s;
-}
-.loader-inner:nth-child(3) {
-  top: 50%;
-			left: 100%;
-			transform: translate(-100%, -50%);
-			animation-delay: -1.25s;
-}
-.loader-inner:nth-child(4) {
-  top: 82%;
-  left: 82%;
-  transform: translate(-50%, -82%);
-  animation-delay: -1s;
-}
-.loader-inner:nth-child(5) {
-  top: 100%;
-			left: 50%;
-			transform: translate(-50%, -100%);
-			animation-delay: -0.75s;
-}
-.loader-inner:nth-child(6) {
-  top: 82%;
-			left: 20%;
-			transform: translate(-50%, -82%);
-			animation-delay: -0.5s;
-}
-.loader-inner:nth-child(7) {
-  top: 50%;
-			left: 0%;
-			transform: translate(0%, -50%);
-			animation-delay: -0.25s;
-}
-.loader-inner:nth-child(8) {
-  top: 18%;
-			left: 20%;
-			transform: translate(-50%, -18%);
-			animation-delay: 0s;
+  animation: loader-inner 1s infinite ease-in;
 }
 
 .loader {
@@ -75,10 +21,10 @@
 }
 
 .custom-loader {
-  width: 60px;
-  height: 60px;
+  width: 64px;
+  height: 64px;
   .loader-inner {
-    width: 10px;
-			height: 10px;
+    width: 64px;
+    height: 64px;
   }
 }

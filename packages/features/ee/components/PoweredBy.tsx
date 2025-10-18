@@ -15,15 +15,15 @@ const PoweredByCal = ({
   const isEmbed = useIsEmbed();
 
   return (
-    <div className={`p-2 text-center text-xs sm:text-right${isEmbed ? " max-w-3xl" : ""}`}>
+    <div className={`text-center text-xs sm:text-right${isEmbed ? " max-w-3xl" : ""}`}>
       <Link href={BRANDED_URL} target="_blank" className="text-subtle">
         {!logoOnly && <>{t("powered_by")} </>}
         {APP_NAME === "Cal.com" || !hasValidLicense ? (
           <>
             <img
-              className="-mt-px inline h-[40px] w-auto"
+              className="-mt-px inline h-[43px] w-auto"
               src={`${process.env.NEXT_PUBLIC_WEBAPP_URL}/api/logo`}
-              alt="Fertility Mapper Logo V2"
+              alt="Seen Fertility Logo V2"
             />
           </>
         ) : (

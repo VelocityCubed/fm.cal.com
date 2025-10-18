@@ -172,18 +172,22 @@ const WithLabel = ({
           field.label && (
             <div className="mb-2 flex items-center">
               <Label className="!mb-0 flex items-center" htmlFor={htmlFor}>
-                <span className={isBranded ? "body-head-4 font-circular color-text-dark font-medium" : ""}>
-                  {field.label}
-                </span>
-                <span
-                  className={
-                    isBranded
-                      ? "body-head-4 font-circular color-text-dark font-medium"
-                      : "text-emphasis -mb-1 ml-1 text-sm font-medium leading-none"
-                  }>
-                  {!readOnly && field.required ? "*" : ""}
-                </span>
-                {field.type === "phone" && <InfoBadge content={t("number_in_international_format")} />}
+                {(field.name === "notes" || field.name === "rescheduleReason") && (
+                  <span className={isBranded ? "body-head-4 font-saans color-body-text" : ""}>
+                    {field.label}
+                  </span>
+                )}
+                {(field.name === "notes" || field.name === "rescheduleReason") && (
+                  <span
+                    className={
+                      isBranded
+                        ? "body-head-4 font-saans color-body-text"
+                        : "text-emphasis -mb-1 ml-1 text-sm font-medium leading-none"
+                    }>
+                    {!readOnly && field.required ? "*" : ""}
+                  </span>
+                )}
+                {/* {field.type === "phone" && <InfoBadge content={t("number_in_international_format")} />} */}
               </Label>
             </div>
           )}
@@ -297,8 +301,8 @@ export const ComponentForField = ({
           className={
             isBranded
               ? field.name === "notes" || field.name === "rescheduleReason"
-                ? "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark branded-form-border body-head-4 font-normal-medium font-circular h-min-115 rounded-lg px-4 py-2"
-                : "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark rounded-40 branded-form-border body-head-4 font-normal-medium font-circular h-min-48 px-4 py-2"
+                ? "focus:custom-brand branded-placeholder focus-within:custom-brand color-body-text branded-form-border body-head-4 font-semimono padding-16 h-min-93 rounded-20"
+                : "focus:custom-brand branded-placeholder focus-within:custom-brand color-body-text branded-form-border body-head-4 font-semimono padding-16 rounded-40 h-min-48"
               : ""
           }
         />
@@ -324,8 +328,8 @@ export const ComponentForField = ({
           className={
             isBranded
               ? field.name === "notes" || field.name === "rescheduleReason"
-                ? "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark branded-form-border body-head-4 font-normal-medium font-circular h-min-115 rounded-lg px-4 py-2"
-                : "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark rounded-40 branded-form-border body-head-4 font-normal-medium font-circular h-min-48 px-4 py-2"
+                ? "focus:custom-brand branded-placeholder focus-within:custom-brand color-body-text branded-form-border body-head-4 font-semimono padding-16 h-min-93 rounded-20"
+                : "focus:custom-brand branded-placeholder focus-within:custom-brand color-body-text branded-form-border body-head-4 font-semimono padding-16 rounded-40 h-min-48"
               : ""
           }
         />
@@ -351,8 +355,8 @@ export const ComponentForField = ({
           className={
             isBranded
               ? field.name === "notes" || field.name === "rescheduleReason"
-                ? "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark branded-form-border body-head-4 font-normal-medium font-circular h-min-115 rounded-lg px-4 py-2"
-                : "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark rounded-40 branded-form-border body-head-4 font-normal-medium font-circular h-min-48 px-4 py-2"
+                ? "focus:custom-brand branded-placeholder focus-within:custom-brand color-body-text branded-form-border body-head-4 font-semimono padding-16 h-min-93 rounded-20"
+                : "focus:custom-brand branded-placeholder focus-within:custom-brand color-body-text branded-form-border body-head-4 font-semimono padding-16 rounded-40 h-min-48"
               : ""
           }
           isBranded={isBranded}
@@ -407,9 +411,9 @@ export const ComponentForField = ({
           className={
             isBranded
               ? field.name === "notes" || field.name === "rescheduleReason"
-                ? "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark branded-form-border body-head-4 font-normal-medium font-circular h-min-115 rounded-lg px-4 py-2"
+                ? "focus:custom-brand branded-placeholder focus-within:custom-brand color-body-text branded-form-border body-head-4 font-semimono padding-16 h-min-93 rounded-20"
                 : fieldType === "checkbox"
-                ? "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark rounded-40 branded-form-border body-head-4 font-normal-medium font-circular h-min-48 px-4 py-2"
+                ? "focus:custom-brand branded-placeholder focus-within:custom-brand color-body-text branded-form-border body-head-4 font-semimono padding-16 rounded-40 h-min-48"
                 : ""
               : ""
           }
@@ -449,8 +453,8 @@ export const ComponentForField = ({
           className={
             isBranded
               ? field.name === "notes" || field.name === "rescheduleReason"
-                ? "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark branded-form-border body-head-4 font-normal-medium font-circular h-min-115 rounded-lg px-4 py-2"
-                : "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark rounded-40 branded-form-border body-head-4 font-normal-medium font-circular h-min-48 px-4 py-2"
+                ? "focus:custom-brand branded-placeholder focus-within:custom-brand color-body-text branded-form-border body-head-4 font-semimono padding-16 h-min-93 rounded-20"
+                : "focus:custom-brand branded-placeholder focus-within:custom-brand color-body-text branded-form-border body-head-4 font-semimono padding-16 rounded-40 h-min-48"
               : ""
           }
         />

@@ -16,6 +16,7 @@ import { classNames } from "@calcom/lib";
 import { getPaymentAppData } from "@calcom/lib/getPaymentAppData";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { localStorage } from "@calcom/lib/webstorage";
+import type { BookerLayouts } from "@calcom/prisma/zod-utils";
 import type { IGetAvailableSlots } from "@calcom/trpc/server/routers/viewer/slots/util";
 import { Button, Icon, SkeletonText } from "@calcom/ui";
 
@@ -40,6 +41,7 @@ export type AvailableTimesProps = {
   className?: string;
   date?: Dayjs;
   isBranded?: boolean;
+  layout?: BookerLayouts | "mobile_branded";
 } & Omit<SlotItemProps, "slot">;
 
 type SlotItemProps = {
@@ -146,7 +148,7 @@ const SlotItem = ({
 
   return (
     <AnimatePresence>
-      <div className="flex gap-2">
+      <div className={classNames(`flex gap-2`, layout === "mobile_branded" ? `times-mobile-btn` : ``)}>
         <Button
           key={slot.time}
           disabled={
@@ -168,10 +170,11 @@ const SlotItem = ({
             selectedSlots?.includes(slot.time) && "bg-selected-primary light-text border-brand-default",
             selectedTimeslot === slot.time && "bg-selected-primary light-text border-brand-default",
             showConfirm && "bg-selected-primary light-text border-brand-default",
+            isBranded && layout === "mobile_branded" ? "inner-times-mobile-btn" : "",
             `${customClassNames}`
           )}
           color={isBranded ? "branded" : "secondary"}>
-          <div className={classNames("flex items-center gap-2", isBranded ? "font-normal-medium" : "")}>
+          <div className={classNames("flex items-center gap-2", isBranded ? "branded-time-text" : "")}>
             {!hasTimeSlots && overlayCalendarToggled && (
               <span
                 className={classNames(
@@ -273,6 +276,7 @@ export const AvailableTimes = ({
   className,
   date,
   isBranded,
+  layout,
   ...props
 }: AvailableTimesProps) => {
   const { t } = useLocale();
@@ -289,12 +293,20 @@ export const AvailableTimes = ({
   return (
     <div className={classNames("text-default flex flex-col", className)}>
       {isBranded && date && (
-        <h4 className="body-head-4 font-normal-medium font-circular color-primary pb-4">
+        <h4 className="body-head-4 font-saans color-body-text pb-4 text-center">
           <span className="color-text-dark">{date.format("dddd")}</span>
           {date.format(", MMMM Do, YYYY")}
         </h4>
       )}
-      <div className={classNames("h-full", isBranded ? "flex w-full flex-row flex-wrap gap-4" : "pb-4")}>
+      <div
+        className={classNames(
+          "h-full",
+          isBranded
+            ? layout !== "mobile_branded"
+              ? "flex w-full flex-row flex-wrap justify-center gap-4"
+              : "gap-8-small flex w-full flex-row flex-wrap justify-center"
+            : "pb-4"
+        )}>
         {!slots.length && (
           <div
             data-testId="no-slots-available"

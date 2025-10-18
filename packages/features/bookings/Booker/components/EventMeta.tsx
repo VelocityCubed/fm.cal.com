@@ -140,16 +140,19 @@ export const EventMeta = ({
     EventTypeAutoTranslatedField.DESCRIPTION,
     userLocale
   );
+
   const translatedTitle = getTranslatedField(
     event?.fieldTranslations ?? [],
     EventTypeAutoTranslatedField.TITLE,
     userLocale
   );
 
+  const isClinicBooking = logoUrl?.includes("clinics/");
+
   return (
     <div
       className={`${classNames?.eventMetaContainer || ""} ${
-        isBranded ? (isMobile ? "px-l-6 px-r-6 py-t-6 py-b-6" : "px-r-6 px-l-10 py-b-6 py-t-10") : "p-6"
+        isBranded ? (isMobile ? "pb-8 pl-4 pr-4 pt-8" : "px-r-6 px-l-12 py-b-12 py-t-6 h-full") : "p-6"
       } relative z-10 `}
       data-testid="event-meta">
       {isPending && (
@@ -162,43 +165,71 @@ export const EventMeta = ({
           {...fadeInUp}
           layout
           transition={{ ...fadeInUp.transition, delay: 0.3 }}
-          className={isMobile ? "" : ""}>
-          <div className="flex flex-col gap-4">
-            <div
-              className={`flex flex-row items-center justify-start gap-6 ${
-                event.title && event.title.length <= 14 ? "minus-margin" : ""
-              }`}>
-              <img
-                src={getImageUrl(logoUrl)}
-                className="max-h-5-5 h-5-5 w-5-5 max-w-5-5 bg-branded-subtle rounded-full"
-                alt="Clinic Logo"
-              />
-              <EventTitle
+          className={isMobile ? "" : "h-full"}>
+          <div className="flex h-full flex-col items-stretch justify-between gap-4">
+            <div className="flex flex-col items-stretch justify-start">
+              {isClinicBooking && (
+                <img
+                  src={getImageUrl(logoUrl)}
+                  className={`${
+                    isMobile
+                      ? "max-h-branded-2 h-branded-2 w-full max-w-full"
+                      : "max-h-branded-1 h-branded-1 w-branded-1 max-w-branded-1"
+                  } rounded-24`}
+                  alt="Clinic Logo"
+                />
+              )}
+
+              {event.description && isClinicBooking && (
+                <EventMetaBlock contentClassName="body-normal font-saans color-body-text subtle-bg desc-padding rounded-branded">
+                  <div
+                    // eslint-disable-next-line react/no-danger
+                    dangerouslySetInnerHTML={{
+                      __html: markdownToSafeHTMLClient(event.description),
+                    }}
+                  />
+                </EventMetaBlock>
+              )}
+
+              {!isClinicBooking && (
+                <div>
+                  <div className="team-profiles">
+                    <EventMembers
+                      schedulingType={event.schedulingType}
+                      users={event.subsetOfUsers}
+                      profile={event.profile}
+                      entity={event.entity}
+                      isBranded={isBranded}
+                    />
+                  </div>
+                  {event.description && (
+                    <EventMetaBlock contentClassName="internal-team-desc">
+                      <div
+                        // eslint-disable-next-line react/no-danger
+                        dangerouslySetInnerHTML={{
+                          __html: markdownToSafeHTMLClient(event.description),
+                        }}
+                      />
+                    </EventMetaBlock>
+                  )}
+                </div>
+              )}
+              {/* <EventTitle
                 className={`${classNames?.eventMetaTitle} body-head-2 font-circular color-primary font-medium`}>
                 {event.title}
-              </EventTitle>
+              </EventTitle> */}
             </div>
 
-            {event.description && (
-              <EventMetaBlock contentClassName="body-normal font-normal-medium font-circular color-body-text">
-                <div
-                  // eslint-disable-next-line react/no-danger
-                  dangerouslySetInnerHTML={{
-                    __html: markdownToSafeHTMLClient(event.description),
-                  }}
+            {!isMobile && isClinicBooking && (
+              <div className="branded-seen-free color-body-text font-semimono flex items-center justify-start">
+                <img
+                  src="https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/icons/functional/icon-heart-handshake.svg"
+                  className="icon-heart-handshake"
+                  alt="icon-heart-handshake"
                 />
-              </EventMetaBlock>
+                Booking with Seen is always free - no fees, no commission, just expert support.
+              </div>
             )}
-
-            <div className="flex flex-row items-center justify-start gap-4">
-              <EventMembers
-                schedulingType={event.schedulingType}
-                users={event.subsetOfUsers}
-                profile={event.profile}
-                entity={event.entity}
-                isBranded={isBranded}
-              />
-            </div>
           </div>
         </m.div>
       )}

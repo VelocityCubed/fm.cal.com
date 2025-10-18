@@ -32,7 +32,7 @@ const sizesPropsBySize = {
   mdLg: "w-10 h-10 min-w-10 min-h-10", //40px
   lg: "w-16 h-16 min-w-16 min-h-16", // 64px
   xl: "w-24 h-24 min-w-24 min-h-24", // 96px
-  custom: "max-h-5-5 h-5-5 w-5-5 max-w-5-5", // 52px
+  custom: "h-profile w-profile", // 54px
 } as const;
 
 export function Avatar(props: AvatarProps) {

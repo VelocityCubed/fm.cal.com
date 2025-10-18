@@ -164,7 +164,7 @@ export const AvailableTimeSlots = ({
               "scroll-bar flex-grow overflow-auto md:h-[400px]",
             limitHeight &&
               layout === BookerLayouts.BRANDED_VIEW &&
-              "scroll-bar h-[388px] flex-grow overflow-auto",
+              "scroll-bar h-[397px] flex-grow overflow-auto",
             !limitHeight && layout !== "mobile_branded" && "flex h-full w-full flex-row gap-4",
             !limitHeight && layout === "mobile_branded" && "flex h-full w-full flex-col gap-6",
             `${customClassNames?.availableTimeSlotsContainer}`
@@ -208,10 +208,21 @@ export const AvailableTimeSlots = ({
                   skipConfirmStep={skipConfirmStep}
                   date={dayjs(slots.date)}
                   isBranded={true}
+                  layout={layout}
                   {...props}
                 />
               </div>
             ))}
+          {layout === "mobile_branded" && (
+            <div className="branded-seen-free color-body-text font-semimono flex items-center justify-start">
+              <img
+                src="https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/icons/functional/icon-heart-handshake.svg"
+                className="icon-heart-handshake"
+                alt="icon-heart-handshake"
+              />
+              Booking with Seen is always free - no fees, no commission, just expert support.
+            </div>
+          )}
         </div>
       )}
     </>

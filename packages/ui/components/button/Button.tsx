@@ -51,13 +51,13 @@ export const buttonClasses = cva(
       },
       color: {
         branded: [
-          "color-primary",
-          "font-circular",
+          "color-body-text",
+          "font-semimono",
           "focus-visible:outline-none",
           "focus-visible:ring-0",
           "focus-visible:shadow-button-solid-brand-focused",
           // Border
-          "branded-border rounded-40",
+          "branded-border",
           "hover:branded-border",
           // Disabled
           "disabled:color-light",
@@ -68,6 +68,7 @@ export const buttonClasses = cva(
           "transition-shadow",
           "transition-transform",
           "duration-100",
+          "branded-time-btn",
         ],
         branded_minimal: [
           "bg-transparent",
@@ -113,12 +114,11 @@ export const buttonClasses = cva(
           "ease-trans",
           "bg-secondary",
           "light-text",
-          "font-circular",
+          "font-semimono",
           "body-btn",
           "focus-visible:outline-none",
           "focus-visible:ring-0",
           "focus-visible:shadow-button-solid-brand-focused",
-          "border-0 rounded-right-40",
           "disabled:color-light",
           "shadow-button-solid-brand-default",
           "enabled:active:shadow-button-solid-brand-active",

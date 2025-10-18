@@ -1,4 +1,4 @@
-import { AnimatePresence, LazyMotion, m } from "framer-motion";
+import { AnimatePresence, LazyMotion } from "framer-motion";
 import dynamic from "next/dynamic";
 import { useEffect, useMemo, useRef } from "react";
 import { Toaster } from "react-hot-toast";
@@ -315,7 +315,7 @@ const BookerComponent = ({
         className={classNames(
           // In a popup embed, if someone clicks outside the main(having main class or main tag), it closes the embed
           "main",
-          "text-default flex min-h-full w-full flex-col items-center",
+          "text-default flex min-h-[calc(100dvh)] w-full flex-col items-center justify-center",
           layout === BookerLayouts.MONTH_VIEW || layout === BookerLayouts.BRANDED_VIEW
             ? "overflow-visible"
             : "overflow-clip",
@@ -358,6 +358,7 @@ const BookerComponent = ({
                   <></>
                 ) : (
                   <Header
+                    event={event.data}
                     isMyLink={Boolean(username === sessionUsername)}
                     eventSlug={eventSlug}
                     enabledLayouts={bookerLayouts.enabledLayouts}
@@ -426,7 +427,9 @@ const BookerComponent = ({
               </StickyOnDesktop>
             )}
             {(layout === BookerLayouts.BRANDED_VIEW || layout === "mobile_branded") && !multiClinics && (
-              <StickyOnDesktop key="meta" className={classNames("relative z-10 flex [grid-area:meta]")}>
+              <StickyOnDesktop
+                key="meta"
+                className={classNames("relative z-10 flex h-full [grid-area:meta]")}>
                 <BookerSection area="meta" className="max-w-screen flex w-full flex-col">
                   <EventMeta
                     classNames={{
@@ -443,9 +446,28 @@ const BookerComponent = ({
                     logoUrl={logoUrl}
                     locale={userLocale}
                   />
-                  {!isMobile && <div className="branded-divider" />}
                 </BookerSection>
               </StickyOnDesktop>
+            )}
+
+            {(layout === BookerLayouts.BRANDED_VIEW || layout === "mobile_branded") && !multiClinics && (
+              <BookerSection
+                area="footer"
+                className={classNames(
+                  "[grid-area:footer]",
+                  layout === "mobile_branded" ? "seen-footer-mobile" : "seen-footer"
+                )}
+                visible={bookerState !== "booking"}>
+                <span
+                  key="logo"
+                  className={classNames(
+                    layout === "mobile_branded" ? "padding-footer-mobile" : "padding-32",
+                    hasDarkBackground ? "dark" : "",
+                    "block"
+                  )}>
+                  <PoweredBy logoOnly hasValidLicense={hasValidLicense} />
+                </span>
+              </BookerSection>
             )}
 
             <BookerSection
@@ -456,9 +478,9 @@ const BookerComponent = ({
                 !multiClinics && "md:w-[var(--booker-main-width)]",
                 layout !== BookerLayouts.BRANDED_VIEW
                   ? layout === "mobile_branded"
-                    ? "px-l-6 px-r-6"
+                    ? "pl-4 pr-4"
                     : "ml-[-1px] p-6 md:border-l "
-                  : "px-l-6 px-r-10-half"
+                  : "px-l-6 px-r-6"
               )}
               {...fadeInLeft}
               visible={bookerState === "booking" && !shouldShowFormInDialog}>
@@ -514,7 +536,7 @@ const BookerComponent = ({
                 layout !== BookerLayouts.BRANDED_VIEW && layout !== "mobile_branded"
                   ? "border-subtle rtl:border-default px-5 py-3 pb-0 rtl:border-r ltr:md:border-l"
                   : layout === "mobile_branded"
-                  ? "px-l-6 px-r-6 py-b-10"
+                  ? "pb-8 pl-4 pr-4"
                   : "px-l-6 px-r-10 py-b-10",
                 (layout === BookerLayouts.BRANDED_VIEW || layout === "mobile_branded") &&
                   "h-full overflow-hidden",
@@ -598,7 +620,7 @@ const BookerComponent = ({
           </div>
         )}
 
-        {!hideBranding && (!isPlatform || isPlatformBookerEmbed) && !shouldRenderCaptcha && (
+        {/* {!hideBranding && (!isPlatform || isPlatformBookerEmbed) && !shouldRenderCaptcha && (
           <m.span
             key="logo"
             className={classNames(
@@ -610,7 +632,7 @@ const BookerComponent = ({
             )}>
             <PoweredBy logoOnly hasValidLicense={hasValidLicense} />
           </m.span>
-        )}
+        )} */}
       </div>
 
       <BookFormAsModal

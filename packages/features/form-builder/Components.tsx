@@ -156,7 +156,7 @@ export const Components: Record<FieldType, Component> = {
               onChange={(e) => {
                 props.setValue(e.target.value);
               }}
-              className="focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark rounded-40 branded-form-border body-head-4 font-normal-medium font-circular h-min-48 px-4 py-2"
+              className="focus:custom-brand branded-placeholder focus-within:custom-brand color-body-text rounded-40 branded-form-border body-head-4 font-semimono h-min-48 padding-16"
             />
           );
         }
@@ -191,7 +191,7 @@ export const Components: Record<FieldType, Component> = {
               // Because the container is flex(and thus margin is being computed towards container height), I need to explicitly ensure that margin-bottom for the input becomes 0, which is mb-2 otherwise
               className={
                 props.isBranded
-                  ? "focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark rounded-40 branded-form-border body-head-4 font-normal-medium font-circular h-min-48 px-4 py-2"
+                  ? "focus:custom-brand branded-placeholder focus-within:custom-brand color-body-text rounded-40 branded-form-border body-head-4 font-semimono h-min-48 padding-16"
                   : "!mb-0"
               }
               showAsteriskIndicator={true}
@@ -288,7 +288,7 @@ export const Components: Record<FieldType, Component> = {
                       value={value[index]}
                       className={
                         props.isBranded
-                          ? `${inputClassName} focus:custom-brand branded-placeholder focus-within:custom-brand color-text-dark rounded-40 branded-form-border body-head-4 font-normal-medium font-circular h-min-48  px-4 py-2`
+                          ? `${inputClassName} focus:custom-brand branded-placeholder focus-within:custom-brand color-body-text rounded-40 branded-form-border body-head-4 font-semimono h-min-48 padding-16`
                           : inputClassName
                       }
                       onChange={(e) => {

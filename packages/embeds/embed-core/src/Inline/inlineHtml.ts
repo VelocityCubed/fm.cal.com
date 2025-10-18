@@ -10,14 +10,7 @@
 // export default html;
 const html = `<div id="wrapper" style="top:50%; left:50%;transform:translate(-50%,-50%)" class="absolute z-highest">
 <div class="loader custom-loader">
-	<span class="loader-inner circle"></span>
-  <span class="loader-inner circle"></span>
-  <span class="loader-inner circle"></span>
-  <span class="loader-inner circle"></span>
-  <span class="loader-inner circle"></span>
-  <span class="loader-inner circle"></span>
-  <span class="loader-inner circle"></span>
-  <span class="loader-inner circle"></span>
+  <img class="loader-inner" src="https://fertilitymapperprod.blob.core.windows.net/assets/icons/icon-spinner.svg" alt="Loader Spinner" />
 </div>
 <div id="error" style="transform:translate(-50%,-50%)" class="hidden">
 Something went wrong.

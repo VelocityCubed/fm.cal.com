@@ -6,6 +6,440 @@
 */
 
 @font-face {
+  font-family: "Saans-TRIAL";
+  font-weight: 100 900;
+  font-style: normal;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/Saans-TRIAL-VF.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/Saans-TRIAL-VF.woff")
+      format("woff");
+  font-display: swap;
+}
+
+/* Saans Regular - Individual Weights */
+@font-face {
+  font-family: "Saans-TRIAL";
+  font-weight: 300;
+  font-style: normal;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans_TRIAL/Saans-TRIAL-Light.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans_TRIAL/Saans-TRIAL-Light.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans-TRIAL";
+  font-weight: 300;
+  font-style: italic;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans_TRIAL/Saans-TRIAL-LightItalic.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans_TRIAL/Saans-TRIAL-LightItalic.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans-TRIAL";
+  font-weight: 400;
+  font-style: normal;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans_TRIAL/Saans-TRIAL-Regular.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans_TRIAL/Saans-TRIAL-Regular.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans-TRIAL";
+  font-weight: 400;
+  font-style: italic;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans_TRIAL/Saans-TRIAL-RegularItalic.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans_TRIAL/Saans-TRIAL-RegularItalic.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans-TRIAL";
+  font-weight: 500;
+  font-style: normal;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans_TRIAL/Saans-TRIAL-Medium.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans_TRIAL/Saans-TRIAL-Medium.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans-TRIAL";
+  font-weight: 500;
+  font-style: italic;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans_TRIAL/Saans-TRIAL-MediumItalic.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans_TRIAL/Saans-TRIAL-MediumItalic.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans-TRIAL";
+  font-weight: 600;
+  font-style: normal;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans_TRIAL/Saans-TRIAL-SemiBold.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans_TRIAL/Saans-TRIAL-SemiBold.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans-TRIAL";
+  font-weight: 600;
+  font-style: italic;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans_TRIAL/Saans-TRIAL-SemiBoldItalic.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans_TRIAL/Saans-TRIAL-SemiBoldItalic.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans-TRIAL";
+  font-weight: 700;
+  font-style: normal;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans_TRIAL/Saans-TRIAL-Bold.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans_TRIAL/Saans-TRIAL-Bold.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans-TRIAL";
+  font-weight: 700;
+  font-style: italic;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans_TRIAL/Saans-TRIAL-BoldItalic.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans_TRIAL/Saans-TRIAL-BoldItalic.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans-TRIAL";
+  font-weight: 900;
+  font-style: normal;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans_TRIAL/Saans-TRIAL-Heavy.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans_TRIAL/Saans-TRIAL-Heavy.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans-TRIAL";
+  font-weight: 900;
+  font-style: italic;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans_TRIAL/Saans-TRIAL-HeavyItalic.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans_TRIAL/Saans-TRIAL-HeavyItalic.woff")
+      format("woff");
+  font-display: swap;
+}
+
+/* Saans Mono Font Family */
+@font-face {
+  font-family: "Saans Mono-TRIAL";
+  font-weight: 100 900;
+  font-style: normal;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/SaansMono-TRIAL-VF.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/SaansMono-TRIAL-VF.woff")
+      format("woff");
+  font-display: swap;
+}
+
+/* Saans Mono - Individual Weights */
+@font-face {
+  font-family: "Saans Mono-TRIAL";
+  font-weight: 300;
+  font-style: normal;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-mono_TRIAL/SaansMono-TRIAL-Light.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-mono_TRIAL/SaansMono-TRIAL-Light.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans Mono-TRIAL";
+  font-weight: 300;
+  font-style: italic;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-mono_TRIAL/SaansMono-TRIAL-LightItalic.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-mono_TRIAL/SaansMono-TRIAL-LightItalic.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans Mono-TRIAL";
+  font-weight: 400;
+  font-style: normal;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-mono_TRIAL/SaansMono-TRIAL-Regular.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-mono_TRIAL/SaansMono-TRIAL-Regular.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans Mono-TRIAL";
+  font-weight: 400;
+  font-style: italic;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-mono_TRIAL/SaansMono-TRIAL-RegularItalic.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-mono_TRIAL/SaansMono-TRIAL-RegularItalic.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans Mono-TRIAL";
+  font-weight: 500;
+  font-style: normal;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-mono_TRIAL/SaansMono-TRIAL-Medium.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-mono_TRIAL/SaansMono-TRIAL-Medium.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans Mono-TRIAL";
+  font-weight: 500;
+  font-style: italic;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-mono_TRIAL/SaansMono-TRIAL-MediumItalic.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-mono_TRIAL/SaansMono-TRIAL-MediumItalic.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans Mono-TRIAL";
+  font-weight: 600;
+  font-style: normal;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-mono_TRIAL/SaansMono-TRIAL-SemiBold.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-mono_TRIAL/SaansMono-TRIAL-SemiBold.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans Mono-TRIAL";
+  font-weight: 600;
+  font-style: italic;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-mono_TRIAL/SaansMono-TRIAL-SemiBoldItalic.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-mono_TRIAL/SaansMono-TRIAL-SemiBoldItalic.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans Mono-TRIAL";
+  font-weight: 700;
+  font-style: normal;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-mono_TRIAL/SaansMono-TRIAL-Bold.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-mono_TRIAL/SaansMono-TRIAL-Bold.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans Mono-TRIAL";
+  font-weight: 700;
+  font-style: italic;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-mono_TRIAL/SaansMono-TRIAL-BoldItalic.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-mono_TRIAL/SaansMono-TRIAL-BoldItalic.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans Mono-TRIAL";
+  font-weight: 900;
+  font-style: normal;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-mono_TRIAL/SaansMono-TRIAL-Heavy.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-mono_TRIAL/SaansMono-TRIAL-Heavy.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans Mono-TRIAL";
+  font-weight: 900;
+  font-style: italic;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-mono_TRIAL/SaansMono-TRIAL-HeavyItalic.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-mono_TRIAL/SaansMono-TRIAL-HeavyItalic.woff")
+      format("woff");
+  font-display: swap;
+}
+
+/* Saans SemiMono Font Family */
+@font-face {
+  font-family: "Saans SemiMono-TRIAL";
+  font-weight: 100 900;
+  font-style: normal;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/SaansSemiMono-TRIAL-VF.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/SaansSemiMono-TRIAL-VF.woff")
+      format("woff");
+  font-display: swap;
+}
+
+/* Saans SemiMono - Individual Weights */
+@font-face {
+  font-family: "Saans SemiMono-TRIAL";
+  font-weight: 300;
+  font-style: normal;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-semimono_TRIAL/SaansSemiMono-TRIAL-Light.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-semimono_TRIAL/SaansSemiMono-TRIAL-Light.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans SemiMono-TRIAL";
+  font-weight: 300;
+  font-style: italic;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-semimono_TRIAL/SaansSemiMono-TRIAL-LightItalic.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-semimono_TRIAL/SaansSemiMono-TRIAL-LightItalic.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans SemiMono-TRIAL";
+  font-weight: 400;
+  font-style: normal;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-semimono_TRIAL/SaansSemiMono-TRIAL-Regular.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-semimono_TRIAL/SaansSemiMono-TRIAL-Regular.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans SemiMono-TRIAL";
+  font-weight: 400;
+  font-style: italic;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-semimono_TRIAL/SaansSemiMono-TRIAL-RegularItalic.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-semimono_TRIAL/SaansSemiMono-TRIAL-RegularItalic.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans SemiMono-TRIAL";
+  font-weight: 500;
+  font-style: normal;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-semimono_TRIAL/SaansSemiMono-TRIAL-Medium.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-semimono_TRIAL/SaansSemiMono-TRIAL-Medium.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans SemiMono-TRIAL";
+  font-weight: 500;
+  font-style: italic;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-semimono_TRIAL/SaansSemiMono-TRIAL-MediumItalic.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-semimono_TRIAL/SaansSemiMono-TRIAL-MediumItalic.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans SemiMono-TRIAL";
+  font-weight: 600;
+  font-style: normal;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-semimono_TRIAL/SaansSemiMono-TRIAL-SemiBold.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-semimono_TRIAL/SaansSemiMono-TRIAL-SemiBold.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans SemiMono-TRIAL";
+  font-weight: 600;
+  font-style: italic;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-semimono_TRIAL/SaansSemiMono-TRIAL-SemiBoldItalic.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-semimono_TRIAL/SaansSemiMono-TRIAL-SemiBoldItalic.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans SemiMono-TRIAL";
+  font-weight: 700;
+  font-style: normal;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-semimono_TRIAL/SaansSemiMono-TRIAL-Bold.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-semimono_TRIAL/SaansSemiMono-TRIAL-Bold.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans SemiMono-TRIAL";
+  font-weight: 700;
+  font-style: italic;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-semimono_TRIAL/SaansSemiMono-TRIAL-BoldItalic.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-semimono_TRIAL/SaansSemiMono-TRIAL-BoldItalic.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans SemiMono-TRIAL";
+  font-weight: 900;
+  font-style: normal;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-semimono_TRIAL/SaansSemiMono-TRIAL-Heavy.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-semimono_TRIAL/SaansSemiMono-TRIAL-Heavy.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Saans SemiMono-TRIAL";
+  font-weight: 900;
+  font-style: italic;
+  src: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-semimono_TRIAL/SaansSemiMono-TRIAL-HeavyItalic.woff2")
+      format("woff2"),
+    url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/fonts/DP_saans-semimono_TRIAL/SaansSemiMono-TRIAL-HeavyItalic.woff")
+      format("woff");
+  font-display: swap;
+}
+
+@font-face {
   font-family: "p22-mackinac";
   font-weight: 400;
   src: url("https://icy-desert-0c5aba603.3.azurestaticapps.net/assets/fonts/P22/P22Mackinac-Book_13.woff");
@@ -109,8 +543,11 @@
 }
 
 :root {
-  --font-body: "circular-std";
+  /* --font-body: "circular-std"; */
   --font-head: "p22-mackinac";
+
+  --font-body: "Saans-TRIAL";
+  --font-cta: "Saans SemiMono-TRIAL";
   /* background */
 
   --cal-bg-emphasis: hsla(220, 13%, 91%, 1);
@@ -606,14 +1043,50 @@ select:focus {
   font-family: var(--font-head) !important;
 }
 
+.font-semimono {
+  font-family: var(--font-cta) !important;
+}
+
+.font-saans {
+  font-family: var(--font-body) !important;
+}
+
+.padding-16 {
+  padding: 16px;
+}
+
+.branded-seen-free {
+  padding: 16px;
+  background: #efebeb80;
+  border-radius: 120px;
+  font-size: 11px;
+  font-weight: 570;
+  line-height: 110%;
+  text-transform: uppercase;
+  gap: 4px;
+}
+
+.icon-heart-handshake {
+  width: 24px;
+  height: 24px;
+  min-width: 24px;
+}
+
+.\[grid-area\:footer\] {
+  grid-area: footer;
+}
+
 .body-head-1 {
-  font-size: 36px;
-  line-height: 43.2px;
+  font-size: 48px;
+  line-height: 110%;
+  font-weight: 570;
+  font-family: var(--font-body) !important;
 }
 
 .body-head-1-mobile {
-  font-size: 28px;
-  line-height: 33.6px;
+  font-size: 36px;
+  font-weight: 570;
+  line-height: 110%;
 }
 
 .body-head-2 {
@@ -623,25 +1096,52 @@ select:focus {
 
 .body-head-3 {
   font-size: 18px;
-  line-height: 25.2px;
+  font-weight: 670;
+  line-height: 120%;
+}
+
+.date-range-seen {
+  text-transform: lowercase;
+}
+
+.padding-32 {
+  padding: 32px;
+}
+
+.padding-footer-mobile {
+  padding: 24px 16px 0;
+}
+
+.h-\[43px\] {
+  height: 43px;
 }
 
 .body-head-4 {
   font-size: 16px !important;
-  line-height: 20.8px !important;
+  font-weight: 570 !important;
+  line-height: 120% !important;
 }
 
 .body-normal {
-  font-size: 16px;
-  line-height: 24px;
+  font-size: 24px;
+  line-height: normal;
+  font-weight: 570;
   p,
   code,
   kbd,
   pre,
   samp {
-    font-size: 16px !important;
-    line-height: 24px !important;
+    font-size: 24px !important;
+    line-height: normal !important;
+    font-weight: 570;
   }
+}
+.body-done-normal {
+  font-family: var(--font-body) !important;
+  color: #1f282d !important;
+    font-size: 24px;
+  line-height: 120%;
+  font-weight: 570;
 }
 
 .body-head-sm {
@@ -655,8 +1155,8 @@ select:focus {
 }
 
 .body-btn {
-  line-height: 24px;
-  font-size: 20px;
+  line-height: 14px;
+  font-size: 120%;
 }
 
 .font-normal-medium {
@@ -664,7 +1164,7 @@ select:focus {
 }
 
 .color-primary {
-  color: #0b4736;
+  color: #1f282d;
 }
 
 .color-text-dark {
@@ -672,15 +1172,47 @@ select:focus {
 }
 
 .color-body-text {
-  color: #737571;
+  color: #1f282d;
 }
 
 .rounded-20 {
   border-radius: 20px;
 }
 
+.rounded-24 {
+  border-radius: 24px;
+}
+
 .subtle-bg {
-  background-color: #fafafa;
+  background-color: #efebeb;
+}
+
+.seen-footer {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  border-top: 1px solid #1f282d;
+}
+
+.seen-footer-mobile {
+  width: 100%;
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+  border-top: 1px solid #1f282d;
+}
+
+.custom-arrow {
+  width: 32px;
+  height: 32px;
+  min-width: 32px;
+}
+
+.custom-arrow-back {
+  width: 18px;
+  height: 18px;
+  min-width: 18px;
 }
 
 .px-l-6 {
@@ -693,6 +1225,14 @@ select:focus {
 
 .px-l-10 {
   padding-left: 2.5rem;
+}
+
+.px-r-12 {
+  padding-right: 3rem;
+}
+
+.px-l-12 {
+  padding-left: 3rem;
 }
 
 .px-r-10 {
@@ -719,8 +1259,81 @@ select:focus {
   padding-bottom: 2.5rem;
 }
 
+.gap-8-small {
+  gap: 0.5rem;
+}
+
+.times-mobile-btn {
+  width: calc(50% - 4px);
+}
+
+.inner-times-mobile-btn {
+  width: 100% !important;
+}
+
+.internal-team-desc {
+  padding: 0 24px 24px;
+  border-radius: 0 0 20px 20px;
+  background-color: #efebeb;
+  color: #1f282d;
+  font-family: var(--font-body) !important;
+  p {
+    font-size: 24px !important;
+    line-height: normal !important;
+    font-weight: 570;
+    padding-top: 16px;
+    border-top: 1px solid #1f282d33;
+  }
+}
+
+.team-profiles {
+  padding: 24px;
+  border-radius: 20px 20px 0 0;
+  background-color: #efebeb;
+  display: flex;
+  gap: 8px;
+  justify-content: flex-start;
+  align-items: center;
+}
+
+.profile-gap {
+  gap: 0.25rem;
+}
+
+.profile-name {
+  font-size: 20px;
+  font-weight: 570;
+  line-height: normal;
+  color: #1f282d;
+  font-family: var(--font-body) !important;
+}
+
+.profile-bio {
+  font-size: 14px;
+  font-weight: 570;
+  line-height: 120%;
+  color: #1f282d;
+  font-family: var(--font-body) !important;
+}
+
+.custom-btn {
+  font-size: 14px;
+  font-weight: 570 !important;
+  line-height: 120%;
+  color: #1f282d;
+  font-family: var(--font-cta) !important;
+}
+
+.py-b-12 {
+  padding-bottom: 3rem;
+}
+
 .py-b-81 {
   padding-bottom: 81px;
+}
+
+.py-b-113 {
+  padding-bottom: 113px;
 }
 
 .my-b-10 {
@@ -728,17 +1341,18 @@ select:focus {
 }
 
 .disabled\:color-light:disabled {
-  color: #e6e2e2 !important;
+  color: #ffffff !important;
+  opacity: 0.3;
 }
 
-.h-\[388px\] {
+.h-\[397px\] {
   height: 100%;
-  max-height: 388px;
+  max-height: 397px;
 }
 
-.h-\[480px\] {
+.h-\[572px\] {
   height: 100%;
-  max-height: 480px;
+  max-height: 572px;
 }
 
 .min-h-380 {
@@ -753,7 +1367,8 @@ select:focus {
   max-width: 434px !important;
 }
 .bg-branded {
-  background-color: #fafafa;
+  background-color: #ffffff;
+  overflow: "hidden";
 }
 
 .bg-branded-subtle {
@@ -764,8 +1379,16 @@ select:focus {
   --booker-main-width: 511px;
 }
 
+.\[--booker-main-width\:629px\] {
+  --booker-main-width: 629px;
+}
+
 .\[--booker-meta-width\:308px\] {
   --booker-meta-width: 308px;
+}
+
+.\[--booker-meta-width\:434px\] {
+  --booker-meta-width: 434px;
 }
 
 .max-w-branded {
@@ -795,6 +1418,10 @@ select:focus {
 }
 .h-min-115 {
   min-height: 115px;
+}
+
+.h-min-93 {
+  min-height: 93px;
 }
 
 .w-max-266 {
@@ -835,25 +1462,55 @@ select:focus {
 }
 
 .branded-border {
-  border: 1px solid #0b4736;
+  border: 1px solid #1f282d;
+  border-radius: 1333px;
 }
 
 .branded-border-secondary {
-  border: 1px solid #f5a25d;
+  border-radius: 1333px;
+  border: 1px solid #1f282d;
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
+  max-width: max-content;
+  padding: 16px;
+  height: 48px;
+  display: flex;
+  flex-direction: row;
+  gap: 4px;
+  align-items: center;
+  justify-content: center;
 }
 
 .hover\:branded-secondary:hover {
-  border-color: #e95d2b !important;
-  background-color: #e95d2b !important;
-  color: #ffffff !important;
+  background-color: #1f282d1a !important;
 }
 
 .hover\:branded-border:hover {
-  border-color: #292929 !important;
+  background-color: #1f282d1a !important;
+}
+
+.seen-logo {
+}
+
+.branded-time-btn {
+  height: 48px;
+  width: 125px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
 }
 
 .branded-form-border {
-  border: 1px solid #a2a1a1;
+  border: 1px solid #1f282d !important;
+  margin: 0 !important;
+}
+
+.branded-time-text {
+  font-size: 14px;
+  font-weight: 570 !important;
+  line-height: 110%;
 }
 
 .branded-mobile-border {
@@ -869,19 +1526,29 @@ select:focus {
 }
 
 .bg-secondary {
-  background-color: #e95d2b;
+  border-radius: 1333px;
+  background-color: #46ff87;
+  transition: color 0.3s ease-in-out, background-color 0.3s ease-in-out, border-color 0.3s ease-in-out,
+    opacity 0.3s ease-in-out;
+  max-width: max-content;
+  padding: 16px;
+  height: 48px;
 }
 
 .color-text-secondary {
-  color: #e95d2b;
+  color: #1f282d;
 }
 
 .bg-selected-primary {
-  background-color: #0b4736;
+  background-color: #1f282d;
 }
 
 .hover\:bg-branded-secondary:hover {
-  background-color: #b64312;
+  background-color: #2b3338;
+  color: #ffffff !important;
+  .custom-btn {
+    color: #ffffff !important;
+  }
 }
 
 .bg-primary {
@@ -921,6 +1588,39 @@ select:focus {
 
 .max-w-5-5 {
   max-width: 3.25rem;
+}
+
+.h-profile {
+  height: 3.375rem;
+  max-height: 3.375rem;
+}
+
+.w-profile {
+  width: 3.375rem;
+  max-width: 3.375rem;
+}
+
+.h-branded-2 {
+  height: 15.25rem;
+}
+
+.max-h-branded-2 {
+  max-height: 15.25rem;
+}
+
+.h-branded-1 {
+  height: 14.813rem;
+}
+
+.max-h-branded-1 {
+  max-height: 14.813rem;
+}
+.w-branded-1 {
+  width: 22.625rem;
+}
+
+.max-w-branded-1 {
+  max-width: 22.625rem;
 }
 
 .max-w-6 {
@@ -972,7 +1672,7 @@ select:focus {
 }
 
 .orange-bg {
-  background-color: #f5a25d;
+  background-color: #b6a7f9;
 }
 
 .branded-divider {
@@ -986,9 +1686,20 @@ select:focus {
 
 .branded-submit {
   position: absolute;
-  bottom: 0;
-  right: 0;
+  bottom: -0px;
+  right: -9px;
   width: calc(var(--booker-meta-width) + var(--booker-main-width));
+  justify-content: space-between;
+  padding: 32px;
+  background-color: #ffffff;
+  border-radius: 0 0 20px 20px;
+}
+
+.submit-holder {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
 }
 
 .branded-mobile-submit {
@@ -1006,7 +1717,7 @@ select:focus {
   box-shadow: none !important;
   outline: none !important;
   outline-offset: 0;
-  border-color: #a2a1a1;
+  border-color: #1f282d;
 }
 
 .focus-within\:custom-brand:focus-within {
@@ -1016,16 +1727,16 @@ select:focus {
   box-shadow: none !important;
   outline: none !important;
   outline-offset: 0;
-  border-color: #a2a1a1;
+  border-color: #1f282d;
 }
 
 .branded-placeholder::placeholder {
-  color: #a2a1a1;
+  color: #1f282d66;
   opacity: 1;
 }
 
 .branded-placeholder::-ms-input-placeholder {
-  color: #a2a1a1;
+  color: #1f282d66;
 }
 .react-tel-input .form-control {
   color: #282d27 !important ;
@@ -1052,34 +1763,40 @@ select:focus {
 }
 
 .branded-full-name label {
-  color: #282d27 !important;
-  font-size: 16px !important;
-  line-height: 20.8px !important;
-  font-family: var(--font-body) !important;
+  display: none;
 }
 
 .branded-checkbox {
-  border: 1px solid #a2a1a1 !important;
+  border: 1px solid #1f282d !important;
   background-color: #ffffff !important;
+  border-radius: 50% !important;
 }
 
 .checked\:branded-checkbox:checked {
-  border: 1px solid #a2a1a1 !important;
+  border: 1px solid #1f282d !important;
   background-color: #ffffff !important;
   background-image: url("https://fertilitymapperprod.blob.core.windows.net/assets/images/check.svg");
-  background-size: auto;
+  background-size: 10px;
 }
 .hover\:branded-checkbox:hover {
-  border: 1px solid #a2a1a1 !important;
+  border: 1px solid #1f282d !important;
   background-color: var(--cal-bg-subtle) !important;
 }
 .checked\:hover\:branded-checkbox:checked:hover {
-  border: 1px solid #a2a1a1 !important;
+  border: 1px solid #ffffff !important;
   background-color: var(--cal-bg-subtle) !important;
 }
-.branded-checkbox-label a {
-  color: #0b4736;
-  text-decoration: underline;
+.branded-checkbox-label {
+  color: #1f282d !important;
+  font-weight: 380 !important;
+  line-height: 110%;
+  font-size: 14px;
+  font-family: --font-cta;
+  font-family: var(--font-cta) !important;
+}
+
+.react-tel-input {
+  padding: 5px !important;
 }
 
 .mt-2px {
@@ -1089,9 +1806,9 @@ select:focus {
   display: none !important;
 }
 .branded-link {
-  color: #0b4736;
+  color: #1f282d;
   text-decoration: underline;
-  font-weight: 500;
+  font-weight: 570;
 }
 .max-w-175 {
   max-width: 175px;
@@ -1101,6 +1818,10 @@ select:focus {
 }
 .branded-max-w {
   max-width: calc(var(--booker-meta-width) + var(--booker-main-width));
+}
+
+.desc-padding {
+  padding: 24px;
 }
 
 .multi-clinic-p {

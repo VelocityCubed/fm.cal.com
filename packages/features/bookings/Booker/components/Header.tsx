@@ -1,9 +1,11 @@
+import type { BookerEvent } from "bookings/types";
 import { useCallback, useMemo } from "react";
 import { shallow } from "zustand/shallow";
 
 import { useIsPlatform } from "@calcom/atoms/monorepo";
 import dayjs from "@calcom/dayjs";
 import { useIsEmbed } from "@calcom/embed-core/embed-iframe";
+import { EventTitle } from "@calcom/features/bookings";
 import { WEBAPP_URL } from "@calcom/lib/constants";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
 import { BookerLayouts } from "@calcom/prisma/zod-utils";
@@ -14,6 +16,7 @@ import { useBookerStore } from "../store";
 import type { BookerLayout } from "../types";
 
 export function Header({
+  event,
   extraDays,
   isMobile,
   enabledLayouts,
@@ -24,6 +27,28 @@ export function Header({
   bookerState,
   renderOverlay,
 }: {
+  event?: Pick<
+    BookerEvent,
+    | "lockTimeZoneToggleOnBookingPage"
+    | "schedule"
+    | "seatsPerTimeSlot"
+    | "subsetOfUsers"
+    | "length"
+    | "schedulingType"
+    | "profile"
+    | "entity"
+    | "description"
+    | "title"
+    | "metadata"
+    | "locations"
+    | "currency"
+    | "requiresConfirmation"
+    | "recurringEvent"
+    | "price"
+    | "isDynamic"
+    | "fieldTranslations"
+    | "autoTranslateDescriptionEnabled"
+  > | null;
   extraDays: number;
   isMobile: boolean;
   enabledLayouts: BookerLayouts[];
@@ -40,8 +65,10 @@ export function Header({
   const selectedDateString = useBookerStore((state) => state.selectedDate);
   const setSelectedDate = useBookerStore((state) => state.setSelectedDate);
   const addToSelectedDate = useBookerStore((state) => state.addToSelectedDate);
+  const selectedTimeslotString = useBookerStore((state) => state.selectedTimeslot);
   const isMonthView = layout === BookerLayouts.MONTH_VIEW;
   const selectedDate = dayjs(selectedDateString);
+  const selectedTimeslot = dayjs(selectedTimeslotString);
   const today = dayjs();
   const selectedDateMin3DaysDifference = useMemo(() => {
     const diff = today.diff(selectedDate, "days");
@@ -93,29 +120,43 @@ export function Header({
   };
   const formattedMonth = new Intl.DateTimeFormat(i18n.language ?? "en", { month: "short" });
 
+  const selectedDateFormat = () => {
+    return selectedDate.format("dddd MMMM DD");
+  };
+  const selectedTimeFormat = () => {
+    return selectedTimeslot.format("HH:mm");
+  };
   if (isBranded) {
     if (bookerState === "booking") {
       return (
         <div
           className={
             isMobile
-              ? "px-l-6 px-r-10 py-b-6 relative z-10 flex flex-col gap-6"
-              : "px-l-6 px-r-10 py-b-6 py-t-10 relative z-10 flex flex-col gap-6"
+              ? "py-b-6 relative z-10 flex flex-col pl-4 pr-4"
+              : "px-r-12 px-l-6 py-b-6 py-t-6 relative z-10 flex flex-col"
           }>
-          <h2
-            className={
-              isMobile
-                ? "branded-mobile-border py-t-6 font-circular body-head-2 color-primary font-medium"
-                : "font-circular body-head-2 color-primary font-medium"
-            }>
-            Enter Details
-          </h2>
+          {!!event && isBranded && (
+            <EventTitle
+              className={
+                isMobile
+                  ? "body-head-1-mobile font-saans color-body-text pb-4"
+                  : "body-head-1 font-saans color-body-text pb-6"
+              }>
+              {event.title}
+            </EventTitle>
+          )}
+          <h4 className="font-saans body-head-4 color-body-text">
+            Confirm your details to book your call on:
+          </h4>
+          <p className="font-saans body-head-3 color-body-text">
+            {selectedDateFormat()} at {selectedTimeFormat()}
+          </p>
         </div>
       );
     }
     const FormattedSelectedDateRange = () => {
       return (
-        <h3 className="body-head-3 font-circular color-primary font-medium">
+        <h3 className="body-head-3 font-saans color-body-text date-range-seen">
           {formattedMonth.format(selectedDate.toDate())} {selectedDate.format("D")} -{" "}
           {formattedMonth.format(endDate.toDate())} {endDate.format("D")}
         </h3>
@@ -126,25 +167,40 @@ export function Header({
       <div
         className={
           isMobile
-            ? "px-l-6 px-r-6 py-b-6  relative z-10 flex flex-col gap-6"
-            : "px-l-6 px-r-10 py-b-6 py-t-10 relative z-10 flex flex-col gap-6"
+            ? "py-b-6 relative z-10 flex flex-col gap-8 pl-4 pr-4"
+            : "px-r-12 px-l-6 py-b-6 py-t-6 relative z-10 flex flex-col gap-6"
         }>
-        <h2
-          className={
-            isMobile
-              ? "font-circular body-head-2 color-primary branded-mobile-border py-t-6 text-center font-medium"
-              : "font-circular body-head-2 color-primary font-medium"
-          }>
-          Select a Date & Time
-        </h2>
+        <div>
+          {!!event && isBranded && (
+            <EventTitle
+              className={
+                isMobile
+                  ? "body-head-1-mobile font-saans color-body-text pb-4"
+                  : "body-head-1 font-saans color-body-text pb-6"
+              }>
+              {event.title}
+            </EventTitle>
+          )}
+          {!!event && isBranded && (
+            <h4 className="font-saans body-head-4 color-body-text">
+              Select a date and time for a videocall with {event.profile.name}:
+            </h4>
+          )}
+        </div>
         <div className="flex w-full items-center justify-between rtl:flex-grow">
           <ButtonGroup>
             <Button
               disabled={!selectedDate.isAfter(dayjs())}
-              className="chev-btn color-primary group !p-0 rtl:ml-1 rtl:rotate-180"
+              className="chev-btn color-body-text group !p-0 rtl:ml-1 rtl:rotate-180"
               variant="icon_branded"
               color="branded_minimal"
-              StartIcon="chevron-left"
+              CustomStartIcon={
+                <img
+                  className="custom-arrow"
+                  src="https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/icons/functional/icon-arrow-left.svg"
+                  alt="Continue with Google Icon"
+                />
+              }
               aria-label="Previous Day"
               onClick={() => addToSelectedDate(-extraDays)}
             />
@@ -152,10 +208,16 @@ export function Header({
           <FormattedSelectedDateRange />
           <ButtonGroup>
             <Button
-              className="chev-btn color-primary group !p-0 rtl:mr-1 rtl:rotate-180"
+              className="chev-btn color-body-text group !p-0 rtl:mr-1 rtl:rotate-180"
               variant="icon_branded"
               color="branded_minimal"
-              StartIcon="chevron-right"
+              CustomStartIcon={
+                <img
+                  className="custom-arrow"
+                  src="https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/icons/functional/icon-arrow-right.svg"
+                  alt="Continue with Google Icon"
+                />
+              }
               aria-label="Next Day"
               onClick={() => addToSelectedDate(extraDays)}
             />

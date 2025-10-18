@@ -1051,6 +1051,32 @@ select:focus {
   padding: 9.5px 0 9.5px 16px !important;
 }
 
+.select-input-text {
+  font-size: 11px !important;
+  font-weight: 570 !important;
+  line-height: 120% !important;
+}
+
+.select-input-holder {
+  padding: 8px;
+  border-radius: 1333px;
+  border: 1px solid #1f282d;
+  background: white;
+  flex-direction: row-reverse;
+  gap: 4px;
+}
+
+.custom-remove {
+  content: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/icons/functional/icon-circle-x.svg");
+}
+
+.custom-multi-remove {
+  content: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/icons/functional/icon-circle-x.svg");
+  width: 12px;
+  height: 12px;
+  margin: 0 !important;
+}
+
 .font-saans {
   font-family: var(--font-body) !important;
 }
@@ -1095,7 +1121,8 @@ select:focus {
 .body-head-1-mobile {
   font-size: 36px;
   font-weight: 570;
-  line-height: 110%;  font-family: var(--font-body) !important;
+  line-height: 110%;
+  font-family: var(--font-body) !important;
   color: #1f282d;
 }
 
@@ -1154,6 +1181,16 @@ select:focus {
   font-weight: 570;
   max-width: 409px;
   margin: 0 auto;
+}
+
+.body-done-normal-embed {
+  font-family: var(--font-body) !important;
+  color: #1f282d !important;
+  font-size: 16px;
+  line-height: 120%;
+  font-weight: 570;
+  max-width: 409px;
+  margin: 0 auto 32px;
 }
 
 .custom-confirmed-btn {
@@ -1374,11 +1411,15 @@ select:focus {
 }
 
 .branded-indicator {
-  content: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/icons/functional/icon-chevron-down.svg");
+  content: url("https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/icons/functional/icon-chevron-down.svg") !important;
 }
 
 .custom-text-error {
   color: #ff937e !important;
+}
+
+.overwrite-min-height {
+  min-height: 113% !important;
 }
 
 .custom-dropdown {
@@ -1394,7 +1435,7 @@ select:focus {
 
 .h-\[397px\] {
   height: 100%;
-  max-height: 354px;
+  max-height: 379px;
 }
 
 .h-\[572px\] {
@@ -1403,7 +1444,7 @@ select:focus {
 }
 
 .min-h-380 {
-  min-height: 354px;
+  min-height: 379px;
 }
 
 .custom-time-icon {
@@ -1730,7 +1771,6 @@ select:focus {
   max-height: 104px;
 }
 
-
 .w-cal-icon-mobile {
   width: 48px;
   max-width: 48px;
@@ -1740,6 +1780,10 @@ select:focus {
 
 .max-title {
   max-width: 791px;
+}
+
+.max-h-booking-form {
+  max-height: 590px;
 }
 
 .confirmed-custom-img {
@@ -1753,7 +1797,7 @@ select:focus {
   width: 50%;
   max-width: 200px;
   border-radius: 24px;
-    height: 109px;
+  height: 109px;
 }
 
 .custom-confirmed-card {
@@ -1932,11 +1976,11 @@ select:focus {
 }
 .hover\:branded-checkbox:hover {
   border: 1px solid #1f282d !important;
-  background-color: var(--cal-bg-subtle) !important;
+  background-color: #ffffff !important;
 }
 .checked\:hover\:branded-checkbox:checked:hover {
-  border: 1px solid #ffffff !important;
-  background-color: var(--cal-bg-subtle) !important;
+  border: 1px solid #1f282d !important;
+  background-color: #ffffff !important;
 }
 .branded-checkbox-label {
   color: #1f282d !important;

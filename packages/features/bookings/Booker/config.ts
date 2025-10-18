@@ -190,7 +190,7 @@ export const getBookerSizeClassNames = (
     layout === BookerLayouts.MONTH_VIEW &&
       bookerState !== "booking" &&
       `[--booker-main-width:480px] ${getBookerMetaClass("lg:[--booker-meta-width:280px]")}`,
-    layout === BookerLayouts.BRANDED_VIEW && "[--booker-main-width:629px] [--booker-meta-width:434px]",
+    layout === BookerLayouts.BRANDED_VIEW && "[--booker-main-width:620px] [--booker-meta-width:434px]",
     // Fullscreen view settings.
     layout !== BookerLayouts.MONTH_VIEW &&
       layout !== BookerLayouts.BRANDED_VIEW &&

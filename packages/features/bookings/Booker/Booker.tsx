@@ -316,6 +316,7 @@ const BookerComponent = ({
           // In a popup embed, if someone clicks outside the main(having main class or main tag), it closes the embed
           "main",
           "text-default flex min-h-[calc(100dvh)] w-full flex-col items-center justify-center",
+          layout === "mobile_branded" && isEmbed ? "overwrite-min-height" : "",
           layout === BookerLayouts.MONTH_VIEW || layout === BookerLayouts.BRANDED_VIEW
             ? "overflow-visible"
             : "overflow-clip",
@@ -451,7 +452,8 @@ const BookerComponent = ({
               </StickyOnDesktop>
             )}
 
-            {(layout === BookerLayouts.BRANDED_VIEW || layout === "mobile_branded") && !multiClinics && (
+            {((layout === BookerLayouts.BRANDED_VIEW && !multiClinics) ||
+              (layout === "mobile_branded" && !multiClinics && !isEmbed)) && (
               <BookerSection
                 area="footer"
                 className={classNames(

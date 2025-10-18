@@ -50,7 +50,7 @@ export const Select = <
       {...reactSelectProps}
       menuPlacement={menuPlacement}
       classNames={{
-        input: () => cx("text-emphasis", innerClassNames?.input),
+        input: () => cx("text-emphasis font-semimono body-head-4 color-body-text", innerClassNames?.input),
         option: (state) =>
           cx(
             "bg-default flex cursor-pointer justify-between py-2.5 px-3 rounded-none text-default ",
@@ -59,7 +59,8 @@ export const Select = <
             state.isSelected && "bg-emphasis text-default",
             innerClassNames?.option
           ),
-        placeholder: (state) => cx("text-muted", state.isFocused && variant !== "checkbox" && "hidden"),
+        placeholder: (state) =>
+          cx("text-muted font-semimono body-head-4", state.isFocused && variant !== "checkbox" && "hidden"),
         dropdownIndicator: () => "branded-indicator",
         control: (state) =>
           cx(
@@ -74,12 +75,16 @@ export const Select = <
             props.isDisabled && "bg-subtle",
             innerClassNames?.control
           ),
-        singleValue: () => cx("text-emphasis placeholder:text-muted", innerClassNames?.singleValue),
+        singleValue: () =>
+          cx(
+            "text-emphasis placeholder:text-muted font-semimono body-head-4 color-body-text",
+            innerClassNames?.singleValue
+          ),
         valueContainer: () =>
           cx("text-emphasis placeholder:text-muted flex gap-1", innerClassNames?.valueContainer),
         multiValue: () =>
           cx(
-            "bg-subtle text-default rounded-md py-1.5 px-2 flex items-center text-sm leading-tight",
+            "select-input-holder select-input-text flex items-center leading-tight",
             innerClassNames?.multiValue
           ),
         menu: () => cx("font-semimono  mt-1 custom-dropdown", innerClassNames?.menu),
@@ -93,7 +98,7 @@ export const Select = <
                 : "rotate-180 transition-transform"
               : "text-default" // Woo it adds another SVG here on multi for some reason
           ),
-        multiValueRemove: () => "text-default py-auto ml-2",
+        multiValueRemove: () => "custom-multi-remove",
         ...classNames,
       }}
       {...restProps}

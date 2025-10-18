@@ -498,7 +498,7 @@ export default function Success(props: PageProps) {
                     "pb-4 pt-5 sm:py-8 sm:align-middle",
                   layout !== "mobile_branded" && "px-8",
                   "text-left align-bottom transition-all sm:w-full",
-                  layout === "branded_view" && isEmbed && "w-[352px] !px-0",
+                  layout === "branded_view" && isEmbed && "max-title !px-0",
                   layout === "branded_view" &&
                     !isEmbed &&
                     "border-subtle bg-branded rounded-branded padd-min-48",
@@ -1025,34 +1025,32 @@ export default function Success(props: PageProps) {
                           multiClinics &&
                           "py-t-6 branded-mobile-border"
                       )}>
-                      {!isEmbed && (
-                        <div className="mb2-custom flex flex-col items-center justify-center">
-                          <div
+                      <div className="mb2-custom flex flex-col items-center justify-center">
+                        <div
+                          className={classNames(
+                            "flex items-center justify-center",
+                            layout === "branded_view" && "w-cal-icon",
+                            layout === "mobile_branded" && "w-cal-icon-mobile"
+                          )}>
+                          <img
+                            src="https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/icons/brand/icon-calendar.svg"
                             className={classNames(
-                              "flex items-center justify-center",
-                              layout === "branded_view" && "w-cal-icon",
-                              layout === "mobile_branded" && "w-cal-icon-mobile"
-                            )}>
-                            <img
-                              src="https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/icons/brand/icon-calendar.svg"
-                              className={classNames(
-                                layout === "branded_view" && "w-cal-img",
-                                layout === "mobile_branded" && "w-cal-img-mobile"
-                              )}
-                              alt="Check Icon"
-                            />
-                          </div>
-                          <h3
-                            className={classNames(
-                              layout === "branded_view" && "body-head-1 max-title",
-                              layout === "mobile_branded" && "body-head-1-mobile"
+                              layout === "branded_view" && "w-cal-img",
+                              layout === "mobile_branded" && "w-cal-img-mobile"
                             )}
-                            data-testid={isCancelled ? "cancelled-headline" : ""}
-                            id="modal-headline">
-                            Your call with {bookingInfo?.user?.name} is confirmed
-                          </h3>
+                            alt="Check Icon"
+                          />
                         </div>
-                      )}
+                        <h3
+                          className={classNames(
+                            layout === "branded_view" && "body-head-1 max-title",
+                            layout === "mobile_branded" && "body-head-1-mobile"
+                          )}
+                          data-testid={isCancelled ? "cancelled-headline" : ""}
+                          id="modal-headline">
+                          Your call with {bookingInfo?.user?.name} is confirmed
+                        </h3>
+                      </div>
                       <div>
                         <div className="mb2-custom custom-confirmed-btn">
                           <RecurringBookings
@@ -1084,7 +1082,11 @@ export default function Success(props: PageProps) {
                           </p>
                         )}
                         {!multiClinics && (
-                          <p className="body-done-normal">
+                          <p
+                            className={classNames(
+                              isEmbed && "body-done-normal-embed",
+                              !isEmbed && "body-done-normal"
+                            )}>
                             We’ve sent a calendar invite to your email. Ahead of the call, check our guide on{" "}
                             <a
                               className="branded-link"
@@ -1093,33 +1095,35 @@ export default function Success(props: PageProps) {
                               href="https://seenfertility.com/fertility/path/questions-at-your-first-clinic-consultation/">
                               {" "}
                               what to ask the clinic
-                            </a>
+                            </a>{" "}
                             to help you feel prepared and confident.
                           </p>
                         )}
                       </div>
 
-                      <h3 className="confirmed-title-outer">{props?.eventType?.title ?? ""}</h3>
+                      {!isEmbed && <h3 className="confirmed-title-outer">{props?.eventType?.title ?? ""}</h3>}
 
-                      <div className="custom-confirmed-card mt-4 text-left">
-                        <img
-                          src={getImageUrl(logoUrl)}
-                          className={classNames(
-                            layout === "branded_view" && "confirmed-custom-img",
-                            layout === "mobile_branded" && "confirmed-custom-img-mobile"
-                          )}
-                          alt="Clinic Logo"
-                        />
+                      {!isEmbed && (
+                        <div className="custom-confirmed-card mt-4 text-left">
+                          <img
+                            src={getImageUrl(logoUrl)}
+                            className={classNames(
+                              layout === "branded_view" && "confirmed-custom-img",
+                              layout === "mobile_branded" && "confirmed-custom-img-mobile"
+                            )}
+                            alt="Clinic Logo"
+                          />
 
-                        <div
-                          className={classNames(
-                            layout === "branded_view" && "custom-confirmed-info",
-                            layout === "mobile_branded" && "custom-confirmed-info-mobile"
-                          )}>
-                          <p className="confirmed-title">{props.profile.name ?? ""}</p>
-                          {props.profile.bio && <p className="confirmed-title">{props.profile.bio}</p>}
+                          <div
+                            className={classNames(
+                              layout === "branded_view" && "custom-confirmed-info",
+                              layout === "mobile_branded" && "custom-confirmed-info-mobile"
+                            )}>
+                            <p className="confirmed-title">{props.profile.name ?? ""}</p>
+                            {props.profile.bio && <p className="confirmed-title">{props.profile.bio}</p>}
+                          </div>
                         </div>
-                      </div>
+                      )}
                     </div>
                   </>
                 )}

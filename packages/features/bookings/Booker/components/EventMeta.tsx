@@ -166,7 +166,7 @@ export const EventMeta = ({
           layout
           transition={{ ...fadeInUp.transition, delay: 0.3 }}
           className={isMobile ? "" : "h-full"}>
-          <div className="flex h-full flex-col items-stretch justify-between gap-4">
+          <div className="max-h-booking-form flex h-full flex-col items-stretch justify-between gap-4">
             <div className="flex flex-col items-stretch justify-start">
               {isClinicBooking && (
                 <img

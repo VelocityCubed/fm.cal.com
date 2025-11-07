@@ -1724,6 +1724,8 @@ async function handler(
     videoCallUrl = booking.location;
   }
 
+  const source = searchParams?.get("source") ?? "Standalone";
+
   const metadata = videoCallUrl
     ? {
         videoCallUrl: getVideoCallUrlFromCalEvent(evt) || videoCallUrl,
@@ -1747,6 +1749,7 @@ async function handler(
     status: "ACCEPTED",
     smsReminderNumber: booking?.smsReminderNumber || undefined,
     rescheduledBy: reqBody.rescheduledBy,
+    from: source,
   };
 
   if (bookingRequiresPayment) {

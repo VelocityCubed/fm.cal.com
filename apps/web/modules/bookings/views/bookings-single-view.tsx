@@ -371,6 +371,7 @@ export default function Success(props: PageProps) {
   const isBookingInPast = new Date(bookingInfo.endTime) < new Date();
   const isReschedulable = !isCancelled;
   const logoUrl = searchParams?.get("logoUrl");
+  const isClinicBooking = logoUrl?.includes("clinics/");
 
   const bookingCancelledEventProps = {
     booking: bookingInfo,
@@ -1103,7 +1104,7 @@ export default function Success(props: PageProps) {
 
                       {!isEmbed && <h3 className="confirmed-title-outer">{props?.eventType?.title ?? ""}</h3>}
 
-                      {!isEmbed && (
+                      {!isEmbed && isClinicBooking && (
                         <div className="custom-confirmed-card mt-4 text-left">
                           <img
                             src={getImageUrl(logoUrl)}
@@ -1121,6 +1122,23 @@ export default function Success(props: PageProps) {
                             )}>
                             <p className="confirmed-title">{props.profile.name ?? ""}</p>
                             {props.profile.bio && <p className="confirmed-title">{props.profile.bio}</p>}
+                          </div>
+                        </div>
+                      )}
+
+                      {!isEmbed && !isClinicBooking && (
+                        <div className="ask-us-thumbnail">
+                          <div className="thumbnail-content">
+                            <Avatar
+                              className="confirmed-about-image"
+                              alt={props.profile.name ?? ""}
+                              size="lg"
+                              imageSrc={`${props.profile.image}`}
+                            />
+                            <div className="details">
+                              <p className="confirmed-title">{props.profile.name ?? ""}</p>
+                              {props.profile.bio && <p className="confirmed-title">{props.profile.bio}</p>}
+                            </div>
                           </div>
                         </div>
                       )}

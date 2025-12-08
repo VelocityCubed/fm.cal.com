@@ -495,10 +495,6 @@ export const ensureBookingInputsHaveSystemFields = ({
           label: "Multiple rounds of previous treatment",
           value: "Multiple rounds of previous treatment",
         },
-        {
-          label: "Receiving or in need of specialised support",
-          value: "Receiving or in need of specialised support",
-        },
       ],
       editable: "user",
       sources: [

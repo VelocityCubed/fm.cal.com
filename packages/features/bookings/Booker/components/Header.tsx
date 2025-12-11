@@ -8,6 +8,7 @@ import { EventTitle } from "@calcom/features/bookings";
 import type { BookerEvent } from "@calcom/features/bookings/types";
 import { WEBAPP_URL } from "@calcom/lib/constants";
 import { useLocale } from "@calcom/lib/hooks/useLocale";
+import { markdownToSafeHTMLClient } from "@calcom/lib/markdownToSafeHTMLClient";
 import { BookerLayouts } from "@calcom/prisma/zod-utils";
 import { Button, ButtonGroup, Icon, ToggleGroup, Tooltip } from "@calcom/ui";
 
@@ -127,30 +128,27 @@ export function Header({
     return selectedTimeslot.format("HH:mm");
   };
   if (isBranded) {
-    if (bookerState === "booking") {
+    if (bookerState === "booking" && !isMobile) {
+      return <div />;
+    }
+    if (bookerState === "booking" && isMobile) {
       return (
-        <div
-          className={
-            isMobile
-              ? "py-b-6 relative z-10 flex flex-col pl-4 pr-4"
-              : "px-r-12 px-l-6 py-b-6 py-t-6 relative z-10 flex flex-col"
-          }>
-          {!!event && isBranded && (
-            <EventTitle
-              className={
-                isMobile
-                  ? "body-head-1-mobile font-saans color-body-text pb-4"
-                  : "body-head-1 font-saans color-body-text pb-6"
-              }>
-              {event.title}
-            </EventTitle>
-          )}
-          <h4 className="font-saans body-head-4 color-body-text">
-            Confirm your details to book your call on:
-          </h4>
-          <p className="font-saans body-head-3 color-body-text">
-            {selectedDateFormat()} at {selectedTimeFormat()}
-          </p>
+        <div className="relative z-10 flex flex-col gap-8 pb-8 pl-4 pr-4 pt-4">
+          <div>
+            {!!event && isBranded && isMobile && (
+              <EventTitle className="body-meta-head">{event.title}</EventTitle>
+            )}
+            {!!event && event.description && isBranded && isMobile && (
+              <div className="body-meta-desc mobile-desc-head">
+                <div
+                  // eslint-disable-next-line react/no-danger
+                  dangerouslySetInnerHTML={{
+                    __html: markdownToSafeHTMLClient(event.description),
+                  }}
+                />
+              </div>
+            )}
+          </div>
         </div>
       );
     }
@@ -167,26 +165,24 @@ export function Header({
       <div
         className={
           isMobile
-            ? "py-b-6 relative z-10 flex flex-col gap-8 pl-4 pr-4"
+            ? "relative z-10 flex flex-col gap-8 pb-8 pl-4 pr-4 pt-4"
             : "px-r-12 px-l-6 py-b-6 py-t-6 relative z-10 flex flex-col gap-6"
         }>
-        <div>
-          {!!event && isBranded && (
-            <EventTitle
-              className={
-                isMobile
-                  ? "body-head-1-mobile font-saans color-body-text pb-4"
-                  : "body-head-1 font-saans color-body-text pb-6"
-              }>
-              {event.title}
-            </EventTitle>
-          )}
-          {!!event && isBranded && (
-            <h4 className="font-saans body-head-4 color-body-text">
-              Select a date and time for a videocall with {event.profile.name}:
-            </h4>
-          )}
-        </div>
+        {!!event && isBranded && isMobile && (
+          <div>
+            {!!event && isBranded && <EventTitle className="body-meta-head">{event.title}</EventTitle>}
+            {!!event && event.description && isBranded && (
+              <div className="body-meta-desc mobile-desc-head">
+                <div
+                  // eslint-disable-next-line react/no-danger
+                  dangerouslySetInnerHTML={{
+                    __html: markdownToSafeHTMLClient(event.description),
+                  }}
+                />
+              </div>
+            )}
+          </div>
+        )}
         <div className="flex w-full items-center justify-between rtl:flex-grow">
           <ButtonGroup>
             <Button

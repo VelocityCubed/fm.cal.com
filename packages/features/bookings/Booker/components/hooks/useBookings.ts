@@ -50,6 +50,7 @@ export interface IUseBookings {
   teamMemberEmail?: string | null;
   layout?: string | null;
   multiClinics?: boolean;
+  hasCoordinators?: boolean | undefined;
   logoUrl?: string | null | undefined;
 }
 
@@ -113,6 +114,7 @@ export const useBookings = ({
   teamMemberEmail,
   layout,
   multiClinics = false,
+  hasCoordinators = false,
   logoUrl,
 }: IUseBookings) => {
   const router = useRouter();
@@ -279,6 +281,7 @@ export const useBookings = ({
         email: bookingForm.getValues("responses.email"),
         layout: layout,
         multiClinics: multiClinics,
+        hasCoordinators: hasCoordinators,
         logoUrl: logoUrl,
         eventTypeSlug: eventSlug,
         seatReferenceUid: "seatReferenceUid" in booking ? booking.seatReferenceUid : null,

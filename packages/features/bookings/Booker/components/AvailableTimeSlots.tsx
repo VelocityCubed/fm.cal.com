@@ -220,16 +220,6 @@ export const AvailableTimeSlots = ({
                 />
               </div>
             ))}
-          {layout === "mobile_branded" && (
-            <div className="branded-seen-free color-body-text font-semimono flex items-center justify-start">
-              <img
-                src="https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/icons/functional/icon-heart-handshake.svg"
-                className="icon-heart-handshake"
-                alt="icon-heart-handshake"
-              />
-              Booking with Seen is always free - no fees, no commission, just expert support.
-            </div>
-          )}
         </div>
       )}
     </>

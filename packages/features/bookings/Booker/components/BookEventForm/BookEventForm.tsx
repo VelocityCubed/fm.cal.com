@@ -5,6 +5,7 @@ import { useMemo, useState } from "react";
 import type { FieldError } from "react-hook-form";
 
 import { useIsPlatformBookerEmbed } from "@calcom/atoms/monorepo";
+import { useIsEmbed } from "@calcom/embed-core/embed-iframe";
 import type { BookerEvent } from "@calcom/features/bookings/types";
 import { WEBSITE_PRIVACY_POLICY_URL, WEBSITE_TERMS_URL } from "@calcom/lib/constants";
 import { getPaymentAppData } from "@calcom/lib/getPaymentAppData";
@@ -60,6 +61,7 @@ export const BookEventForm = ({
   rescheduleUid: string | null;
 }) => {
   const eventType = eventQuery.data;
+  const isEmbed = useIsEmbed();
   const setFormValues = useBookerStore((state) => state.setFormValues);
   const bookingData = useBookerStore((state) => state.bookingData);
   const timeslot = useBookerStore((state) => state.selectedTimeslot);
@@ -102,8 +104,8 @@ export const BookEventForm = ({
       className={
         isBranded
           ? isMobile
-            ? "py-b-81 flex h-full flex-col"
-            : "py-b-113 flex h-[572px] flex-col"
+            ? "flex h-full flex-col"
+            : "py-b-113 py-t-6 flex h-[572px] flex-col"
           : "flex h-full flex-col"
       }>
       <Form
@@ -188,18 +190,23 @@ export const BookEventForm = ({
           className={
             isBranded
               ? isMobile
-                ? "footer-border branded-mobile-submit sticky bottom-0 z-10 flex items-center justify-center px-6 py-4"
+                ? "branded-mobile-submit"
+                : isEmbed
+                ? "seen-footer branded-submit-embed"
                 : "seen-footer branded-submit"
               : "modalsticky mt-auto flex justify-end space-x-2 rtl:space-x-reverse"
           }>
           {!isMobile && (
-            <img
-              className="-mt-px inline h-[43px] w-auto"
-              src="https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/brand/symbol.svg"
-              alt="Seen Fertility"
-            />
+            <div className="footer-submit-img-holder">
+              <img
+                className="-mt-px inline h-[43px] w-auto"
+                src="https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/brand/symbol.svg"
+                alt="Seen Fertility"
+              />
+              <span className="booking-text">Booking through us keep Seen free for you and for everyone</span>
+            </div>
           )}
-          <div className="submit-holder">
+          <div className={isMobile ? "submit-holder-mobile" : "submit-holder"}>
             {isInstantMeeting ? (
               <Button type="submit" color="primary" loading={loadingStates.creatingInstantBooking}>
                 {isPaidEvent ? t("pay_and_book") : t("confirm")}
@@ -212,7 +219,7 @@ export const BookEventForm = ({
                     className={
                       isBranded
                         ? isMobile
-                          ? "ease-trans hover:branded-secondary body-head-sm  font-normal-medium color-text-secondary font-circular rounded-left-40 branded-border-secondary w-max-220 body-btn flex flex h-12 w-[50] w-auto flex-grow flex-col items-center justify-center gap-2 py-2"
+                          ? "ease-trans hover:branded-secondary body-head-sm  font-normal-medium color-text-secondary font-circular rounded-left-40 branded-border-secondary w-max-220 body-btn full-width-btn flex flex h-12 w-[50] w-auto flex-grow flex-col items-center justify-center gap-2 py-2"
                           : "ease-trans hover:branded-secondary branded-border-secondary custom-btn body-btn h-12flex-grow flex flex flex-col items-center justify-center gap-2 py-2"
                         : "hover:bg-subtle"
                     }
@@ -239,7 +246,9 @@ export const BookEventForm = ({
                   }
                   className={
                     isBranded
-                      ? "hover:bg-branded-secondary body-btn flex h-12 w-auto flex-grow flex-col justify-center py-2"
+                      ? isMobile
+                        ? "hover:bg-branded-secondary body-btn full-width-btn flex h-12 w-auto flex-grow flex-col justify-center py-2"
+                        : "hover:bg-branded-secondary body-btn flex h-12 w-auto flex-grow flex-col justify-center py-2"
                       : ""
                   }
                   data-testid={
@@ -257,7 +266,7 @@ export const BookEventForm = ({
                             ? "font-normal-medium body-head-sm custom-btn flex items-center gap-2"
                             : "font-normal-medium custom-btn flex items-center gap-2"
                         }>
-                        Schedule appointment
+                        Book now
                       </div>
                     ) : (
                       t("confirm")

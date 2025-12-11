@@ -4,6 +4,7 @@ import { useEffect, useMemo } from "react";
 import { shallow } from "zustand/shallow";
 
 import { Timezone as PlatformTimezoneSelect } from "@calcom/atoms/monorepo";
+import dayjs from "@calcom/dayjs";
 import { useEmbedUiConfig, useIsEmbed } from "@calcom/embed-core/embed-iframe";
 import { EventDetails, EventMembers, EventMetaSkeleton, EventTitle } from "@calcom/features/bookings";
 import { SeatsAvailabilityText } from "@calcom/features/bookings/components/SeatsAvailabilityText";
@@ -53,6 +54,7 @@ export const EventMeta = ({
   classNames,
   locale,
   logoUrl,
+  hasCoordinators = false,
 }: {
   event?: Pick<
     BookerEvent,
@@ -80,6 +82,7 @@ export const EventMeta = ({
   isPlatform?: boolean;
   isBranded?: boolean;
   isMobile?: boolean;
+  hasCoordinators?: boolean | undefined;
   classNames?: {
     eventMetaContainer?: string;
     eventMetaTitle?: string;
@@ -92,6 +95,7 @@ export const EventMeta = ({
   const [setTimezone] = useTimePreferences((state) => [state.setTimezone]);
   const [setBookerStoreTimezone] = useBookerStore((state) => [state.setTimezone], shallow);
   const selectedDuration = useBookerStore((state) => state.selectedDuration);
+  const selectedDateString = useBookerStore((state) => state.selectedDate);
   const selectedTimeslot = useBookerStore((state) => state.selectedTimeslot);
   const bookerState = useBookerStore((state) => state.state);
   const bookingData = useBookerStore((state) => state.bookingData);
@@ -149,10 +153,20 @@ export const EventMeta = ({
 
   const isClinicBooking = logoUrl?.includes("clinics/");
 
+  const selectedDate = dayjs(selectedDateString);
+  const formattedSelectedTimeslot = dayjs(selectedTimeslot);
+
+  const selectedDateFormat = () => {
+    return selectedDate.format("dddd MMMM DD");
+  };
+  const selectedTimeFormat = () => {
+    return formattedSelectedTimeslot.format("HH:mm");
+  };
+
   return (
     <div
       className={`${classNames?.eventMetaContainer || ""} ${
-        isBranded ? (isMobile ? "pb-8 pl-4 pr-4 pt-8" : "px-r-6 px-l-12 py-b-12 py-t-6 h-full") : "p-6"
+        isBranded ? (isMobile ? "pb-8 pl-4 pr-4" : "px-r-6 px-l-12 py-b-12 py-t-6 h-full") : "p-6"
       } relative z-10 `}
       data-testid="event-meta">
       {isPending && (
@@ -167,21 +181,10 @@ export const EventMeta = ({
           transition={{ ...fadeInUp.transition, delay: 0.3 }}
           className={isMobile ? "" : "h-full"}>
           <div className="max-h-booking-form flex h-full flex-col items-stretch justify-between gap-4">
-            <div className="flex flex-col items-stretch justify-start">
-              {isClinicBooking && (
-                <img
-                  src={getImageUrl(logoUrl)}
-                  className={`${
-                    isMobile
-                      ? "max-h-branded-2 h-branded-2 w-full max-w-full"
-                      : "max-h-branded-1 h-branded-1 w-branded-1 max-w-branded-1"
-                  } rounded-24`}
-                  alt="Clinic Logo"
-                />
-              )}
-
-              {event.description && isClinicBooking && (
-                <EventMetaBlock contentClassName="body-normal font-saans color-body-text subtle-bg desc-padding rounded-branded">
+            <div className="custom-meta-style">
+              {!isMobile && <EventTitle className="body-meta-head">{event.title}</EventTitle>}
+              {event.description && !isMobile && (
+                <EventMetaBlock contentClassName="body-meta-desc">
                   <div
                     // eslint-disable-next-line react/no-danger
                     dangerouslySetInnerHTML={{
@@ -190,44 +193,51 @@ export const EventMeta = ({
                   />
                 </EventMetaBlock>
               )}
-
-              {!isClinicBooking && (
-                <div>
-                  <div className="team-profiles">
-                    <EventMembers
-                      schedulingType={event.schedulingType}
-                      users={event.subsetOfUsers}
-                      profile={event.profile}
-                      entity={event.entity}
-                      isBranded={isBranded}
-                    />
-                  </div>
-                  {event.description && (
-                    <EventMetaBlock contentClassName="internal-team-desc">
-                      <div
-                        // eslint-disable-next-line react/no-danger
-                        dangerouslySetInnerHTML={{
-                          __html: markdownToSafeHTMLClient(event.description),
-                        }}
-                      />
-                    </EventMetaBlock>
+              <div className="body-time-holder">
+                <div className="body-time-desc">
+                  <img
+                    height="16"
+                    src="https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/icons/functional/icon-clock.svg"
+                    width="16"
+                    alt="time image icon"
+                  />
+                  <span>20 min</span>
+                </div>
+                <div className="body-time-desc">
+                  <img
+                    height="16"
+                    src="https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/icons/functional/icon-user.svg"
+                    width="16"
+                    alt="time image icon"
+                  />
+                  {bookerState === "booking" && (
+                    <span>
+                      Confirm your details to book your call on:{" "}
+                      <span className="bold-time">
+                        {selectedDateFormat()} at {selectedTimeFormat()}
+                      </span>
+                    </span>
+                  )}
+                  {bookerState !== "booking" && (
+                    <span>Select a date and time for a videocall with {event.profile.name}</span>
                   )}
                 </div>
-              )}
-              {/* <EventTitle
-                className={`${classNames?.eventMetaTitle} body-head-2 font-circular color-primary font-medium`}>
-                {event.title}
-              </EventTitle> */}
+              </div>
+              <div
+                className={isMobile ? "meta-img-holder img-mobile-holder" : "meta-img-holder"}
+                style={{ backgroundImage: `url(${getImageUrl(logoUrl)})` }}>
+                {hasCoordinators && <span className="meta-coordinator">Patient Coordinator</span>}
+              </div>
             </div>
 
-            {!isMobile && isClinicBooking && (
+            {isMobile && (
               <div className="branded-seen-free color-body-text font-semimono flex items-center justify-start">
                 <img
                   src="https://brave-rock-0b1df7103.2.azurestaticapps.net/assets/rebrand/icons/functional/icon-heart-handshake.svg"
                   className="icon-heart-handshake"
                   alt="icon-heart-handshake"
                 />
-                Booking with Seen is always free - no fees, no commission, just expert support.
+                Booking through us keep Seen free for you and for everyonE
               </div>
             )}
           </div>

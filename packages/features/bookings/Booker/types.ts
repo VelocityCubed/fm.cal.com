@@ -94,6 +94,8 @@ export interface BookerProps {
   userLocale?: string | null;
   hasValidLicense?: boolean;
   multiClinics?: boolean | null;
+  hasCoordinators?: boolean | undefined;
+  clinic?: string | null | undefined;
   logoUrl?: string | null | undefined;
   customHooks?: (eventType: string) => void | null;
 }

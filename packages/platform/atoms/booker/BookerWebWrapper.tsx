@@ -4,6 +4,7 @@ import { useSession } from "next-auth/react";
 import { useSearchParams } from "next/navigation";
 import { usePathname, useRouter } from "next/navigation";
 import { useMemo, useCallback, useEffect } from "react";
+import { useState } from "react";
 import { shallow } from "zustand/shallow";
 
 import dayjs from "@calcom/dayjs";
@@ -35,12 +36,30 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
     fromRedirectOfNonOrgLink: props.entity.fromRedirectOfNonOrgLink,
   });
   const bookerLayout = useBookerLayout(event.data);
-  const logoUrl = searchParams?.get("logoUrl");
+  const imgParam = searchParams?.get("logoUrl");
   const bookingId = searchParams?.get("bookingId");
   const userId = searchParams?.get("userId");
   const uid = searchParams?.get("uid") ?? "";
   const source = searchParams?.get("source") ?? "Standalone";
   const multiClinics = searchParams?.get("multiClinics") === "true";
+
+  const [hasCoordinators, setHasCoordinators] = useState(false);
+  const [logoUrl, setLogoUrl] = useState<string | null>(null);
+
+  const getClinicId = () => {
+    const params = new URLSearchParams(window.location.search);
+    let clinic = params.get("clinic");
+    if (!clinic && imgParam) {
+      if (imgParam.includes("clinics/")) {
+        // Extract string between 'clinics/' and '/icon.png'
+        const match = imgParam.match(/clinics\/(.*?)\/icon\.png/);
+        clinic = match ? match[1] : "kayleigh";
+      } else {
+        clinic = "kayleigh";
+      }
+    }
+    return clinic;
+  };
 
   const selectedDate = searchParams?.get("date") || dayjs().format("YYYY-MM-DD");
   const isRedirect = searchParams?.get("redirected") === "true" || false;
@@ -53,6 +72,41 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
     typeof window !== "undefined" ? new URLSearchParams(window.location.search).get("bookingUid") : null;
   const date = dayjs(selectedDate).format("YYYY-MM-DD");
   const timezone = searchParams?.get("cal.tz") || null;
+
+  useEffect(() => {
+    let clinicId = getClinicId();
+    if (!clinicId) clinicId = "kayleigh";
+    if (clinicId === "kayleigh" || clinicId === "lucia" || clinicId === "velocity") {
+      setHasCoordinators(false);
+      setLogoUrl(`https://fertilitymapperprod.blob.core.windows.net/assets/images/${clinicId}.jpg`);
+      return;
+    }
+
+    const getData = async () => {
+      const url = `https://fertilitymapperprod.blob.core.windows.net/clinics/${clinicId}/media.json`;
+      try {
+        const response = await fetch(url);
+        if (!response.ok) throw new Error(`Response status: ${response.status}`);
+        const json = await response.json();
+        if (json.coordinators && json.coordinators.length > 0) {
+          if (json.coordinators[0].name === "Kayleigh Hartigan") {
+            setHasCoordinators(false);
+          } else {
+            setHasCoordinators(true);
+          }
+          setLogoUrl(json.coordinators[0].url);
+        } else {
+          setHasCoordinators(false);
+          setLogoUrl(`https://fertilitymapperprod.blob.core.windows.net/clinics/${clinicId}/icon.png`);
+        }
+      } catch (error: any) {
+        setHasCoordinators(false);
+        setLogoUrl(`https://fertilitymapperprod.blob.core.windows.net/clinics/${clinicId}/icon.png`);
+      }
+    };
+
+    getData();
+  }, []);
 
   useEffect(() => {
     // This event isn't processed by BookingPageTagManager because BookingPageTagManager hasn't loaded when it is fired. I think we should have a queue in fire method to handle this.
@@ -200,6 +254,7 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
     logoUrl: logoUrl,
     layout: bookerLayout.layout,
     multiClinics: multiClinics,
+    hasCoordinators: hasCoordinators,
   });
 
   const verifyCode = useVerifyCode({
@@ -289,6 +344,7 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
       renderCaptcha
       logoUrl={logoUrl}
       multiClinics={multiClinics}
+      hasCoordinators={hasCoordinators}
       customHooks={customHooks}
     />
   );

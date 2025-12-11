@@ -80,6 +80,7 @@ const BookerComponent = ({
   renderCaptcha,
   logoUrl = "",
   multiClinics = false,
+  hasCoordinators = false,
   customHooks,
 }: BookerProps & WrappedBookerProps) => {
   const searchParams = useCompatSearchParams();
@@ -432,7 +433,9 @@ const BookerComponent = ({
               <StickyOnDesktop
                 key="meta"
                 className={classNames("relative z-10 flex h-full [grid-area:meta]")}>
-                <BookerSection area="meta" className="max-w-screen flex w-full flex-col">
+                <BookerSection
+                  area="meta"
+                  className="max-w-screen flex w-full flex-col md:w-[var(--booker-meta-width)]">
                   <EventMeta
                     classNames={{
                       eventMetaContainer: customClassNames?.eventMetaCustomClassNames?.eventMetaContainer,
@@ -447,6 +450,7 @@ const BookerComponent = ({
                     isMobile={isMobile}
                     logoUrl={logoUrl}
                     locale={userLocale}
+                    hasCoordinators={hasCoordinators}
                   />
                 </BookerSection>
               </StickyOnDesktop>
@@ -460,16 +464,21 @@ const BookerComponent = ({
                   "[grid-area:footer]",
                   layout === "mobile_branded" ? "seen-footer-mobile" : "seen-footer"
                 )}
-                visible={bookerState !== "booking"}>
+                visible={bookerState !== "booking" || (bookerState === "booking" && layout === "mobile_branded")}>
                 <span
                   key="logo"
                   className={classNames(
-                    layout === "mobile_branded" ? "padding-footer-mobile" : "padding-32",
+                    layout === "mobile_branded" ? "padding-footer-mobile" : "",
                     hasDarkBackground ? "dark" : "",
                     "block"
                   )}>
                   <PoweredBy logoOnly hasValidLicense={hasValidLicense} />
                 </span>
+                {layout !== "mobile_branded" && (
+                  <span className="booking-text">
+                    Booking through us keep Seen free for you and for everyone
+                  </span>
+                )}
               </BookerSection>
             )}
 
@@ -477,7 +486,7 @@ const BookerComponent = ({
               key="book-event-form"
               area="main"
               className={classNames(
-                "sticky top-0 h-full ",
+                "relative h-full ",
                 !multiClinics && "md:w-[var(--booker-main-width)]",
                 layout !== BookerLayouts.BRANDED_VIEW
                   ? layout === "mobile_branded"

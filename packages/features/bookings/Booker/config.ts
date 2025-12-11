@@ -77,9 +77,9 @@ export const resizeAnimationConfig: ResizeAnimationConfig = {
       minHeight: "0px",
       gridTemplateAreas: `
           "footer"
-          "meta"
           "header"
           "main"
+          "meta"
         `,
       gridTemplateColumns: "100%",
       gridTemplateRows: "minmax(min-content,max-content) 1fr",
@@ -138,7 +138,7 @@ export const resizeAnimationConfig: ResizeAnimationConfig = {
   branded_view: {
     default: {
       width: "100%",
-      minHeight: "80dvh",
+      minHeight: "65dvh",
       height: "auto",
       gridTemplateAreas: `
       "meta header header"

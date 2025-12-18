@@ -33,6 +33,7 @@ export const getEmailHtml = async (
       fertilityStage: event.responses?.fertilityStage?.value,
       notes: event.additionalNotes,
       personalDataConsent: (event.responses?.personalDataConsent?.value as string[])?.join(","),
+      marketingConsent: (event.responses?.marketingConsent?.value as string[])?.join(","),
       dateOfBirth: event.responses?.dateOfBirth?.value,
       guests: (event.responses?.guests?.value as string[])?.join(","),
     },

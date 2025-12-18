@@ -549,6 +549,31 @@ export const ensureBookingInputsHaveSystemFields = ({
       ],
     },
     {
+      label: "Marketing emails Consent",
+      type: "checkbox",
+      name: "marketingConsent",
+      required: false,
+      editable: "user",
+      options: [
+        {
+          label:
+            "<span>I agree to receive marketing emails and product updates from Seen Fertility. I understand I can unsubscribe at any time.</span>",
+          value: "User has consented to the receive marketing emails from Seen",
+        },
+        {
+          label: "removeOption",
+          value: "removeOption",
+        },
+      ],
+      sources: [
+        {
+          label: "user",
+          id: "user",
+          type: "user",
+        },
+      ],
+    },
+    {
       defaultLabel: "what_is_this_meeting_about",
       type: "text",
       name: "title",

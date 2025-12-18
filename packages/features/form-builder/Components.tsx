@@ -414,7 +414,9 @@ export const Components: Record<FieldType, Component> = {
                   isBranded
                     ? option.label === "removeOption"
                       ? "hide-val"
-                      : "flex flex-row items-start justify-start pb-4"
+                      : option.value.includes("marketing")
+                      ? "flex flex-row items-start justify-start pb-4"
+                      : "flex flex-row items-start justify-start"
                     : "block"
                 }>
                 <input

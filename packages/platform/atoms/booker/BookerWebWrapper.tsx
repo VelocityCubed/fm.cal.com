@@ -91,7 +91,11 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
         if (!response.ok) throw new Error(`Response status: ${response.status}`);
         const json = await response.json();
         if (json.coordinators && json.coordinators.length > 0) {
-          if (json.coordinators[0].name === "Kayleigh Hartigan") {
+          if (
+            json.coordinators[0].name === "Sarah" ||
+            json.coordinators[0].name === "Kayleigh" ||
+            json.coordinators[0].name === "Lucia"
+          ) {
             setHasCoordinators(false);
           } else {
             setHasCoordinators(true);

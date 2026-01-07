@@ -559,6 +559,7 @@ export const ensureBookingInputsHaveSystemFields = ({
           label:
             "<span>I agree to receive marketing emails and product updates from Seen Fertility. I understand I can unsubscribe at any time.</span>",
           value: "User has agreed to receive marketing emails from Seen",
+          defaultValue: "User has agreed to receive marketing emails from Seen",
         },
         {
           label: "removeOption",

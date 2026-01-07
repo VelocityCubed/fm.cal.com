@@ -45,7 +45,7 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
 
   const [hasCoordinators, setHasCoordinators] = useState(false);
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
-  const [coordinatorName, setCoordinatorName] = useState(false);
+  const [coordinatorName, setCoordinatorName] = useState<string | null>(null);
 
   const getClinicId = () => {
     const params = new URLSearchParams(window.location.search);

@@ -54,6 +54,7 @@ export const EventMeta = ({
   classNames,
   locale,
   logoUrl,
+  coordinatorName,
   hasCoordinators = false,
 }: {
   event?: Pick<
@@ -82,6 +83,7 @@ export const EventMeta = ({
   isPlatform?: boolean;
   isBranded?: boolean;
   isMobile?: boolean;
+  coordinatorName?: string | null | undefined;
   hasCoordinators?: boolean | undefined;
   classNames?: {
     eventMetaContainer?: string;
@@ -226,7 +228,9 @@ export const EventMeta = ({
               <div
                 className={isMobile ? "meta-img-holder img-mobile-holder" : "meta-img-holder"}
                 style={{ backgroundImage: `url(${getImageUrl(logoUrl)})` }}>
-                {hasCoordinators && <span className="meta-coordinator">Patient Coordinator</span>}
+                {hasCoordinators && coordinatorName && (
+                  <span className="meta-coordinator">{coordinatorName}</span>
+                )}
               </div>
             </div>
 

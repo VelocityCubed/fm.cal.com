@@ -45,6 +45,7 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
 
   const [hasCoordinators, setHasCoordinators] = useState(false);
   const [logoUrl, setLogoUrl] = useState<string | null>(null);
+  const [coordinatorName, setCoordinatorName] = useState(false);
 
   const getClinicId = () => {
     const params = new URLSearchParams(window.location.search);
@@ -53,9 +54,9 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
       if (imgParam.includes("clinics/")) {
         // Extract string between 'clinics/' and '/icon.png'
         const match = imgParam.match(/clinics\/(.*?)\/icon\.png/);
-        clinic = match ? match[1] : "kayleigh";
+        clinic = match ? match[1] : "sarah";
       } else {
-        clinic = "kayleigh";
+        clinic = "sarah";
       }
     }
     return clinic;
@@ -75,9 +76,10 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
 
   useEffect(() => {
     let clinicId = getClinicId();
-    if (!clinicId) clinicId = "kayleigh";
-    if (clinicId === "kayleigh" || clinicId === "lucia" || clinicId === "velocity") {
+    if (!clinicId) clinicId = "sarah";
+    if (clinicId === "kayleigh" || clinicId === "sarah" || clinicId === "lucia" || clinicId === "velocity") {
       setHasCoordinators(false);
+      setCoordinatorName(clinicId);
       setLogoUrl(`https://fertilitymapperprod.blob.core.windows.net/assets/images/${clinicId}.jpg`);
       return;
     }
@@ -94,13 +96,16 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
           } else {
             setHasCoordinators(true);
           }
+          setCoordinatorName(json.coordinators[0].name);
           setLogoUrl(json.coordinators[0].url);
         } else {
           setHasCoordinators(false);
+          setCoordinatorName("Patient Coordinator");
           setLogoUrl(`https://fertilitymapperprod.blob.core.windows.net/clinics/${clinicId}/icon.png`);
         }
       } catch (error: any) {
         setHasCoordinators(false);
+        setCoordinatorName("Patient Coordinator");
         setLogoUrl(`https://fertilitymapperprod.blob.core.windows.net/clinics/${clinicId}/icon.png`);
       }
     };
@@ -254,6 +259,7 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
     logoUrl: logoUrl,
     layout: bookerLayout.layout,
     multiClinics: multiClinics,
+    coordinatorName: coordinatorName,
     hasCoordinators: hasCoordinators,
   });
 
@@ -344,6 +350,7 @@ export const BookerWebWrapper = (props: BookerWebWrapperAtomProps) => {
       renderCaptcha
       logoUrl={logoUrl}
       multiClinics={multiClinics}
+      coordinatorName={coordinatorName}
       hasCoordinators={hasCoordinators}
       customHooks={customHooks}
     />

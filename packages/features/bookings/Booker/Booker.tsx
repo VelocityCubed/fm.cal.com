@@ -81,6 +81,7 @@ const BookerComponent = ({
   logoUrl = "",
   multiClinics = false,
   hasCoordinators = false,
+  coordinatorName = "",
   customHooks,
 }: BookerProps & WrappedBookerProps) => {
   const searchParams = useCompatSearchParams();
@@ -450,6 +451,7 @@ const BookerComponent = ({
                     isMobile={isMobile}
                     logoUrl={logoUrl}
                     locale={userLocale}
+                    coordinatorName={coordinatorName}
                     hasCoordinators={hasCoordinators}
                   />
                 </BookerSection>
@@ -464,7 +466,9 @@ const BookerComponent = ({
                   "[grid-area:footer]",
                   layout === "mobile_branded" ? "seen-footer-mobile" : "seen-footer"
                 )}
-                visible={bookerState !== "booking" || (bookerState === "booking" && layout === "mobile_branded")}>
+                visible={
+                  bookerState !== "booking" || (bookerState === "booking" && layout === "mobile_branded")
+                }>
                 <span
                   key="logo"
                   className={classNames(

@@ -404,13 +404,6 @@ export const Components: Record<FieldType, Component> = {
     propsType: propsTypes.checkbox,
     factory: ({ options, readOnly, setValue, value, isBranded }) => {
       value = value || [];
-      function getChecked(newValue: string) {
-        if (newValue.includes("marketing")) {
-          setValue([newValue]);
-          return true;
-        }
-        return value.includes(newValue);
-      }
       return (
         <div>
           {options.map((option, i) => {
@@ -443,7 +436,7 @@ export const Components: Record<FieldType, Component> = {
                       : "border-default dark:border-default hover:bg-subtle checked:hover:bg-brand-default checked:bg-brand-default dark:checked:bg-brand-default dark:bg-darkgray-100 dark:hover:bg-subtle dark:checked:hover:bg-brand-default h-4 w-4 cursor-pointer rounded transition ltr:mr-2 rtl:ml-2"
                   }
                   value={option.value}
-                  checked={getChecked(option.value)}
+                  checked={value.includes(option.value)}
                 />
                 <span
                   className={

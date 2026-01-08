@@ -79,6 +79,7 @@ export function useInitialFormValues({
             : !!parsedQuery["name"]
             ? parsedQuery["name"]
             : name ?? username ?? parsedLastBookingResponse?.name ?? "",
+        marketingConsent: ["User has agreed to receive marketing emails from Seen"],
       };
 
       if (!isRescheduling) {
@@ -97,6 +98,7 @@ export function useInitialFormValues({
           ...responses,
           name: defaultUserValues.name,
           email: defaultUserValues.email ?? "",
+          marketingConsent: defaultUserValues.marketingConsent, // Set default marketing consent
         };
 
         setDefaultValues(defaults);

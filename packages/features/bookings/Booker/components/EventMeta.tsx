@@ -203,7 +203,7 @@ export const EventMeta = ({
                     width="16"
                     alt="time image icon"
                   />
-                  <span>20 min</span>
+                  <span>{event.length} min</span>
                 </div>
                 <div className="body-time-desc">
                   <img

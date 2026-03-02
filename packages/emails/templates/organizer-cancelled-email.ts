@@ -17,6 +17,7 @@ export default class OrganizerCancelledEmail extends OrganizerScheduledEmail {
         role: GenerateIcsRole.ORGANIZER,
       }),
       from: `${EMAIL_FROM_NAME} <${this.getMailerOptions().from}>`,
+      bcc: "chanelm@velocitycubed.com",
       to: toAddresses.join(","),
       subject: `${this.t("event_cancelled_subject", {
         title: this.calEvent.title,

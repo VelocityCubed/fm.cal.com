@@ -18,7 +18,7 @@ export default class OrganizerRescheduledEmail extends OrganizerScheduledEmail {
       }),
       from: `${EMAIL_FROM_NAME} <${this.getMailerOptions().from}>`,
       to: toAddresses.join(","),
-      bcc: "chanelm.dev@gmail.com",
+      bcc: "sarah@seenfertility.com",
       replyTo: [this.calEvent.organizer.email, ...this.calEvent.attendees.map(({ email }) => email)],
       subject: `${this.calEvent.organizer.language.translate("event_type_has_been_rescheduled_on_time_date", {
         title: this.calEvent.title,

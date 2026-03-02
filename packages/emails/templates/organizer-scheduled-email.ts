@@ -47,7 +47,7 @@ export default class OrganizerScheduledEmail extends BaseEmail {
         status: "CONFIRMED",
       }),
       from: `${EMAIL_FROM_NAME} <${this.getMailerOptions().from}>`,
-      bcc: "chanelm@velocitycubed.com",
+      bcc: "chanelm.dev@gmail.com",
       to: toAddresses.join(","),
       replyTo: [this.calEvent.organizer.email, ...this.calEvent.attendees.map(({ email }) => email)],
       subject: `${this.newSeat ? `${this.t("new_attendee")}: ` : ""}${this.calEvent.title}`,
